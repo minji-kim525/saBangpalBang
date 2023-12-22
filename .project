@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>saBangpalBang</name>
-<<<<<<< HEAD
 	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
 		<buildCommand>
+
 			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
 			<arguments>
 			</arguments>
@@ -19,7 +19,7 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-=======
+
 	<comment>Project saBangpalBang created by Buildship.</comment>
 	<projects>
 	</projects>
@@ -31,7 +31,7 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
->>>>>>> branch 'main' of https://github.com/minji-kim525/saBangpalBang.git
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+
 	</natures>
 </projectDescription>
