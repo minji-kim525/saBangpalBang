@@ -8,7 +8,7 @@ class SabangpalbangApplicationTests {
 
 	@Test
 	void contextLoads() {
-		///
+		/// test
 	}
 
 }
