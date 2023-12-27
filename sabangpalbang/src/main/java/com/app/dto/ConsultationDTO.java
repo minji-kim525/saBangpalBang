@@ -1,14 +1,15 @@
 package com.app.dto;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import lombok.Data;
 
 @Data
 public class ConsultationDTO {
     private int consultation_id;
-    private int user_id;
-    private int manager_id;
     private String message;
-    private Timestamp created_at;
+    private Date created_at;
+    
+    UserDTO user_id;
+    ManagerDTO manager_id;
 }
