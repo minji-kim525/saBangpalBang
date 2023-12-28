@@ -11,5 +11,4 @@ public class ConsultationDTO {
     private Date created_at;
     
     UserDTO user_id;
-    ManagerDTO manager_id;
 }

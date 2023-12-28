@@ -15,5 +15,4 @@ public class AnswerDTO {
     
     QuestionDTO question_id;
     UserDTO user_id;
-    ManagerDTO manager_id;
 }
