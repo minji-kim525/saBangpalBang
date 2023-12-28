@@ -7,5 +7,5 @@ public class LikeListDTO {
     private int like_list_id;
     UserDTO user_id;
     PropertyServiceDTO property_service_id; 
-//    private Integer property_id; 
+    PropertyDTO property_id; 
 }
