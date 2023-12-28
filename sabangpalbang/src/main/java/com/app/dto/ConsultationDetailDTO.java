@@ -2,6 +2,9 @@ package com.app.dto;
 
 import java.sql.Timestamp;
 
+import lombok.Data;
+
+@Data
 public class ConsultationDetailDTO {
 	
 	private int c_detail_id;
