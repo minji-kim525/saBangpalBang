@@ -9,4 +9,5 @@ import com.app.property.service.searchAllService;
 @Controller
 public class searchAllController {
 	
-}
+}	
+
