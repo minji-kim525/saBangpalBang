@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.mypage.dao.MypageDao"> 
+	
+	
+	<insert id="insertRoomInfo" parameterType="com.app.mypage.dto.UploadRequestDto" useGeneratedKeys="true" keyProperty="property_service_id"> 
+		insert into property_service(ps_service_type,property_type_id,price,feet,pname,deposit,charge,count,registration_date,move_date,private_property,user_id)
+		values(1, #{property_type_id},#{price},#{feet},#{pname},#{deposit},#{charge},#{count},now(),#{move_date},0,1)
+	</insert>
+
+	<insert id="insertFile"> 
+	insert into images(filename,filepath,property_id,property_service_id,ps_service_type)
+	values
+	<foreach collection="list" item="item" separator=",">
+		(#{item.filename}, #{item.filepath},null, #{id},1)
+	</foreach>
+	</insert>
+	
+</mapper>
