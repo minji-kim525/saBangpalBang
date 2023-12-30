@@ -6,8 +6,8 @@
 	
 	
 	<insert id="insertRoomInfo" parameterType="com.app.mypage.dto.UploadRequestDto" useGeneratedKeys="true" keyProperty="property_service_id"> 
-		insert into property_service(ps_service_type,property_type_id,price,feet,pname,deposit,charge,count,registration_date,move_date,private_property,user_id)
-		values(1, #{property_type_id},#{price},#{feet},#{pname},#{deposit},#{charge},#{count},now(),#{move_date},0,1)
+		insert into property_service(ps_service_type,property_type_id,price,feet,pname,deposit,charge,count,registration_date,move_date,address,floor,description,private_property,user_id)
+		values(1, #{property_type_id},#{price},#{feet},#{pname},#{deposit},#{charge},#{count},now(),#{move_date},#{address},#{floor},#{description},0,1)
 	</insert>
 
 	<insert id="insertFile"> 
