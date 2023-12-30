@@ -9,7 +9,7 @@ import lombok.Data;
 public class PropertyDTO {
 
 	private int property_id;
-    private int service_type;
+    private int p_service_type;
     private String image;
     private int price;
     private int feet;
@@ -21,6 +21,6 @@ public class PropertyDTO {
     private Date move_date;
     private String address;
     
-    UserDTO user_id;
-    PropertyTypeDTO property_type_id;
+    UserDTO userDTO;
+    PropertyTypeDTO propertyTypeDTO;
 }
