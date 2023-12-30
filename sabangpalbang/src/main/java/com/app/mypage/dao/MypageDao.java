@@ -22,4 +22,6 @@ public interface MypageDao {
 	@Insert("insert into confirm(confirm_check,ps_service_type,property_service_id)"+
 	"values(#{confirm_check},#{ps_service_type},#{property_service_id})")
 	int insertConfirm(ConfirmDTO confirmDto);
+	
+//	List<>
 }
