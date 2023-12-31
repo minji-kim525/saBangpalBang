@@ -14,7 +14,7 @@ import com.app.dto.QuestionDTO;
 import com.app.dto.UserDTO;
 
 @Controller
-public class QuestionContoller {
+public class QuestionController {
 	
 	@Autowired
 	QuestionService service;

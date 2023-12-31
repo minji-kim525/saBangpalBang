@@ -44,6 +44,11 @@ public class MypageController {
 //	}
 //	
 
+@Controller
+public class MypageContorller{
+	
+}
+
 
 //	@GetMapping("/list")
 //	public String list(Model m) {
