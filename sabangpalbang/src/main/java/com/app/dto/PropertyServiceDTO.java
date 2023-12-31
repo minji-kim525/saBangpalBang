@@ -19,7 +19,5 @@ public class PropertyServiceDTO {
     private Date move_date;
     private String address;
     private boolean private_property;
-    
-    UserDTO userDTO;
-    PropertyTypeDTO propertyTypeDTO;
+   
 }
