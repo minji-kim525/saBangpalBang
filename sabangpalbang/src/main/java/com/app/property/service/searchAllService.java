@@ -13,8 +13,13 @@ public class searchAllService {
 	@Autowired
 	searchAllDAO alldao;
 	
+	public List<PropertyDTO> getAllProperties(){
+		return alldao.getAllProperties();
+	}
+	
 	public List <PropertyDTO> searchAll(String keyword){
 		return alldao.searchAll(keyword);
+		
 	}	
 
 }
