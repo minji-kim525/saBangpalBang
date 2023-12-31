@@ -26,7 +26,7 @@ public class MypageController {
 
 	@Autowired
 	MypageService service;
-    
+
 //	@GetMapping("/deletefile/{fileid}")
 //	public String deletefile(@PathVariable("fileid") int id, HttpServletRequest request) {
 //		FileinfoDto dto = service.fileOne(id);
@@ -44,11 +44,10 @@ public class MypageController {
 //	}
 //	
 
-@Controller
-public class MypageContorller{
-	
-}
+	@Controller
+	public class MypageContorller {
 
+	}
 
 //	@GetMapping("/list")
 //	public String list(Model m) {
@@ -63,20 +62,20 @@ public class MypageContorller{
 
 		return "mypage/roomUploadForm";
 	}
-	
 
 	@PostMapping("mypage/upload")
-	private String upload( UploadRequestDto uploadRequestDto,HttpServletRequest request) throws IllegalStateException,IOException {
-		List<MultipartFile>files=uploadRequestDto.getFiles();
+	private String upload(UploadRequestDto uploadRequestDto, HttpServletRequest request)
+			throws IllegalStateException, IOException {
+		List<MultipartFile> files = uploadRequestDto.getFiles();
 //		String path=request.getServletContext().getRealPath("/roomImg");
 		String webPath = "WEB-INF/roomImg";
 		String path = request.getSession().getServletContext().getRealPath(webPath);
-		//ServletContext객체란? 프로젝트의 context정보(path 등)를 가지고 있는 객체. Path(지정)
+		// ServletContext객체란? 프로젝트의 context정보(path 등)를 가지고 있는 객체. Path(지정)
 
-		System.out.println(path);	
+		System.out.println(path);
 
-		List<ImagesDTO> fileList=service.uploadImages(uploadRequestDto,files, path);
-		service.insertRoom(uploadRequestDto,fileList);
+		List<ImagesDTO> fileList = service.uploadImages(uploadRequestDto, files, path);
+		service.insertRoom(uploadRequestDto, fileList);
 
 		return "mypage/result";
 	}
