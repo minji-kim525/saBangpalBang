@@ -24,4 +24,5 @@ public interface MypageDao {
 	int insertConfirm(ConfirmDTO confirmDto);
 	
 //	List<>
+//	List<PropertyServiceDTO> 
 }
