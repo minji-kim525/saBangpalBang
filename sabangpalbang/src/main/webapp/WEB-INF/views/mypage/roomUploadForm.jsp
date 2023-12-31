@@ -21,18 +21,17 @@
 	가격 : <input type="number" name="price"><br>
 	보증금 : <input type="number" name="deposit"><br>
 	평수 : <input type="number" name="feet"><br>
+	층 : <input type="number" name="floor"><br>
 	관리비 : <input type="number" name="charge"><br>
 	방 개수 : <input type="number" name="count"><br>
 	입주 가능일 : <input type="date" name="move_date"><br>
+	상세 설명 : <input type="text" name="description"><br>
 <!-- 	기타정보 : <input type="text" name="description"><br>
  -->	파일첨부 :<input type="file" name="files" multiple="multiple"><br>
 	
 	
-	
 	<input type="submit" value="등록">
-	
-
-</form>
+	</form>
 
 </body>
 </html>
