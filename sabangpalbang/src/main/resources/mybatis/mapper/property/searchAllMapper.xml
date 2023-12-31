@@ -1,0 +1,20 @@
+<mapper namespace="com.app.property.dao.searchAllDAO">
+
+	<!-- 검색 쿼리 -->
+	<select id="searchAll" resultType="com.app.dto.PropertyDTO">
+		SELECT p.pname, ps.pname
+		FROM property p, property_service ps
+		WHERE p.property_type_id = ps.property_type_id
+		AND (p.pname LIKE CONCAT('%', #{keyword}, '%') OR ps.pname LIKE
+		CONCAT('%', #{keyword}, '%'))
+	</select>
+
+	<!-- 전체 데이터 조회 쿼리 -->
+	<select id="getAllProperties"
+		resultType="com.app.dto.PropertyDTO">
+		SELECT *
+		FROM property p, property_service ps
+		WHERE p.property_type_id = ps.property_type_id
+	</select>
+
+</mapper>
