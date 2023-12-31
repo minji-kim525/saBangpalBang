@@ -20,6 +20,7 @@ public class UploadRequestDto {
 	private int property_type_id;
     private int price;
     private int feet;
+    private int floor;
     private String pname;
     private int deposit;
     private int charge;
@@ -28,6 +29,7 @@ public class UploadRequestDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date move_date;
     private String address;
+    private String description;
     private boolean private_property;
     List<MultipartFile> files; 
 

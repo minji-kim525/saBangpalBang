@@ -30,3 +30,5 @@ public class searchAllController {
 		return "property/searchAllResult";
 	}
 }
+	
+}	
