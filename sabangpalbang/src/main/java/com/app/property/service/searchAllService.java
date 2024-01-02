@@ -12,15 +12,13 @@ import com.app.property.dao.searchAllDAO;
 public class searchAllService {
 
 	@Autowired
+	private searchAllDAO alldao;
 
-	searchAllDAO alldao;
-	
-	public List<PropertyDTO> getAllProperties(){
+	public List<PropertyDTO> searchAll(String keyword) {
+		return alldao.searchAll(keyword);
+	}
+
+	public List<PropertyDTO> getAllProperties() {
 		return alldao.getAllProperties();
 	}
-	
-	public List <PropertyDTO> searchAll(String keyword){
-		return alldao.searchAll(keyword);
-		
-	}	
 }

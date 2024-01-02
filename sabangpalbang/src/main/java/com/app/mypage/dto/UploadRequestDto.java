@@ -14,23 +14,23 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class UploadRequestDto {
-
+	
 	private int property_service_id;
 	private int ps_service_type;
 	private int property_type_id;
-	private int price;
-	private int feet;
-	private int floor;
-	private String pname;
-	private int deposit;
-	private int charge;
-	private int count;
+    private int price;
+    private int feet;
+    private int floor;
+    private String pname;
+    private int deposit;
+    private int charge;
+    private int count;
 //    private Date registration_date;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date move_date;
-	private String address;
-	private String description;
-	private boolean private_property;
-	List<MultipartFile> files;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date move_date;
+    private String address;
+    private String description;
+    private boolean private_property;
+    List<MultipartFile> files; 
 
 }

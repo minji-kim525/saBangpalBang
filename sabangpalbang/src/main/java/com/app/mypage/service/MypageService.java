@@ -22,37 +22,35 @@ import lombok.Data;
 public class MypageService {
 	@Autowired
 	MypageDao dao;
-
-	public List<ImagesDTO> uploadImages(UploadRequestDto dto, List<MultipartFile> files, String path)
-			throws IllegalStateException, IOException {
-		List<ImagesDTO> fileList = new ArrayList<>();
-
-		for (MultipartFile file : files) {
-			if (!file.isEmpty()) {
-
-				String origName = file.getOriginalFilename();
+	public List<ImagesDTO> uploadImages(UploadRequestDto dto, List<MultipartFile> files, String path) throws IllegalStateException, IOException{ 
+		List<ImagesDTO> fileList=new ArrayList<>();
+		
+		for(MultipartFile file:files) {
+			if(!file.isEmpty()) {
+				
+				String origName=file.getOriginalFilename();
 				System.out.println(origName);
-				// 확장자
-				String ext = origName.substring((origName.lastIndexOf(".") + 1));
+				//확장자
+				String ext=origName.substring((origName.lastIndexOf(".")+1));
 				String uuid = UUID.randomUUID().toString();
-				String fileName = uuid + "." + ext;
+				String fileName=uuid+"."+ext;
 //				Random r = new Random();
 //				String fileName = System.currentTimeMillis() + "_" + r.nextInt(50) + "." + ext;
-				File f = new File(path + File.separator + fileName);
+				File f= new File(path+File.separator+fileName);
 				file.transferTo(f);
-				fileList.add(new ImagesDTO(fileName, path, dto.getProperty_type_id()));
-
+				fileList.add(new ImagesDTO(fileName,path,dto.getProperty_type_id()));
+				
 			}
 		}
 		return fileList;
-	}
+ }
 
 	public void insertRoom(UploadRequestDto dto, List<ImagesDTO> fileList) {
 		dao.insertRoomInfo(dto);
 		int id = dto.getProperty_service_id();
-		dao.insertFile(fileList, id);
+		dao.insertFile(fileList,id);
 		dao.insertConfirm(new ConfirmDTO(false, id));
 
 	}
-
+	
 }

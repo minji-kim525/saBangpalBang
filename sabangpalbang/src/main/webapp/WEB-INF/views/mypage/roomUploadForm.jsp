@@ -30,6 +30,7 @@
  -->	파일첨부 :<input type="file" name="files" multiple="multiple"><br>
 	
 	
+	
 	<input type="submit" value="등록">
 	</form>
 

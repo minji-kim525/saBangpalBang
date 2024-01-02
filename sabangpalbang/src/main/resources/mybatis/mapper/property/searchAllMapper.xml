@@ -1,20 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.property.dao.searchAllDAO">
-
 	<!-- 검색 쿼리 -->
-	<select id="searchAll" resultType="com.app.dto.PropertyDTO">
-		SELECT p.pname, ps.pname
-		FROM property p, property_service ps
-		WHERE p.property_type_id = ps.property_type_id
-		AND (p.pname LIKE CONCAT('%', #{keyword}, '%') OR ps.pname LIKE
-		CONCAT('%', #{keyword}, '%'))
+	<select id="searchAll"
+		resultType="com.app.property.dto.propertyResultDTO">
+		SELECT pname FROM property WHERE pname LIKE CONCAT('%', #{keyword}, '%')
+		UNION ALL
+		SELECT pname FROM property_service WHERE pname LIKE CONCAT('%', #{keyword},
+		'%')
 	</select>
 
 	<!-- 전체 데이터 조회 쿼리 -->
 	<select id="getAllProperties"
-		resultType="com.app.dto.PropertyDTO">
-		SELECT *
-		FROM property p, property_service ps
-		WHERE p.property_type_id = ps.property_type_id
-	</select>
+		resultType="com.app.property.dto.propertyResultDTO">
+		SELECT
+		property_id,
+		p_service_type,
+		user_id,
+		property_type_id,
+		pname,
+		charge
+		FROM property
+		WHERE pname LIKE CONCAT('%', #{keyword}, '%')
 
+		UNION ALL
+
+		SELECT
+		property_service_id,
+		ps_service_type,
+		user_id,
+		property_type_id,
+		pname,
+		charge
+		FROM property_service
+		WHERE pname LIKE CONCAT('%', #{keyword}, '%')
+	</select>
 </mapper>
