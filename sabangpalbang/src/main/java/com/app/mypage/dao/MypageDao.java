@@ -31,6 +31,8 @@ public interface MypageDao {
 
 	ImagesDTO getImage(@Param("id1")int id, @Param("id2")int ps_type);
 	
+//	List<>
+//	List<PropertyServiceDTO> 
 	@Update("update property_service set private_property = not private_property where property_service_id = #{property_service_id} and user_id=#{user_id}")
 	int updatePrivate(@Param("property_service_id") int property_service_id,@Param("user_id")int user_id);
 }

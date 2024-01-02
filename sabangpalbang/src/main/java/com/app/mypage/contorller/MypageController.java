@@ -52,7 +52,7 @@ public class MypageController {
 		List<MultipartFile>files=uploadRequestDto.getFiles();
 //		String path=request.getServletContext().getRealPath("/roomImg");
 		String path = request.getServletContext().getRealPath("/roomImg");
-		//ServletContext객체란? 프로젝트의 context정보(path 등)를 가지고 있는 객체. Path(지정)
+		//ServletContext객체란? 프로젝트의 context 정보(path 등)를 가지고 있는 객체. Path(지정)
 
 		System.out.println(path);	
 
