@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.question.QuestionDao">
+<mapper namespace="com.app.question.dao.QuestionDao">
 
  
 
@@ -11,12 +11,23 @@
             values(0,#{user_id},#{title},#{content})
     </insert>
     
-    <delete id="questionBoard" parameterType="int">
-		delete from users where no = #{no}
-	</delete>
+    <delete id="deleteContent" parameterType="int">
+           delete from question where question_id = #{question_id}
+    </delete>
+    
+    <select id="contentSelect" resultType="com.app.question.dto.titleDto"
+            parameterType="int">
+          select question_id,title,created_at,id,content
+          from question natural join users where question_id = #{question_id}
+          
+    
+    </select>
+    
+    <select id="titleSelect" resultType="com.app.question.dto.titleDto">
+           select question_id,title,created_at,id
+           from question natural join users
+    </select>
      
-
-	
 	<select id="idSelect" resultType="com.app.dto.UserDTO" parameterType="string">
 			select user_id from users where id like #{id}
 	</select>

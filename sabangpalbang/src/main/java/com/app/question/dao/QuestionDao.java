@@ -1,5 +1,6 @@
-package com.app.question;
+package com.app.question.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
@@ -9,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import com.app.dto.QuestionDTO;
 import com.app.dto.UserDTO;
 import com.app.property.dto.InsertDto;
+import com.app.question.dto.titleDto;
 
 @Mapper
 public interface QuestionDao {
@@ -17,6 +19,11 @@ public interface QuestionDao {
 	
 	UserDTO idSelect(String id);
 	
+	List<titleDto> titleSelect();
+	
+	titleDto contentSelect(int question_id);
+	
+	int deleteContent(int question_id);	
 			
 
 }
