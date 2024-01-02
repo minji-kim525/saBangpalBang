@@ -19,4 +19,5 @@ public class MyUploadResponseDto {
     private String pname;
 	
 	private ImagesDTO images;
+	
 }
