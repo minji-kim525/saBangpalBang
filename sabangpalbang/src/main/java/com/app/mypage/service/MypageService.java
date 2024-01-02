@@ -9,11 +9,13 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
 import com.app.mypage.dao.MypageDao;
+import com.app.mypage.dto.MyUploadResponseDto;
 import com.app.mypage.dto.UploadRequestDto;
 
 import lombok.Data;
@@ -22,6 +24,8 @@ import lombok.Data;
 public class MypageService {
 	@Autowired
 	MypageDao dao;
+	
+	//다중 이미지 경로 저장
 	public List<ImagesDTO> uploadImages(UploadRequestDto dto, List<MultipartFile> files, String path) throws IllegalStateException, IOException{ 
 		List<ImagesDTO> fileList=new ArrayList<>();
 		
@@ -45,6 +49,8 @@ public class MypageService {
 		return fileList;
  }
 
+	// 방 업로드
+	@Transactional
 	public void insertRoom(UploadRequestDto dto, List<ImagesDTO> fileList) {
 		dao.insertRoomInfo(dto);
 		int id = dto.getProperty_service_id();
@@ -53,4 +59,21 @@ public class MypageService {
 
 	}
 	
+	//나의 방조회 
+	public List<MyUploadResponseDto> getMyUploadAll(int user_id){
+		List<MyUploadResponseDto> list = dao.getMyUploadAll(user_id);
+		for (MyUploadResponseDto myUploadResponseDto : list) {
+			int id=myUploadResponseDto.getProperty_service_id();
+			int ps_type=myUploadResponseDto.getPs_service_type();
+			ImagesDTO img=dao.getImage(id,ps_type);
+			System.out.println(img);
+			myUploadResponseDto.setImages(img);
+		}
+		return list;
+	}
+	
+	//비공개 설정
+	public int updatePrivate(int property_service_id,int user_id) {
+		return dao.updatePrivate(property_service_id,user_id);
+	}
 }
