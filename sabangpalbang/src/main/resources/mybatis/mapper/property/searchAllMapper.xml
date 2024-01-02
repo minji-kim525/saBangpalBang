@@ -8,8 +8,7 @@
 		resultType="com.app.property.dto.propertyResultDTO">
 		SELECT pname FROM property WHERE pname LIKE CONCAT('%', #{keyword}, '%')
 		UNION ALL
-		SELECT pname FROM property_service WHERE pname LIKE CONCAT('%', #{keyword},
-		'%')
+		SELECT pname FROM property_service WHERE pname LIKE CONCAT('%', #{keyword}, '%')
 	</select>
 
 	<!-- 전체 데이터 조회 쿼리 -->
