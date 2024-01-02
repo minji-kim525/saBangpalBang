@@ -1,8 +1,12 @@
 package com.app.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class ImagesDTO {
 
 	private int image_id;
