@@ -17,7 +17,7 @@ import org.springframework.web.servlet.resource.HttpResource;
 
 import com.app.dto.QuestionDTO;
 import com.app.dto.UserDTO;
-import com.app.property.dto.InsertDto;
+import com.app.question.dto.InsertDto;
 import com.app.question.dto.titleDto;
 import com.app.question.service.QuestionService;
 

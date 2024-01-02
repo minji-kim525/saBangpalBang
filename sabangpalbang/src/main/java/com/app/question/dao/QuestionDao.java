@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.app.dto.QuestionDTO;
 import com.app.dto.UserDTO;
-import com.app.property.dto.InsertDto;
+import com.app.question.dto.InsertDto;
 import com.app.question.dto.titleDto;
 
 @Mapper
