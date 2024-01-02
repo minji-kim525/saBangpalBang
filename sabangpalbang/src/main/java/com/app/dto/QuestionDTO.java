@@ -11,8 +11,7 @@ public class QuestionDTO {
     private String title;
     private String content;
     private Date created_at;
-    private Date updated_at;
-    
+    private Date updated_at;   
     UserDTO user_id;
 
 }
