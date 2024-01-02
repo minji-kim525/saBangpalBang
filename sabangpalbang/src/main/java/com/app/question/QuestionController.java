@@ -12,6 +12,7 @@ import org.springframework.web.servlet.resource.HttpResource;
 
 import com.app.dto.QuestionDTO;
 import com.app.dto.UserDTO;
+import com.app.question.service.QuestionService;
 
 @Controller
 public class QuestionController {
@@ -33,7 +34,7 @@ public class QuestionController {
 		return "select";
 	
 	}
-	
+	 
 
 
 }

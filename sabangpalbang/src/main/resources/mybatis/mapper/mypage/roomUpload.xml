@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.mypage.dao.MypageDao"> 
+	
+	
+	<insert id="insertRoomInfo" parameterType="com.app.mypage.dto.UploadRequestDto" useGeneratedKeys="true" keyProperty="property_service_id"> 
+		insert into property_service(ps_service_type,property_type_id,price,feet,pname,deposit,charge,count,registration_date,move_date,address,floor,description,private_property,user_id)
+		values(1, #{property_type_id},#{price},#{feet},#{pname},#{deposit},#{charge},#{count},now(),#{move_date},#{address},#{floor},#{description},0,1)
+	</insert>
+
+	<insert id="insertFile"> 
+	insert into images(filename,filepath,property_id,property_service_id,ps_service_type)
+	values
+	<foreach collection="list" item="item" separator=",">
+		(#{item.filename}, #{item.filepath},null, #{id},1)
+	</foreach>
+	</insert>
+	
+	<select id="getImage" resultType="com.app.dto.ImagesDTO"> 
+		SELECT
+	    	property_id,
+	    	property_service_id,
+	    	filename,
+	    	filepath,
+	    	p_service_type,
+	    	ps_service_type
+		FROM (
+	    	SELECT
+	       		property_id,
+	        	property_service_id,
+	        	filename,
+	        	filepath,
+	        	p_service_type,
+	        	ps_service_type,
+	        	ROW_NUMBER() OVER(PARTITION BY property_service_id ORDER BY image_id) as img_sequence
+	    	FROM images
+		) AS img
+		WHERE img.img_sequence = 1 and property_service_id=#{id1} and ps_service_type=#{id2}
+	</select>
+</mapper>
