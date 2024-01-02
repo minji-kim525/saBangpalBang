@@ -5,53 +5,40 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.WebUtils;
 
 import com.app.dto.ImagesDTO;
+import com.app.mypage.dto.MyUploadResponseDto;
 import com.app.mypage.dto.UploadRequestDto;
 import com.app.mypage.service.MypageService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 
 @Controller
 public class MypageController {
 
 	@Autowired
 	MypageService service;
-    
-//	@GetMapping("/deletefile/{fileid}")
-//	public String deletefile(@PathVariable("fileid") int id, HttpServletRequest request) {
-//		FileinfoDto dto = service.fileOne(id);
-//		String path = request.getServletContext().getRealPath("/mainImg");
-//	
-//		File file = new File(path, dto.getPath());
-//		
-//		if(file.exists()) {
-//			file.delete();// 업로드 된 파일 삭제
-//		}
-//		service.deleteFile(id);
-//		
-//		return "redirect:/list";
-//		
-//	}
-//	
+    //나의 방 조회
+	@GetMapping("/mypage/myupload/{user_id}")
+	public String getMyUpload(@PathVariable("user_id") int user_id,Model model){
+		List<MyUploadResponseDto> list=service.getMyUploadAll(user_id);
+		if(!list.isEmpty()) {
+			model.addAttribute("list",list);
+			System.out.println(list);
+		}else {
+			model.addAttribute("listcheck",0);
+		}
+		return "mypage/myupload";
+	}
 
-
-//	@GetMapping("/list")
-//	public String list(Model m) {
-//		List<FileinfoDto> fList = service.fileList();
-//		m.addAttribute("fList", fList);
-//		return "file/list";
-//	}
-
+	//방 업로드 폼
 	@GetMapping("mypage/upload")
 	public String form() {
 		System.out.println("업로드폼");
@@ -59,13 +46,12 @@ public class MypageController {
 		return "mypage/roomUploadForm";
 	}
 	
-
+    //방업로드
 	@PostMapping("mypage/upload")
-	private String upload( UploadRequestDto uploadRequestDto,HttpServletRequest request) throws IllegalStateException,IOException {
+	public String upload( UploadRequestDto uploadRequestDto,HttpServletRequest request) throws IllegalStateException,IOException {
 		List<MultipartFile>files=uploadRequestDto.getFiles();
 //		String path=request.getServletContext().getRealPath("/roomImg");
-		String webPath = "WEB-INF/roomImg";
-		String path = request.getSession().getServletContext().getRealPath(webPath);
+		String path = request.getServletContext().getRealPath("/roomImg");
 		//ServletContext객체란? 프로젝트의 context정보(path 등)를 가지고 있는 객체. Path(지정)
 
 		System.out.println(path);	
@@ -74,5 +60,11 @@ public class MypageController {
 		service.insertRoom(uploadRequestDto,fileList);
 
 		return "mypage/result";
+	}
+	
+	@PutMapping("mypage/myupload/{user_id}")
+	public String updatePrivate(@RequestParam(value="property_service_id") int property_service_id,@PathVariable("user_id")int user_id) {
+		 service.updatePrivate(property_service_id,user_id);
+		 return "redirect:/mypage/myupload/1";
 	}
 }
