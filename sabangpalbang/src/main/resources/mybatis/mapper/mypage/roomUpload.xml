@@ -6,8 +6,26 @@
 	
 	
 	<insert id="insertRoomInfo" parameterType="com.app.mypage.dto.UploadRequestDto" useGeneratedKeys="true" keyProperty="property_service_id"> 
-		insert into property_service(ps_service_type,property_type_id,price,feet,pname,deposit,charge,count,registration_date,move_date,address,floor,description,private_property,user_id)
-		values(1, #{property_type_id},#{price},#{feet},#{pname},#{deposit},#{charge},#{count},now(),#{move_date},#{address},#{floor},#{description},0,1)
+		insert
+		into
+		property_service(
+			ps_service_type,
+			property_type_id,
+			price,
+			feet,
+			pname,
+			deposit,
+			charge,
+			count,
+			registration_date,
+			move_date,
+			address,
+			floor,
+			description,
+			private_property,
+			user_id
+		)values
+			(1, #{property_type_id},#{price},#{feet},#{pname},#{deposit},#{charge},#{count},now(),#{move_date},#{address},#{floor},#{description},0,#{user_id})
 	</insert>
 
 	<insert id="insertFile"> 
@@ -38,5 +56,33 @@
 	    	FROM images
 		) AS img
 		WHERE img.img_sequence = 1 and property_service_id=#{id1} and ps_service_type=#{id2}
+	</select>
+		
+	<insert id="insertLikeList" parameterType="com.app.dto.LikeListDTO">
+		insert 
+		into 
+			like_list user_id,
+			p_service_type,
+			ps_service_type,
+			property_service_id,
+			property_id 
+		values("#{user_id},#{p_service_type},#{ps_service_type},#{property_service_id},#{property_id}")
+	</insert>
+	
+	<select id="getMyLikeList"  parameterType="int" resultType="com.app.mypage.dto.MyUploadResponseDto">
+		SELECT
+    		COALESCE(p.pname, ps.pname)pname,
+    		l.like_list_id,
+    		COALESCE(p.price, ps.price) AS price,
+    		COALESCE(p.property_type_id, ps.property_type_id) AS property_type_id,
+    		l.property_service_id,
+    		l.property_id,
+    		l.ps_service_type,
+    		l.p_service_type
+		FROM
+    		like_list AS l
+		LEFT JOIN property AS p ON l.property_id = p.property_id AND l.p_service_type = p.p_service_type
+		LEFT JOIN property_service AS ps ON l.property_service_id = ps.property_service_id AND l.ps_service_type = ps.ps_service_type
+		WHERE l.user_id=#{user_id}
 	</select>
 </mapper>

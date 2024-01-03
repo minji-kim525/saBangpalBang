@@ -28,13 +28,13 @@ public class SecurityConfig{
 
 		.authorizeHttpRequests(auth -> {
 			try {
-				auth.requestMatchers(new AntPathRequestMatcher("/user/***")).authenticated()
+				auth.requestMatchers(new AntPathRequestMatcher("/mypage/***")).authenticated()
 						.requestMatchers(new AntPathRequestMatcher("/admin")).hasRole("ADMIN")	
 						.anyRequest().permitAll()
 
 						.and().formLogin().loginPage("/login").defaultSuccessUrl("/", true).and()
 						.exceptionHandling().accessDeniedPage("/accessDenied").and().logout()
-						.invalidateHttpSession(true).logoutSuccessUrl("/login");
+						.invalidateHttpSession(true).logoutSuccessUrl("/");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
