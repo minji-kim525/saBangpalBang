@@ -7,9 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.security.access.method.P;
 
-import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
+import com.app.dto.LikeListDTO;
 import com.app.mypage.dto.MyUploadResponseDto;
 import com.app.mypage.dto.UploadRequestDto;
 
@@ -30,9 +31,12 @@ public interface MypageDao {
 	List<MyUploadResponseDto>getMyUploadAll(int user_id);
 
 	ImagesDTO getImage(@Param("id1")int id, @Param("id2")int ps_type);
-	
-//	List<>
-//	List<PropertyServiceDTO> 
+
 	@Update("update property_service set private_property = not private_property where property_service_id = #{property_service_id} and user_id=#{user_id}")
 	int updatePrivate(@Param("property_service_id") int property_service_id,@Param("user_id")int user_id);
+
+	int insertLikeList(@Param("likeListDto")LikeListDTO likeListDto);
+	
+	List<MyUploadResponseDto> getMyLikeList(@Param("user_id")int user_id);
+	
 }

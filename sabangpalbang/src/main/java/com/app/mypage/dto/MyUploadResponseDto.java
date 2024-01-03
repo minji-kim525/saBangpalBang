@@ -17,6 +17,7 @@ public class MyUploadResponseDto {
     private int price;
     private boolean private_property;
     private String pname;
+    private int like_list_id;
 	
 	private ImagesDTO images;
 	
