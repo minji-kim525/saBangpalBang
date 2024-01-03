@@ -1,4 +1,4 @@
-package com.app.question.contloller;
+package com.app.question.controller;
 
 import java.util.HashMap;
 import java.util.List;

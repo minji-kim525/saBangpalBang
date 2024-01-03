@@ -25,46 +25,49 @@ public class MypageController {
 
 	@Autowired
 	MypageService service;
-    //나의 방 조회
+
+	// 나의 방 조회
 	@GetMapping("/mypage/myupload/{user_id}")
-	public String getMyUpload(@PathVariable("user_id") int user_id,Model model){
-		List<MyUploadResponseDto> list=service.getMyUploadAll(user_id);
-		if(!list.isEmpty()) {
-			model.addAttribute("list",list);
+	public String getMyUpload(@PathVariable("user_id") int user_id, Model model) {
+		List<MyUploadResponseDto> list = service.getMyUploadAll(user_id);
+		if (!list.isEmpty()) {
+			model.addAttribute("list", list);
 			System.out.println(list);
-		}else {
-			model.addAttribute("listcheck",0);
+		} else {
+			model.addAttribute("listcheck", 0);
 		}
 		return "mypage/myupload";
 	}
 
-	//방 업로드 폼
+	// 방 업로드 폼
 	@GetMapping("mypage/upload")
 	public String form() {
 		System.out.println("업로드폼");
 
 		return "mypage/roomUploadForm";
 	}
-	
-    //방업로드
+
+	// 방업로드
 	@PostMapping("mypage/upload")
-	public String upload( UploadRequestDto uploadRequestDto,HttpServletRequest request) throws IllegalStateException,IOException {
-		List<MultipartFile>files=uploadRequestDto.getFiles();
+	public String upload(UploadRequestDto uploadRequestDto, HttpServletRequest request)
+			throws IllegalStateException, IOException {
+		List<MultipartFile> files = uploadRequestDto.getFiles();
 //		String path=request.getServletContext().getRealPath("/roomImg");
 		String path = request.getServletContext().getRealPath("/roomImg");
-		//ServletContext객체란? 프로젝트의 context 정보(path 등)를 가지고 있는 객체. Path(지정)
+		// ServletContext객체란? 프로젝트의 context 정보(path 등)를 가지고 있는 객체. Path(지정)
 
-		System.out.println(path);	
+		System.out.println(path);
 
-		List<ImagesDTO> fileList=service.uploadImages(uploadRequestDto,files, path);
-		service.insertRoom(uploadRequestDto,fileList);
+		List<ImagesDTO> fileList = service.uploadImages(uploadRequestDto, files, path);
+		service.insertRoom(uploadRequestDto, fileList);
 
 		return "mypage/result";
 	}
-	
+
 	@PutMapping("mypage/myupload/{user_id}")
-	public String updatePrivate(@RequestParam(value="property_service_id") int property_service_id,@PathVariable("user_id")int user_id) {
-		 service.updatePrivate(property_service_id,user_id);
-		 return "redirect:/mypage/myupload/1";
+	public String updatePrivate(@RequestParam(value = "property_service_id") int property_service_id,
+			@PathVariable("user_id") int user_id) {
+		service.updatePrivate(property_service_id, user_id);
+		return "redirect:/mypage/myupload/1";
 	}
 }

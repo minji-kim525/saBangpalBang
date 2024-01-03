@@ -8,9 +8,9 @@ import org.apache.ibatis.annotations.Param;
 import com.app.dto.PropertyDTO;
 
 @Mapper
-public interface searchAllDAO {
+public interface SearchAllDAO {
 	
-	List<PropertyDTO> searchAll(@Param("keyword") String keyword);
+//	List<PropertyDTO> searchAll(@Param("keyword") String keyword);
 
-	List<PropertyDTO> getAllProperties();
+	List<PropertyDTO> getAllProperties(@Param("keyword") String keyword);
 }
