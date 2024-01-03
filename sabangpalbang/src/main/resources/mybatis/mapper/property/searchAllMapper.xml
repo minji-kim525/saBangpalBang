@@ -2,26 +2,24 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.property.dao.searchAllDAO">
+<mapper namespace="com.app.property.dao.SearchAllDAO">
+
 	<!-- 검색 쿼리 -->
-	<select id="searchAll"
-		resultType="com.app.property.dto.propertyResultDTO">
-		SELECT pname FROM property WHERE pname LIKE CONCAT('%', #{keyword}, '%')
-		UNION ALL
-		SELECT pname FROM property_service WHERE pname LIKE CONCAT('%', #{keyword},
-		'%')
-	</select>
+	<!-- <select id="searchAll" resultType="com.app.property.dto.propertyResultDTO"> 
+		SELECT pname FROM property WHERE pname LIKE CONCAT('%', #{keyword}, '%') 
+		UNION ALL SELECT pname FROM property_service WHERE pname LIKE CONCAT('%', 
+		#{keyword}, '%') </select> -->
 
 	<!-- 전체 데이터 조회 쿼리 -->
 	<select id="getAllProperties"
-		resultType="com.app.property.dto.propertyResultDTO">
+		resultType="com.app.property.dto.PropertyResultDTO">
 		SELECT
 		property_id,
 		p_service_type,
 		user_id,
 		property_type_id,
 		pname,
-		charge
+		price
 		FROM property
 		WHERE pname LIKE CONCAT('%', #{keyword}, '%')
 
@@ -33,8 +31,34 @@
 		user_id,
 		property_type_id,
 		pname,
-		charge
+		price
 		FROM property_service
-		WHERE pname LIKE CONCAT('%', #{keyword}, '%')
+		WHERE pname LIKE
+		CONCAT('%',
+		#{keyword}, '%')
+	</select>
+
+	<select id="getImage" resultType="com.app.dto.ImagesDTO">
+		SELECT
+		property_id,
+		property_service_id,
+		filename,
+		filepath,
+		p_service_type,
+		ps_service_type
+		FROM (
+		SELECT
+		property_id,
+		property_service_id,
+		filename,
+		filepath,
+		p_service_type,
+		ps_service_type,
+		ROW_NUMBER() OVER(PARTITION BY property_service_id ORDER BY image_id) as
+		img_sequence
+		FROM images
+		) AS img
+		WHERE img.img_sequence = 1 and property_service_id=#{id1} and
+		ps_service_type=#{id2}
 	</select>
 </mapper>
