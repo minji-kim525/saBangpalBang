@@ -55,7 +55,7 @@ public class MypageService {
 		dao.insertRoomInfo(dto);
 		int id = dto.getProperty_service_id();
 		dao.insertFile(fileList,id);
-		dao.insertConfirm(new ConfirmDTO(false, id));
+		dao.insertConfirm(id);
 
 	}
 	
