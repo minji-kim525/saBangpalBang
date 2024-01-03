@@ -37,10 +37,8 @@
 							</c:choose>
 							<h3>${chargeFunction.formatNumberWithUnit(property.price)}</h3>
 							${property.pname}<br></td>
-						<!-- 줄바꿈 왜이래진짜 -->
 						<!-- 다른 속성에 대한 추가 테이블 셀 추가 -->
-						<!-- ImagesDTO 객체의 필드를 통해 이미지 URL을 가져옴 -->
-						<img src="/roomimg/${property.images.filename}" alt="Property Image">
+						<img src="/roomImg/${property.images.filename}" alt="">
 					</tr>
 				</c:forEach>
 			</tbody>

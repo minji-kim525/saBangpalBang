@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.property.dao.searchAllDAO">
+<mapper namespace="com.app.property.dao.SearchAllDAO">
 
 	<!-- 검색 쿼리 -->
 	<!-- <select id="searchAll" resultType="com.app.property.dto.propertyResultDTO"> 
@@ -12,7 +12,7 @@
 
 	<!-- 전체 데이터 조회 쿼리 -->
 	<select id="getAllProperties"
-		resultType="com.app.property.dto.propertyResultDTO">
+		resultType="com.app.property.dto.PropertyResultDTO">
 		SELECT
 		property_id,
 		p_service_type,

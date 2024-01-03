@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.app.property.dao.searchDetailDAO">
+<mapper namespace="com.app.property.dao.SearchDetailDAO">
 
 	<select id="getDetail"
-		resultType="com.app.property.dto.propertyDetailDTO">
+		resultType="com.app.property.dto.PropertyDetailDTO">
 		SELECT
 		address,
 		pname,
