@@ -4,21 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
+import com.app.dto.LikeListDTO;
 import com.app.mypage.dao.MypageDao;
 import com.app.mypage.dto.MyUploadResponseDto;
 import com.app.mypage.dto.UploadRequestDto;
-
-import lombok.Data;
 
 @Service
 public class MypageService {
@@ -51,11 +49,12 @@ public class MypageService {
 
 	// 방 업로드
 	@Transactional
-	public void insertRoom(UploadRequestDto dto, List<ImagesDTO> fileList) {
+	public void insertRoom(int user_id, UploadRequestDto dto, List<ImagesDTO> fileList) {
+		dto.setUser_id(user_id);
 		dao.insertRoomInfo(dto);
 		int id = dto.getProperty_service_id();
 		dao.insertFile(fileList,id);
-		dao.insertConfirm(new ConfirmDTO(false, id));
+		dao.insertConfirm(id);
 
 	}
 	
@@ -75,5 +74,24 @@ public class MypageService {
 	//비공개 설정
 	public int updatePrivate(int property_service_id,int user_id) {
 		return dao.updatePrivate(property_service_id,user_id);
+	}
+
+	
+	//찜목록
+	public List<MyUploadResponseDto> getMyLikeList(int user_id) {
+		List<MyUploadResponseDto> list = dao.getMyLikeList(user_id);
+		for (MyUploadResponseDto myUploadResponseDto : list) {
+			int id=myUploadResponseDto.getProperty_service_id();
+			int ps_type=myUploadResponseDto.getPs_service_type();
+			ImagesDTO img=dao.getImage(id,ps_type);
+			myUploadResponseDto.setImages(img);
+		}
+		return list;
+	}
+	
+	//찜하기
+	public void insertLikeList(LikeListDTO likeListDto, int user_id) {
+		likeListDto.setUser_id(user_id);
+		dao.insertLikeList(likeListDto);		
 	}
 }
