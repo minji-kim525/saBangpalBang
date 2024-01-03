@@ -18,7 +18,7 @@
 				<c:when test="${like.property_type_id==2}">
 				<p>전세 </p>
 				</c:when>
-				<c:when test="${like.property_type_id==2}">
+				<c:when test="${like.property_type_id==3}">
 				<p>월세 </p>
 				</c:when>
 			</c:choose>

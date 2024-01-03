@@ -2,13 +2,13 @@ package com.app.mypage.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.app.dto.ImagesDTO;
 import com.app.dto.LikeListDTO;
 import com.app.mypage.dto.MyUploadResponseDto;
+import com.app.mypage.dto.UploadAndQuestionDto;
 import com.app.mypage.dto.UploadRequestDto;
 import com.app.mypage.service.MypageService;
 import com.app.security.config.SecurityUser;
@@ -28,16 +29,21 @@ public class MypageController {
 
 	@Autowired
 	MypageService service;
-    //나의 방 조회
+    //나의 방 조회 및 나의 문의 조회
 	@GetMapping("/mypage/myupload")
 	public String getMyUpload(@AuthenticationPrincipal SecurityUser user,Model model){
-		List<MyUploadResponseDto> list=service.getMyUploadAll(user.getUsers().getUser_id());
-		if(!list.isEmpty()) {
-			model.addAttribute("list",list);
-			System.out.println(list);
+		UploadAndQuestionDto list=service.getMyUploadAll(user.getUsers().getUser_id());
+		if(!list.getList().isEmpty()) {
+			model.addAttribute("list",list.getList());
 		}else {
 			model.addAttribute("listcheck",0);
 		}
+		if(!list.getQlist().isEmpty()) {
+			model.addAttribute("qlist",list.getQlist());
+		}else {
+			model.addAttribute("qlistcheck",0);
+		}
+		System.out.println(list);
 		return "mypage/myupload";
 	}
 
@@ -87,5 +93,7 @@ public class MypageController {
 		return "mypage/likelist";
 		
 	}
+	
+	
 	
 }
