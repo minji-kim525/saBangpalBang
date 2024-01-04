@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +16,14 @@ import com.app.dto.ImagesDTO;
 import com.app.dto.LikeListDTO;
 import com.app.mypage.dao.MypageDao;
 import com.app.mypage.dto.MyUploadResponseDto;
+import com.app.mypage.dto.UploadAndQuestionDto;
 import com.app.mypage.dto.UploadRequestDto;
+import com.app.question.dto.titleDto;
 
 @Service
 public class MypageService {
 	@Autowired
 	MypageDao dao;
-	
 	//다중 이미지 경로 저장
 	public List<ImagesDTO> uploadImages(UploadRequestDto dto, List<MultipartFile> files, String path) throws IllegalStateException, IOException{ 
 		List<ImagesDTO> fileList=new ArrayList<>();
@@ -59,16 +60,17 @@ public class MypageService {
 	}
 	
 	//나의 방조회 
-	public List<MyUploadResponseDto> getMyUploadAll(int user_id){
+	public UploadAndQuestionDto getMyUploadAll(int user_id){
 		List<MyUploadResponseDto> list = dao.getMyUploadAll(user_id);
 		for (MyUploadResponseDto myUploadResponseDto : list) {
 			int id=myUploadResponseDto.getProperty_service_id();
 			int ps_type=myUploadResponseDto.getPs_service_type();
 			ImagesDTO img=dao.getImage(id,ps_type);
-			System.out.println(img);
 			myUploadResponseDto.setImages(img);
 		}
-		return list;
+		List<titleDto>qlist=dao.myQuestionList(user_id);
+		UploadAndQuestionDto uploadAndQuestionDto= new UploadAndQuestionDto(list,qlist);
+		return uploadAndQuestionDto;
 	}
 	
 	//비공개 설정

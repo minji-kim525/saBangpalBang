@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.manager.dao.ManagerDao"> 
+
+<select id="getPropertyManage" resultType="com.app.manager.dto.PropertyResponseDto">
+	SELECT
+    	u.user_id,
+    	u.id,
+    	ps.property_service_id,
+    	ps.ps_service_type,
+    	ps.property_type_id,
+   		ps.pname,
+   		ps.address,
+    	ps.registration_date
+	FROM
+    	property_service AS ps
+	INNER JOIN users AS u ON ps.user_id = u.user_id
+	ORDER BY registration_date
+</select>
+
+</mapper>
