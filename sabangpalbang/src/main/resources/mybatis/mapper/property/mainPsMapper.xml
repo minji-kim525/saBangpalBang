@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.main.dao.PsDAO">
+	<!-- PropertyService 매물 정보 -->
+	<select id="getServiceProperties"
+		resultType="com.app.dto.PropertyServiceDTO">
+		SELECT
+		property_service_id ,
+		ps_service_type ,
+		user_id ,
+		property_type_id,
+		price,
+		feet,
+		pname,
+		deposit,
+		charge,
+		count,
+		registration_date,
+		move_date,
+		address,
+		description,
+		floor,
+		private_property
+		FROM property_service
+
+	</select>
+</mapper>

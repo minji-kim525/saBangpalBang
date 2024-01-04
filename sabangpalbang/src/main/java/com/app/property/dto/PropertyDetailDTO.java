@@ -2,6 +2,7 @@ package com.app.property.dto;
 import java.sql.Date;
 
 import com.app.dto.ImagesDTO;
+import com.app.dto.PropertyTypeDTO;
 
 import lombok.Data;
 
@@ -19,7 +20,12 @@ public class PropertyDetailDTO {
 	private int count;
 	private Date registration_date;
 	private String description;
+	private int property_type_id;
+	private int charge;
+	private int p_service_type;
+	private int ps_service_type;
 	
 	private ImagesDTO images;
+	PropertyTypeDTO propertyTypeDTO;
 
 }

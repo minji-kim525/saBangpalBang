@@ -1,4 +1,4 @@
-package com.app.property.dao;
+package com.app.main.dao;
 
 import java.util.List;
 
@@ -10,11 +10,9 @@ import com.app.dto.PropertyDTO;
 import com.app.property.dto.PropertyResultDTO;
 
 @Mapper
-public interface SearchAllDAO {
-	
-//	List<PropertyDTO> searchAll(@Param("keyword") String keyword);
+public interface PDAO {
 
-	List<PropertyResultDTO> getAllProperties(@Param("keyword") String keyword);
-	
+	List<PropertyDTO> getProperties();
+
 	ImagesDTO getImage(@Param("id1") int id, @Param("id2") int ps_type);
 }
