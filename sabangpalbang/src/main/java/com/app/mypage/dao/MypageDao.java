@@ -13,6 +13,7 @@ import com.app.dto.ImagesDTO;
 import com.app.dto.LikeListDTO;
 import com.app.mypage.dto.MyUploadResponseDto;
 import com.app.mypage.dto.UploadRequestDto;
+import com.app.question.dto.titleDto;
 
 @Mapper
 public interface MypageDao {
@@ -33,8 +34,12 @@ public interface MypageDao {
 	@Update("update property_service set private_property = not private_property where property_service_id = #{property_service_id} and user_id=#{user_id}")
 	int updatePrivate(@Param("property_service_id") int property_service_id, @Param("user_id") int user_id);
 
-	int insertLikeList(@Param("likeListDto") LikeListDTO likeListDto);
-
-	List<MyUploadResponseDto> getMyLikeList(@Param("user_id") int user_id);
-
+	int insertLikeList(@Param("likeListDto")LikeListDTO likeListDto);
+	
+	List<MyUploadResponseDto> getMyLikeList(@Param("user_id")int user_id);
+  
+	@Select("select question_id,title,created_at,id from question natural join users where user_id=#{user_id}")
+	List<titleDto> myQuestionList(@Param("user_id")int user_id);
+	
 }
+
