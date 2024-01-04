@@ -62,9 +62,14 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-      
+
+
       $("#chagePrivate").click(function(){
-    	  $("#updateform").submit();
+    	  if (confirm("해당 게시물을 비공개 하시겠습니까?") == true){    //확인
+    		  $("#chagePrivate").submit();
+    		 }else{   //취소
+    		     return false;
+    		 }
     	  
       });
 
