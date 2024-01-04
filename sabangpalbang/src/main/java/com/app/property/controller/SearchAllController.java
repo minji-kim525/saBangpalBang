@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.dto.PropertyDTO;
-import com.app.property.service.searchAllService;
+import com.app.property.service.SearchAllService;
 
 @Controller
-public class searchAllController {
+public class SearchAllController {
 
 	@Autowired
-	searchAllService allservice;
+	SearchAllService allservice;
 
 	@GetMapping("/searchAll")
 	public String searchAll() {
@@ -24,7 +24,7 @@ public class searchAllController {
 
 	@GetMapping("/property/searchAllResult")
 	public String searchResult(@RequestParam("keyword") String keyword, Model m) {
-		List<PropertyDTO> allProperties = allservice.searchAll(keyword);
+		List<PropertyDTO> allProperties = allservice.getAllProperties(keyword);
 		m.addAttribute("allProperties", allProperties);
 		m.addAttribute("keyword", keyword);
 		return "property/searchAllResult";
