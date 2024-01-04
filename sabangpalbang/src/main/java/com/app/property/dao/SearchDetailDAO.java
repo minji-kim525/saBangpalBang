@@ -8,5 +8,5 @@ import com.app.property.dto.PropertyDetailDTO;
 
 @Mapper
 public interface SearchDetailDAO {
-	List<PropertyDetailDTO> getDetail(String keyword);
+	List<PropertyDetailDTO> getDetail();
 }

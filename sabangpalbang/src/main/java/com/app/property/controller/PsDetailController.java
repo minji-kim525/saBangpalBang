@@ -1,22 +1,25 @@
 package com.app.property.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.service.SearchDetailService;
 
 @Controller
-public class SearchDetailController {
+public class PsDetailController {
 
 	@Autowired
 	private SearchDetailService detailservice;
 
-	@GetMapping("/property/searchDetail")
-	public String searchDetail(@RequestParam("keyword") String keyword, Model m) {
-		m.addAttribute("detail", detailservice.getDetail(keyword));
-		return "/property/searchDetail";
+	@GetMapping("/property/psDetail")
+	public String searchDetail(Model m) {
+		List<PropertyDetailDTO> psdetail = detailservice.getDetail(); 
+		m.addAttribute("psdetail", psdetail);
+		return "/property/psDetail";
 	}
 }

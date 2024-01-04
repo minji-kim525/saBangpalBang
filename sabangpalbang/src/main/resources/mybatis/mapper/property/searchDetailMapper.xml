@@ -12,13 +12,14 @@
 		price,
 		deposit,
 		feet,
+		property_id,
 		floor,
 		charge,
 		count,
 		registration_date,
-		description
+		description,
+		p_service_type
 		FROM property
-		WHERE pname LIKE CONCAT('%', #{keyword}, '%')
 
 		UNION ALL
 
@@ -28,12 +29,14 @@
 		price,
 		deposit,
 		feet,
+		property_service_id,
 		floor,
 		charge,
 		count,
 		registration_date,
-		description
+		description,
+		ps_service_type
 		FROM property_service
-		WHERE pname LIKE CONCAT('%', #{keyword}, '%')
 	</select>
+
 </mapper>

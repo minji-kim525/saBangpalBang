@@ -15,6 +15,7 @@ public class PropertyResultDTO {
 	private int price;
 	private int user_id;
 	private int property_type_id;
+	private boolean private_property;
 	
 	private ImagesDTO images;
 }

@@ -15,7 +15,7 @@ public class SearchDetailService {
 	@Autowired
 	private SearchDetailDAO detaildao;
 
-	public List<PropertyDetailDTO> getDetail(String keyword) {
-        return detaildao.getDetail(keyword);
+	public List<PropertyDetailDTO> getDetail() {
+        return detaildao.getDetail();
     }
 }

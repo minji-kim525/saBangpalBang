@@ -20,7 +20,10 @@ public class PropertyDTO {
     private Date registration_date;
     private Date move_date;
     private String address;
+    private String description;
+    private int floor;
     
     UserDTO userDTO;
     PropertyTypeDTO propertyTypeDTO;
+	private ImagesDTO images;
 }
