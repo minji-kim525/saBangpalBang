@@ -3,8 +3,6 @@ import java.sql.Date;
 import java.util.List;
 
 import com.app.dto.ImagesDTO;
-import com.app.dto.PropertyTypeDTO;
-
 import lombok.Data;
 
 @Data
