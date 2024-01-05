@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.app.dto.ImagesDTO;
-import com.app.dto.PropertyDTO;
 import com.app.property.dto.PropertyResultDTO;
 
 @Mapper
