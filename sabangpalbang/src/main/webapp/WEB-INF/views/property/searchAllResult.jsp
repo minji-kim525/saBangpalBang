@@ -16,7 +16,7 @@
 .property {
 	margin: 10px;
 	text-align: center;
-	cursor: pointer; /* 이동 가능한 요소에는 cursor: pointer를 사용하는 것이 좋습니다. */
+	cursor: pointer;
 }
 
 .property-type {
@@ -56,12 +56,16 @@
 		<h3>'${keyword}'로 검색한 결과입니다.</h3>
 		<div class="property-container">
 			<c:forEach var="property" items="${allProperties}">
-				<c:if
-					test="${property.private_property == false or property.private_property == null}">
+				<c:if test="${property.private_property == false}">
 					<div class="property"
-						onclick="if(${property.p_service_type} == 1) { location.href='/property/psDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; } else if(${property.p_service_type} == 2) { location.href='/property/pDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}'; }"
+						onclick="if(${property.ps_service_type} == 1)
+						{ location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}'; }
+						else if(${property.p_service_type} == 2)
+						{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
 						style="cursor: pointer;">
-						<img src="/roomImg/${property.images.filename}" alt=""> <br>
+						<c:if test="${not empty property.imagesList}">
+							<img src="/roomImg/${property.imagesList[0].filename}" alt="" class="property-image">
+						</c:if><br>
 						<c:choose>
 							<c:when test="${property.property_type_id == 1}">
 								<span class="property-type">매매</span>

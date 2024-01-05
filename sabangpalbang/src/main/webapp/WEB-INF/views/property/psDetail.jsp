@@ -11,27 +11,24 @@
 </head>
 <body>
 
-	<c:forEach var="propertyServiceDetail" items="${psdetail}">
-		<c:if
-			test="${propertyServiceDetail.property_service_id == param.propertyId}">
-			<p>주소: ${propertyServiceDetail.address}</p>
-			<p>건물명: ${propertyServiceDetail.pname}</p>
-			<p>가격: ${propertyServiceDetail.price}</p>
-			<p>보증금: ${propertyServiceDetail.deposit}</p>
-			<p>평수: ${propertyServiceDetail.feet}</p>
-			<p>층수: ${propertyServiceDetail.floor}</p>
-			<p>관리비: ${propertyServiceDetail.charge}</p>
-			<p>방 개수: ${propertyServiceDetail.count}</p>
-			<p>
-				등록 날짜:
-				<fmt:formatDate value="${propertyServiceDetail.registration_date}"
-					pattern="yyyy-MM-dd" />
-			</p>
-			<p>설명: ${propertyServiceDetail.description}</p>
-			<!-- 필요한 다른 속성들도 추가 -->
-
-			<img src="/roomImg/${propertyServiceDetail.images.filename}" alt="">
-		</c:if>
+	<p>주소: ${psdetail.address}</p>
+	<p>건물명: ${psdetail.pname}</p>
+	<p>가격: ${psdetail.price}</p>
+	<p>보증금: ${psdetail.deposit}</p>
+	<p>평수: ${psdetail.feet}</p>
+	<p>층수: ${psdetail.floor}</p>
+	<p>관리비: ${psdetail.charge}</p>
+	<p>방 개수: ${psdetail.count}</p>
+	<p>
+		등록 날짜:
+		<fmt:formatDate value="${psdetail.registration_date}"
+			pattern="yyyy-MM-dd" />
+	</p>
+	<p>설명: ${psdetail.description}</p>
+	<!-- 필요한 다른 속성들도 추가 -->
+	
+	<c:forEach items="${psdetail.images}" var="image" >
+	<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
 
 </body>

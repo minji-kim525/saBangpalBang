@@ -50,7 +50,7 @@
 		<c:forEach var="property" items="${getProperties}">
 			<c:if test="${property.p_service_type == 2}">
 				<div class="property"
-					onclick="location.href='/property/psDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_service_id}';"
+					onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
 					style="cursor: pointer;">
 					<img src="/roomImg/${property.images.filename}" alt=""><br>
 					<c:choose>
@@ -75,25 +75,27 @@
 	<p>서비스 매물</p>
 	<div class="property-container">
 		<c:forEach var="propertyService" items="${getServiceProperties}">
-			<c:if test="${propertyService.ps_service_type == 1}">
-				<div class="property"
-					onclick="location.href='/property/psDetail?p_service_type=${propertyService.ps_service_type}&propertyId=${propertyService.property_service_id}';"
-					style="cursor: pointer;">
-					<img src="/roomImg/${propertyService.images.filename}" alt=""><br>
-					<c:choose>
-						<c:when test="${propertyService.property_type_id == 1}">
-							<span class="property-type">매매</span>
-						</c:when>
-						<c:when test="${propertyService.property_type_id == 2}">
-							<span class="property-type">전세</span>
-						</c:when>
-						<c:when test="${propertyService.property_type_id == 3}">
-							<span class="property-type">월세</span>
-						</c:when>
-					</c:choose>
-					<span class="price">${ChargeFunction.formatNumberWithUnit(propertyService.price)}</span>
-					<span class="pname">${propertyService.pname}</span>
-				</div>
+			<c:if test="${propertyService.private_property == false}">
+				<c:if test="${propertyService.ps_service_type == 1}">
+					<div class="property"
+						onclick="{ location.href='/property/psDetail?ps_service_type=${propertyService.ps_service_type}&propertyId=${propertyService.property_service_id}'; }"
+						style="cursor: pointer;">
+						<img src="/roomImg/${propertyService.images.filename}" alt=""><br>
+						<c:choose>
+							<c:when test="${propertyService.property_type_id == 1}">
+								<span class="property-type">매매</span>
+							</c:when>
+							<c:when test="${propertyService.property_type_id == 2}">
+								<span class="property-type">전세</span>
+							</c:when>
+							<c:when test="${propertyService.property_type_id == 3}">
+								<span class="property-type">월세</span>
+							</c:when>
+						</c:choose>
+						<span class="price">${ChargeFunction.formatNumberWithUnit(propertyService.price)}</span>
+						<span class="pname">${propertyService.pname}</span>
+					</div>
+				</c:if>
 			</c:if>
 		</c:forEach>
 	</div>

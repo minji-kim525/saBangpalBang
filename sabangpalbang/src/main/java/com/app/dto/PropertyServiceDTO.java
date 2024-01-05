@@ -1,6 +1,7 @@
 package com.app.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -8,7 +9,7 @@ import lombok.Data;
 public class PropertyServiceDTO {
 
 	private int property_service_id;
-    private int ps_service_type;
+    private int ps_service_type; // 무조건 1
     private int price;
     private int feet;
     private String pname;
