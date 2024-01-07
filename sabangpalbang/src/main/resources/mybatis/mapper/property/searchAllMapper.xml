@@ -14,7 +14,8 @@
 		p_service_type,
 		NULL AS ps_service_type,
 		price,
-		property_type_id
+		property_type_id,
+		NULL AS private_property
 		FROM
 		property
 		WHERE pname LIKE CONCAT('%', #{keyword}, '%')
@@ -28,7 +29,8 @@
 		NULL AS p_service_type,
 		ps_service_type,
 		price,
-		property_type_id
+		property_type_id,
+		private_property
 		FROM
 		property_service
 		WHERE pname LIKE CONCAT('%', #{keyword}, '%');
