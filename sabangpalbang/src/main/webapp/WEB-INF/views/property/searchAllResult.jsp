@@ -47,13 +47,24 @@
 </head>
 <body>
 
-	<c:if test="${empty allProperties}">
-		<h3>'${keyword}'로 검색한 결과입니다.</h3>
-		<p>검색 결과가 없습니다.</p>
-	</c:if>
+	<h3>'${keyword}'로 검색한 결과입니다.</h3>
+
+	<c:choose>
+		<c:when test="${empty allProperties}">
+			<p>검색 결과가 없습니다.</p>
+		</c:when>
+		<c:otherwise>
+			<c:forEach var="property" items="${allProperties}">
+				<c:choose>
+					<c:when test="${property.private_property == true}">
+						<p>검색 결과가 없습니다.</p>
+					</c:when>
+				</c:choose>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
 
 	<c:if test="${not empty allProperties}">
-		<h3>'${keyword}'로 검색한 결과입니다.</h3>
 		<div class="property-container">
 			<c:forEach var="property" items="${allProperties}">
 				<c:if test="${property.private_property == false}">
@@ -64,8 +75,10 @@
 						{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
 						style="cursor: pointer;">
 						<c:if test="${not empty property.imagesList}">
-							<img src="/roomImg/${property.imagesList[0].filename}" alt="" class="property-image">
-						</c:if><br>
+							<img src="/roomImg/${property.imagesList[0].filename}" alt=""
+								class="property-image">
+						</c:if>
+						<br>
 						<c:choose>
 							<c:when test="${property.property_type_id == 1}">
 								<span class="property-type">매매</span>
@@ -84,6 +97,7 @@
 			</c:forEach>
 		</div>
 	</c:if>
+
 
 </body>
 </html>

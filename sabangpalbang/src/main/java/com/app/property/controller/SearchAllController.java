@@ -33,7 +33,7 @@ public class SearchAllController {
 	public String searchResult(@RequestParam("keyword") String keyword, Model m) {
 		List<PropertyResultDTO> allProperties = allservice.getAllProperties(keyword);
 //		System.out.println("keyword : "+ keyword);
-//		System.out.println("allProperties : " + allProperties);
+		System.out.println("allProperties : " + allProperties);
 		m.addAttribute("allProperties", allProperties);
 		m.addAttribute("keyword", keyword);
 		return "property/searchAllResult";
@@ -45,7 +45,7 @@ public class SearchAllController {
 		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType); 
 		m.addAttribute("psdetail", psdetail);
 //		System.out.println(psdetail);
-		return "/property/psDetail";
+		return "property/psDetail";
 	}
 	
 	//크롤링매물 상세정보
@@ -53,17 +53,17 @@ public class SearchAllController {
 	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,Model m) {
 		PropertyDetailDTO pdetail = allservice.getpDetail(propertyId, pServiceType); 
 		m.addAttribute("pdetail", pdetail);
-		return "/property/pDetail";
+		return "property/pDetail";
 	}
 	
 	//메인
 	@GetMapping("/main")
-	public String pMain(Model m) {
+	public String Main(Model m) {
 	    List<PropertyDTO> getProperties = allservice.getProperties();
 	    List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
 	    m.addAttribute("getProperties", getProperties);
 	    m.addAttribute("getServiceProperties", getServiceProperties);
-	    return "/main/main";
+	    return "main/main";
 	}
 
 }
