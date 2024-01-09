@@ -41,5 +41,58 @@ public class ManagerController {
 		service.deleteProperty(property_service_id);
 		return "redirect:/manager/property";
 	}
-	
+
+	//승인요청 검색 및 조회
+		@GetMapping("/manager/confirm/search")
+		public String getConfirm(@AuthenticationPrincipal SecurityUser user,
+				@ModelAttribute SearchDto searchDto,Model model) {
+			PagingResponseDto<PropertyResponseDto>list=service.getConfirm(searchDto);
+			if(user.getUsers().getRole().equals("ADMIN")&&!list.getList().isEmpty())
+				{
+				model.addAttribute("list", list.getList());
+				model.addAttribute("pagination",list.getPaginationDto());
+				}else if(!user.getUsers().getRole().equals("ADMIN")){
+					throw new IllegalArgumentException("접근 권한이 없습니다.");
+				}else {
+					model.addAttribute("listcheck",0);
+				}
+			return "manager/confirm";
+		}
+		
+	//승인 및 반려
+		@PutMapping("/manager/confirm/search")
+		public String updatePrivate(
+				@RequestParam(value="property_service_id") int property_service_id,
+				@RequestParam(value="confirmcheck")int confirmcheck) {
+			 service.updateConfirm(property_service_id,confirmcheck);
+			 return "redirect:/manager/confirm/search";
+		}
+		
+		//사용자 조회 및 검색
+		@GetMapping("manager/users/search")
+		public String getUsers(@AuthenticationPrincipal SecurityUser user,
+				@ModelAttribute SearchDto searchDto,Model model) {
+			PagingResponseDto<UsersResponseDto>list=service.getUsers(searchDto);
+			if(user.getUsers().getRole().equals("ADMIN")&&!list.getList().isEmpty())
+				{
+				model.addAttribute("list", list.getList());
+				model.addAttribute("pagination",list.getPaginationDto());
+				}else if(!user.getUsers().getRole().equals("ADMIN")){
+					throw new IllegalArgumentException("접근 권한이 없습니다.");
+				}else {
+					model.addAttribute("listcheck",0);
+				}
+			return "manager/usersManage";
+		}
+		
+		//사용자 삭제
+		@DeleteMapping("/manager/users/search")
+		public String deleteUser(@RequestParam("user_id")int user_id) {
+			service.deleteUser(user_id);
+			return "redirect:/manager/users/search";
+		}
+		
+		
+		
+
 }
