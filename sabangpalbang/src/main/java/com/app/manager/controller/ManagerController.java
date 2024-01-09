@@ -97,4 +97,7 @@ public class ManagerController {
 			service.deleteUser(user_id);
 			return "redirect:/manager/users/search";
 		}
+		
+		
+		
 }
