@@ -1,4 +1,4 @@
-package com.app.property.dto;
+package com.app.question.dto;
 
 import lombok.Data;
 
