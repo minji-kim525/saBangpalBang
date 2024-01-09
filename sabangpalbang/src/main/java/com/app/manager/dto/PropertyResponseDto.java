@@ -15,6 +15,4 @@ public class PropertyResponseDto {
 	private int property_service_id;
 	private int ps_service_type;
 	private int property_type_id;
-	private int confirm_id;
-	private int confirm_check;
 }

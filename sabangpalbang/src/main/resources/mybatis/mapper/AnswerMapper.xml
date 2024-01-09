@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.app.question.dao.AnswerDao">
+
+	<insert id="answerInsert"
+		parameterType="com.app.question.dto.AnswerDto">
+		insert into
+		answer(answer_id,question_id,user_id,title,content)
+		values(0,#{question_id},#{user_id},#{title},#{content})
+	</insert>
+
+	<update id="updateAnswer"
+		parameterType="com.app.question.dto.AnswerDto">
+		update answer SET content = #{content}, updated_at =
+		now()
+		where answer_id = #{answer_id}
+	</update>
+
+	<delete id="deleteContent" parameterType="int">
+		delete from answer where answer_id = #{answer_id}
+	</delete>
+
+	<select id="count" resultType="int" parameterType="int">
+		select
+		count(*) from answer where question_id = #{question_id}
+	</select>
+
+	<select id="answerSelect"
+		resultType="com.app.question.dto.AnswerDto" parameterType="int">
+		select answer_id,content,created_at from answer
+		where question_id = #{question_id}
+
+	</select>
+
+	<select id="titleSelect"
+		resultType="com.app.question.dto.titleDto">
+		select a.question_id,a.title , a.created_at , c.id from question a left
+		outer join answer b
+		on a.question_id = b.question_id
+		left join users c on a.user_id = c.user_id
+		where b.question_id is null
+		ORDER BY created_at DESC;
+	</select> 
+
+</mapper>  
