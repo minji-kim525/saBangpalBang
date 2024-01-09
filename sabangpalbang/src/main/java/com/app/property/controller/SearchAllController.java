@@ -33,7 +33,7 @@ public class SearchAllController {
 	public String searchResult(@RequestParam("keyword") String keyword, Model m) {
 		List<PropertyResultDTO> allProperties = allservice.getAllProperties(keyword);
 //		System.out.println("keyword : "+ keyword);
-		System.out.println("allProperties : " + allProperties);
+//		System.out.println("allProperties : " + allProperties);
 		m.addAttribute("allProperties", allProperties);
 		m.addAttribute("keyword", keyword);
 		return "property/searchAllResult";
