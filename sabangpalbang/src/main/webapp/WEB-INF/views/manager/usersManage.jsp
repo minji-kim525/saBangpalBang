@@ -5,10 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>매물 관리</title>
+<title>사용자 관리</title>
 </head>
 <body>
-<h3>매물 관리</h3>
+<h3>사용자 관리</h3>
 <c:if test="${listcheck!=0 }">
             <section>
                 <!--/* 검색 */-->
@@ -17,9 +17,8 @@
                         <div class="sch_group fl">
                             <select name="searchType">
                                 <option value="" ${searchDto.searchType == "" ? 'selected' : ''}>전체 검색</option>
-                                <option value="writer" ${searchDto.searchType == "writer" ? 'selected' : ''}>작성자</option>
-                                <option value="name" ${searchDto.searchType == "name" ? 'selected' : ''}>건물명</option>
-                                <option value="address" ${searchDto.searchType == "address" ? 'selected' : ''}>주소</option>
+                                <option value="id" ${searchDto.searchType == "id" ? 'selected' : ''}>아이디</option>
+                                <option value="email" ${searchDto.searchType == "email" ? 'selected' : ''}>이메일</option>
                             </select>
                             <input type="text" id="keywordForm" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력"  value="${searchDto.keyword}"/>
                             <button type="button" id="search_submit"><span class="skip_info">검색</span></button>
@@ -36,36 +35,21 @@
                         <tr>
 <!--                             <th scope="col"><input type="checkbox"/></th>
  -->                        <th scope="col">번호</th>
-                            <th scope="col">제목</th>
-                            <th scope="col">작성자</th>
-                            <th scope="col">등록일</th>
+                            <th scope="col">아이디</th>
+                            <th scope="col">이메일</th>
                         </tr>
                                      
   					</thead>
   					<tbody id="list">
-                        <c:forEach items="${list}" var="property" varStatus="i">
+                        <c:forEach items="${list}" var="users" varStatus="i">
 						<tr>
 							<td scope="col"><a href ="">${pagination.totalRecordCount - ((searchDto.page - 1) * searchDto.recordSize)-i.index}</a></td>
+							<td scope="col">${users.id}</td>
+							<td scope="col">${users.email}</td>
 							<td scope="col">
-							<c:choose>
-								<c:when test="${property.property_type_id==1}">
-									매매
-								</c:when>
-								<c:when test="${property.property_type_id==2}">
-								전세
-								</c:when>
-								<c:when test="${property.property_type_id==2}">
-								월세
-								</c:when>
-								</c:choose>
-							/${property.pname}/주소:${property.address}</td>
-							<td scope="col">${property.id}</td>
-							<td scope="col"><fmt:formatDate value="${property.registration_date }" dateStyle="short"/> </td>
-							<td scope="col">
-								<form method="post" id="deleteform" action="/manager/property/search">
+								<form method="post" id="deleteform" action="/manager/users/search">
 									<input type="hidden" name="_method" value="delete">
-									<input type="hidden" name="property_service_id" value="${property.property_service_id}">									
-									<button id="chagePrivate" >삭제</button>
+									<button id="deleteId" name="user_id" value="${users.user_id}" >삭제</button>
 								
 								</form>
 							
@@ -74,14 +58,10 @@
 						</c:forEach>
 					 </tbody>
                 </table>
-                
-                 <!--/* 페이지네이션 렌더링 영역 */-->
-                <div class="paging">
-
-                </div>
-                
+ 
 			 </section>
-      
+     <!--/* 페이지네이션 렌더링 영역 */-->
+    <div class="paging">
 	<jsp:include page="../paging.jsp" flush="true">
 	<jsp:param value="${searchDto.searchType}" name="searchType"/>
 	<jsp:param value="${searchDto.keyword}" name="searchType"/>
@@ -91,10 +71,10 @@
 	<jsp:param value="${pagination.existPrevPage}" name="existPrevPage"/>
 	<jsp:param value="${pagination.existNextPage}" name="existNextPage"/>
 	</jsp:include>
-
+	</div>
 </c:if>
 <c:if test="${listcheck==0 }">
-등록된 매물이 없습니다.
+등록된 사용자가 없습니다.
 </c:if>
 
 

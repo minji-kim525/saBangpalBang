@@ -23,7 +23,7 @@ public interface MypageDao {
 	int insertFile(@Param("list") List<ImagesDTO> list, @Param("id") int id);
 
 	@Insert("insert into confirm(confirm_check,ps_service_type,property_service_id)"
-			+ "values(false,1,#{property_service_id})")
+			+ "values(0,1,#{property_service_id})")
 	int insertConfirm(@Param("property_service_id") int property_service_id);
 
 	@Select("select property_service_id, ps_service_type,property_type_id,price,pname,private_property from property_service where user_id=#{user_id}")
