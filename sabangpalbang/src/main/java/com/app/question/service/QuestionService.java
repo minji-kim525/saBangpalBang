@@ -38,6 +38,22 @@ public class QuestionService {
 		return dao.deleteContent(question_id);
 	}
 	
+	public int updateQuestion(QuestionDTO dto){
+		return dao.updateQuestion(dto);
+	}
+	
+	public int count() {
+		return dao.count();
+	}
+	
+	public List<titleDto> searchTitle (String title) {
+		return dao.searchTitle(title);
+	};
+	
+	public List<titleDto> searchId (String id) {
+		return dao.searchId(id);
+	};
+	
 	
 	
 	

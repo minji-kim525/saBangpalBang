@@ -12,6 +12,7 @@ import com.app.dto.UserDTO;
 import com.app.question.dto.InsertDto;
 import com.app.question.dto.titleDto;
 
+
 @Mapper
 public interface QuestionDao {
 	
@@ -24,6 +25,14 @@ public interface QuestionDao {
 	titleDto contentSelect(int question_id);
 	
 	int deleteContent(int question_id);	
-			
-
+	
+	int updateQuestion(QuestionDTO dto);
+	
+	int count();
+	
+	List<titleDto> searchTitle (String title);
+	
+	List<titleDto> searchId (String id);
+	
+	
 }
