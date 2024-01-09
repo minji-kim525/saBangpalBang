@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.app.dto.QuestionDTO;
 import com.app.dto.UserDTO;
-import com.app.property.dto.InsertDto;
 import com.app.question.dao.QuestionDao;
+import com.app.question.dto.InsertDto;
 import com.app.question.dto.titleDto;
 
 @Service
@@ -37,6 +37,22 @@ public class QuestionService {
 	public int deleteContent(int question_id) {
 		return dao.deleteContent(question_id);
 	}
+	
+	public int updateQuestion(QuestionDTO dto){
+		return dao.updateQuestion(dto);
+	}
+	
+	public int count() {
+		return dao.count();
+	}
+	
+	public List<titleDto> searchTitle (String title) {
+		return dao.searchTitle(title);
+	};
+	
+	public List<titleDto> searchId (String id) {
+		return dao.searchId(id);
+	};
 	
 	
 	
