@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
@@ -86,5 +87,10 @@ public class SearchAllService {
 		}
 		return result;
 	}
+	
+//	//confirm
+//	public void getConfirm(){
+//		ConfirmDTO confirm = alldao.getConfirm();
+//	}
 
 }

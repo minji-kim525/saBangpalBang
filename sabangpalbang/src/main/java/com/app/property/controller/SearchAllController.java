@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.app.dto.ConfirmDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
 import com.app.property.dto.PropertyDetailDTO;
@@ -65,6 +66,11 @@ public class SearchAllController {
 	    m.addAttribute("getServiceProperties", getServiceProperties);
 	    return "main/main";
 	}
+	
+//	//confirm
+//	public String confirm() {
+//		ConfirmDTO getConfirm = allservice.confirm();
+//	}
 
 }
 
