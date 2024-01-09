@@ -6,38 +6,39 @@
 <title>내가 올린 글 조회</title>
 </head>
 <body>
-<h3>내가 올린 방</h3>
-<c:if test="${listcheck!=0 }">
-	<c:forEach items="${list}" var="property">
-		<span class ="card">
-			<img src="/roomImg/${property.images.filename}" alt="">
-			<c:choose>
-				<c:when test="${property.property_type_id==1}">
-				<p>매매 </p>
-				</c:when>
-				<c:when test="${property.property_type_id==2}">
-				<p>전세 </p>
-				</c:when>
-				<c:when test="${property.property_type_id==2}">
-				<p>월세 </p>
-				</c:when>
-			</c:choose>
-			<p>${property.price}</p>
-			<p>${property.pname}</p><br>
-			<form method="post" id="updateform" action="/mypage/myupload">
-			<input type="hidden" name="_method" value="put">
-			<input type="hidden" name="property_service_id" value="${property.property_service_id}">
-			<input type="hidden"  value="${property.private_property}">
-			
-				<c:choose>
- 					<c:when test="${property.private_property==false}">
- 					<button id="changePrivate" >비공개 전환</button>
+	<h3>내가 올린 방</h3>
+	<c:if test="${listcheck!=0 }">
+		<c:forEach items="${list}" var="property">
+			<span class="card"> <img
+				src="/roomImg/${property.images.filename}" alt=""> <c:choose>
+					<c:when test="${property.property_type_id==1}">
+						<p>매매</p>
 					</c:when>
-					<c:when test="${property.private_property==true}">
-				 	<button id="changePrivate" >비공개 취소</button>
+					<c:when test="${property.property_type_id==2}">
+						<p>전세</p>
+					</c:when>
+					<c:when test="${property.property_type_id==2}">
+						<p>월세</p>
 					</c:when>
 				</c:choose>
-			</form>
+				<p>${property.price}</p>
+				<p>${property.pname}</p> <br>
+				<form method="post" id="updateform" action="/mypage/myupload">
+					<input type="hidden" name="_method" value="put"> <input
+						type="hidden" name="property_service_id"
+						value="${property.property_service_id}"> <input
+						type="hidden" value="${property.private_property}">
+
+					<c:choose>
+						<c:when test="${property.private_property==false}">
+							<button id="chagePrivate">비공개 전환</button>
+						</c:when>
+						<c:when test="${property.private_property==true}">
+							<button id="chagePrivate">비공개 취소</button>
+						</c:when>
+					</c:choose>
+				</form>
+
 			</span>
 		</c:forEach>
 	</c:if>
@@ -61,7 +62,12 @@
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-		$("#changePrivate").click(function() {
+		$("#chagePrivate").click(function() {
+			$("#updateform").submit();
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+	</script>
+	<script>
+		$("#chagePrivate").click(function() {
 				if (confirm("해당 게시물을 비공개 하시겠습니까?") == true) { //확인
 					$("#chagePrivate").submit();
 				} else { //취소
@@ -71,6 +77,8 @@
 			});
 		});
 	</script>
+	</script>
+
 
 </body>
 </html>
