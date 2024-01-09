@@ -4,7 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.manager.dao.ManagerDao"> 
 
-<select id="getPropertyManage" resultType="com.app.manager.dto.PropertyResponseDto">
+<!--MyBatis parameterType이 클래스의 객체인 경우
+-> #{parameter}해당 객체의 멤버 변수의 getter get()메서드를 통해 바인딩-->
+<!--offset 다음 행부터 recordSize만큼 출력-->
+
+<select id="searchPropertyManage" resultType="com.app.manager.dto.PropertyResponseDto">
 	SELECT
     	u.user_id,
     	u.id,
@@ -17,7 +21,168 @@
 	FROM
     	property_service AS ps
 	INNER JOIN users AS u ON ps.user_id = u.user_id
+	<include refid ="search"/>
 	ORDER BY registration_date
+	LIMIT #{paginationDto.limitStart},#{recordSize} 
 </select>
 
+	<select id="count" parameterType="com.app.dto.SearchDto" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM
+    	property_service AS ps
+	INNER JOIN users AS u ON ps.user_id = u.user_id
+	<include refid ="search"/>
+	</select>
+	
+	<select id="getConfirm" resultType="com.app.manager.dto.PropertyResponseDto">
+	SELECT 
+	    ps.property_service_id, 
+	    ps.ps_service_type,
+	    u.id,
+	    ps.property_type_id,
+	    ps.price,
+	    ps.pname,
+	    ps.registration_date,
+	    ps.address,
+	    c.confirm_id,
+	    c.confirm_check
+	FROM 
+	    property_service AS ps
+	INNER JOIN 
+	    confirm AS c
+	    ON ps.property_service_id = c.property_service_id AND ps.ps_service_type = c.ps_service_type
+	INNER JOIN 
+	    users AS u
+	    ON ps.user_id = u.user_id
+		<include refid ="searchConfirm"/>
+	ORDER BY registration_date
+	LIMIT #{paginationDto.limitStart},#{recordSize} 
+		
+	</select>
+	
+	
+	<select id="countConfirm" parameterType="com.app.dto.SearchDto" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM 
+	    property_service AS ps
+	INNER JOIN 
+	    confirm AS c
+	    ON ps.property_service_id = c.property_service_id AND ps.ps_service_type = c.ps_service_type
+	INNER JOIN 
+	    users AS u
+	    ON ps.user_id = u.user_id
+		<include refid ="searchConfirm"/>
+	</select>
+	
+	<select id="getUsers" parameterType="com.app.dto.SearchDto" resultType="com.app.manager.dto.UsersResponseDto">
+		SELECT * FROM users 
+		<include refid ="searchUsers"/>
+		ORDER BY user_id
+		LIMIT #{paginationDto.limitStart},#{recordSize} 
+	</select>
+	
+	<select id="countUsers" parameterType="com.app.dto.SearchDto" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM 
+	    users
+		<include refid ="searchUsers"/>
+	</select>
+	
+	<sql id ="search">
+		<where>
+		 <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <!-- 검색 유형이 있을 때 -->
+	                <when test="searchType != null and searchType != ''">
+	                    <choose>
+	                        <when test="'writer'.equals( searchType )">
+	                            u.id LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                        <when test="'name'.equals( searchType )">
+	                            ps.pname LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                         <when test="'address'.equals( searchType )">
+	                            ps.address LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                    </choose>
+	                </when>
+	                
+	                <!-- 전체 검색일 때 -->
+	                <otherwise>
+	                    AND (
+	                         u.id LIKE CONCAT('%', #{keyword}, '%')
+	                        OR ps.pname LIKE CONCAT('%', #{keyword}, '%')
+	                        OR ps.address LIKE CONCAT('%', #{keyword}, '%')
+	                    )
+	                </otherwise>
+	            </choose>
+	        </if>
+	        </where>
+	</sql>
+	
+	<sql id ="searchConfirm">
+		<where>
+		c.confirm_check=0
+		 <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <!-- 검색 유형이 있을 때 -->
+	                <when test="searchType != null and searchType != ''">
+	                    <choose>
+	                        <when test="'writer'.equals( searchType )">
+	                          AND u.id LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                        <when test="'name'.equals( searchType )">
+	                           AND ps.pname LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                         <when test="'address'.equals( searchType )">
+	                           AND ps.address LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                    </choose>
+	                </when>
+	                
+	                <!-- 전체 검색일 때 -->
+	                <otherwise>
+	                    AND(
+	                        u.id LIKE CONCAT('%', #{keyword}, '%')
+	                        OR ps.pname LIKE CONCAT('%', #{keyword}, '%')
+	                        OR ps.address LIKE CONCAT('%', #{keyword}, '%')
+	                    )
+	                </otherwise>
+	            </choose>
+	        </if>
+	        </where>
+	</sql>
+
+	<sql id ="searchUsers">
+		<where>
+		role LIKE 'USER'
+		 <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <!-- 검색 유형이 있을 때 -->
+	                <when test="searchType != null and searchType != ''">
+	                    <choose>
+	                        <when test="'id'.equals( searchType )">
+	                            id LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                        <when test="'email'.equals( searchType )">
+	                            email LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                    </choose>
+	                </when>
+	                
+	                <!-- 전체 검색일 때 -->
+	                <otherwise>
+	                    AND (
+	                         id LIKE CONCAT('%', #{keyword}, '%')
+	                        OR email LIKE CONCAT('%', #{keyword}, '%')
+	                    )
+	                </otherwise>
+	            </choose>
+	        </if>
+	        </where>
+	</sql>
+	
 </mapper>
