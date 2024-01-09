@@ -15,7 +15,12 @@
 		<a href="/login">login</a><br>
 	</sec:authorize>
 	<sec:authorize access="isAuthenticated()"> 
-		logout<br>
+		<a href="#" onclick="document.getElementById('logout').submit();">logout</a><br>
 	</sec:authorize>
+	
+	<form id="logout" action="/logout" method="POST">
+	   <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+	</form>
+	
 </body>
 </html>

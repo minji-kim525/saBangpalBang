@@ -14,10 +14,10 @@ import com.app.dto.UserDTO;
 
 @Controller
 public class SecurityController {
-	
+
 	@Autowired
 	UserService service;
-	
+
 	@GetMapping("/")
 	public String index() {
 		System.out.println("index 요청입니다.");
@@ -28,7 +28,6 @@ public class SecurityController {
 	public void forUser() {
 		System.out.println("User 요청입니다.");
 	}
-
 
 	@GetMapping("/admin")
 	public void forAdmin(@AuthenticationPrincipal SecurityUser user) {
@@ -43,19 +42,19 @@ public class SecurityController {
 	@GetMapping("/loginSuccess")
 	public void loginSuccess() {
 	}
-		
+
 	@GetMapping("/accessDenied")
-	public void accessDenied() {		
+	public void accessDenied() {
 	}
-	
+
 	@GetMapping("/insert")
-	public void insert() {}
-		
-		
+	public void insert() {
+	}
+
 	@PostMapping("/insert")
 	public String insert(UserDTO users) {
-	service.insertUser(users);
-					
-	return "redirect:/";
+		service.insertUser(users);
+
+		return "redirect:/";
 	}
 }

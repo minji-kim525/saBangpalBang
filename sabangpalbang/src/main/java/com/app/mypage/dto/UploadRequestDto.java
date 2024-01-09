@@ -30,6 +30,7 @@ public class UploadRequestDto {
     private Date move_date;
     private String address;
     private String description;
+    private int user_id;
     private boolean private_property;
     List<MultipartFile> files; 
 
