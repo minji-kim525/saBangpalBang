@@ -13,7 +13,7 @@ public class SecurityUser extends User {
 	private UserDTO users;
 	
 	public SecurityUser(UserDTO users) {
-		super(users.getId(), users.getPassword(),
+		super(users.getId().toString(), users.getPassword().toString(),
 				AuthorityUtils.createAuthorityList(users.getRole().toString()));
 		this.email = users.getEmail();
 		this.users = users;

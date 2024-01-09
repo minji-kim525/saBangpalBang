@@ -18,7 +18,7 @@ public class BoardUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserDTO user = userDao.findById(username);
+		UserDTO user = userDao.getUserById(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(username + " 사용자 없음");
 		} else {
