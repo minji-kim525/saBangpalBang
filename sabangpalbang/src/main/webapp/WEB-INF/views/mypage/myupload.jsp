@@ -31,10 +31,10 @@
 			
 				<c:choose>
  					<c:when test="${property.private_property==false}">
- 					<button id="chagePrivate" >비공개 전환</button>
+ 					<button id="changePrivate" >비공개 전환</button>
 					</c:when>
 					<c:when test="${property.private_property==true}">
-				 	<button id="chagePrivate" >비공개 취소</button>
+				 	<button id="changePrivate" >비공개 취소</button>
 					</c:when>
 				</c:choose>
 			</form>
@@ -66,7 +66,7 @@
 
       $("#chagePrivate").click(function(){
     	  if (confirm("해당 게시물을 비공개 하시겠습니까?") == true){    //확인
-    		  $("#chagePrivate").submit();
+    		  $("#changePrivate").submit();
     		 }else{   //취소
     		     return false;
     		 }
