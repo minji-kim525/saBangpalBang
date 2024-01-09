@@ -4,33 +4,79 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.question.dao.QuestionDao">
 
- 
+	<insert id="addQuestion" parameterType="Map">
+		<selectKey resultType="int" keyProperty="question_id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into question(question_id,user_id,title,content)
+		values(0,#{user_id},#{title},#{content})
+	</insert>
 
-    <insert id="addQuestion" parameterType="Map">
-           insert into question(question_id,user_id,title,content)
-            values(0,#{user_id},#{title},#{content})
-    </insert>
-    
-    <delete id="deleteContent" parameterType="int">
-           delete from question where question_id = #{question_id}
-    </delete>
-    
-    <select id="contentSelect" resultType="com.app.question.dto.titleDto"
-            parameterType="int">
-          select question_id,title,created_at,id,content
-          from question natural join users where question_id = #{question_id}
-          
-    
-    </select>
-    
-    <select id="titleSelect" resultType="com.app.question.dto.titleDto">
-           select question_id,title,created_at,id
-           from question natural join users
-    </select>
-     
-	<select id="idSelect" resultType="com.app.dto.UserDTO" parameterType="string">
-			select user_id from users where id like #{id}
+	<update id="updateQuestion"
+		parameterType="com.app.dto.QuestionDTO">
+		update question SET title = #{title},
+		content =
+		#{content}, updated_at = now()
+		where question_id = #{question_id}
+	</update>
+
+	<delete id="deleteContent" parameterType="int">
+		delete from question
+		where question_id = #{question_id}
+	</delete>
+
+	<select id="count" resultType="int">
+		select count(*) from question
 	</select>
-	
-	
+
+	<select id="questionList" parameterType="map"
+		resultType="com.app.question.dto.titleDto">
+		select * from question
+		order by created_at desc limit
+		#{start}, #{count}
+	</select>
+
+	<select id="contentSelect"
+		resultType="com.app.question.dto.titleDto" parameterType="int">
+		select
+		question_id,title,created_at,id,content,user_id
+		from question natural
+		join users where question_id = #{question_id}
+
+	</select>
+
+	<select id="titleSelect"
+		resultType="com.app.question.dto.titleDto">
+		select a.question_id , a.title , b.answer_id ,a.created_at
+		, c.id from question a left join
+		answer b
+		on a.question_id =
+		b.question_id
+		left join users c on a.user_id = c.user_id
+		ORDER BY
+		created_at DESC
+	</select>
+
+	<select id="searchTitle"
+		resultType="com.app.question.dto.titleDto" parameterType="string">
+		select a.question_id,a.title,a.content,a.created_at,b.id,c.answer_id
+		from question a left join users b
+		on a.user_id = b.user_id
+		left join answer c on a.question_id = c.question_id
+		where a.title like CONCAT('%',#{title},'%')
+		ORDER BY created_at DESC;
+	</select>
+	<select id="searchId" resultType="com.app.question.dto.titleDto"
+		parameterType="string">
+		select a.question_id,a.title,a.content,a.created_at,b.id,c.answer_id
+		from question a left join users b
+		on a.user_id = b.user_id
+		left join answer c on a.question_id = c.question_id
+		where b.id like CONCAT('%',#{id},'%')
+		ORDER BY created_at DESC;
+	</select>
+
+
+
 </mapper>  
