@@ -9,6 +9,7 @@ public class titleDto {
 	
 	private int question_id;
 	private int user_id;
+	private int answer_id;
 	private String title;
 	private String content;
 	private String id;
