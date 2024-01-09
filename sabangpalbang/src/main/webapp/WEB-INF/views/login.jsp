@@ -22,6 +22,11 @@
 				<input type="button" value="가입" onclick="location.href='/insert'" />
 			</td>
 		</table>
+		<span> 
+    <c:if test="${error}">
+        <p id="valid" class="alert alert-danger">${exception}</p>
+    </c:if>
+</span>
 	</form>
 </body>
 </html>
