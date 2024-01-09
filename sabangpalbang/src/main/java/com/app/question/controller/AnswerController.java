@@ -1,4 +1,4 @@
-package com.app.question.contorller;
+package com.app.question.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ import com.app.question.service.QuestionService;
 import com.app.security.config.SecurityUser;
 
 @Controller
-public class AnswerContorller {
+public class AnswerController {
 
 	@Autowired
 	AnswerService service;
