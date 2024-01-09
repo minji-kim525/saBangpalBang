@@ -1,4 +1,4 @@
-package com.app.question.contorller;
+package com.app.question.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,13 +21,13 @@ import com.app.question.service.QuestionService;
 import com.app.security.config.SecurityUser;
 
 @Controller
-public class QuestionContoller {
+public class QuestionController {
 
 	@Autowired
 	QuestionService service;
 
 	@Autowired
-	AnswerService aservice;
+	AnswerService aservice; 
 
 	// 문의 수정
 	@PostMapping("question/updatepage")
@@ -126,5 +126,5 @@ public class QuestionContoller {
 		List<titleDto> tlist = service.titleSelect();
 		m.addAttribute("tlist", tlist);
 		return "question/title";
-	}
+	} 
 }
