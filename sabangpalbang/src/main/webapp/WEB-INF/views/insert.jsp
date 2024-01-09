@@ -1,19 +1,26 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<title>회원 가입</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Sign Up</title>
 </head>
 <body>
-	<h3>회원 가입을 환영합니다.</h3>
-<form action="insert" method="post" id="joinform">
-	<table>
-		<tr><td>id</td><td><input name="id" id="id"></td></tr>
-		<tr><td>password</td><td><input name="password" type="password" id="password"></td></tr>
-		<tr><td>email</td><td><input name="email" id="email"></td></tr>
-		
-		<tr><td colspan="2"><input type="submit" value="가입"></td></tr>
-	</table>
-</form>
+    <h2>회원가입</h2>
+    <form action="/insert" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+        <div>
+            <input type="text" name="id" placeholder="id"/>
+        </div>
+            <input type="text" name="email" placeholder="*Email"/>
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Password"/>
+        </div>
+
+        <button type="submit">회원가입</button>
+    </form>
 </body>
 </html>
