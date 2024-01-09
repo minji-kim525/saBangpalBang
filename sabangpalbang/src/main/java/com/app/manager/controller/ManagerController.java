@@ -1,16 +1,19 @@
 package com.app.manager.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.app.dto.PagingResponseDto;
+import com.app.dto.SearchDto;
 import com.app.manager.dto.PropertyResponseDto;
+import com.app.manager.dto.UsersResponseDto;
 import com.app.manager.service.ManagerService;
 import com.app.security.config.SecurityUser;
 
@@ -20,28 +23,31 @@ public class ManagerController {
 	@Autowired
 	ManagerService service;
 	
-	@GetMapping("/manager/property")
-	public String getPropertyManage(@AuthenticationPrincipal SecurityUser user,Model model) {
-		List<PropertyResponseDto>list=service.getPropertyManage();
-		if(user.getUsers().getRole().equals("ADMIN")&&!list.isEmpty())
+	//업로드 게시글 조회 및 검색
+	@GetMapping("/manager/property/search")
+	public String searchPropertyManage(@AuthenticationPrincipal SecurityUser user,
+			@ModelAttribute SearchDto searchDto,Model model) {
+		PagingResponseDto<PropertyResponseDto>list=service.searchPropertyManage(searchDto);
+		if(user.getUsers().getRole().equals("ADMIN")&&!list.getList().isEmpty())
 			{
-			model.addAttribute("list", list);
+			model.addAttribute("list", list.getList());
+			model.addAttribute("pagination",list.getPaginationDto());
 			}else if(!user.getUsers().getRole().equals("ADMIN")){
 				throw new IllegalArgumentException("접근 권한이 없습니다.");
 			}else {
 				model.addAttribute("listcheck",0);
 			}
-		
 		return "manager/propertyManage";
 	}
 	
-	@DeleteMapping("/manager/property")
+	//게시글 삭제
+	@DeleteMapping("/manager/property/search")
 	public String deleteProperty(@RequestParam("property_service_id")int property_service_id,
 			@AuthenticationPrincipal SecurityUser user) {
 		service.deleteProperty(property_service_id);
-		return "redirect:/manager/property";
+		return "redirect:/manager/property/search";
 	}
-
+	
 	//승인요청 검색 및 조회
 		@GetMapping("/manager/confirm/search")
 		public String getConfirm(@AuthenticationPrincipal SecurityUser user,
@@ -94,5 +100,4 @@ public class ManagerController {
 		
 		
 		
-
 }
