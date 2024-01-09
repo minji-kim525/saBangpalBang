@@ -5,10 +5,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>매물 관리</title>
+<title>승인 요청</title>
 </head>
 <body>
-<h3>매물 관리</h3>
+<h3>승인 요청</h3>
 <c:if test="${listcheck!=0 }">
             <section>
                 <!--/* 검색 */-->
@@ -58,16 +58,30 @@
 								월세
 								</c:when>
 								</c:choose>
-							/${property.pname}/주소:${property.address}</td>
+							${property.pname}/주소:${property.address}</td>
 							<td scope="col">${property.id}</td>
 							<td scope="col"><fmt:formatDate value="${property.registration_date }" dateStyle="short"/> </td>
 							<td scope="col">
-								<form method="post" id="deleteform" action="/manager/property/search">
-									<input type="hidden" name="_method" value="delete">
-									<input type="hidden" name="property_service_id" value="${property.property_service_id}">									
-									<button id="chagePrivate" >삭제</button>
+							<form method="post" id="updateform" action="/manager/confirm/search">
+							<input type="hidden" name="_method" value="put">
+							<input type="hidden" name="property_service_id" value="${property.property_service_id}">
+							<input type="hidden"  value="${property.confirm_check}">
+						
+							<c:choose>
+			 					<c:when test="${property.confirm_check==0}">
+			 					<button id="confirm_ok" name="confirmcheck" value="1" >승인</button>
+			 					<button id="confirm_no" name="confirmcheck" value="2" >반려</button>
+								</c:when>
+								<c:when test="${property.confirm_check==1}">
+							 	<button id="ok_cancel" name="confirmcheck" value="0" >승인 취소</button>
+								</c:when>
+								<c:when test="${property.confirm_check==2}">
+							 	<button id="no_cancel" name="confirmcheck" value="0">반려 취소</button>
+								</c:when>
+							</c:choose>
+							</form>
+		
 								
-								</form>
 							
 							</td>
 						</tr>
@@ -107,17 +121,39 @@
 	  	  $("#searchForm").submit();
 	});
       
-      $("#deleteform").click(function(){
-    	  if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+      $("#confirm_ok").click(function(){
+    	  if (confirm("승인하시겠습니까?") == true){    //확인
         	  $("#deleteform").submit();
     		 }else{   //취소
     		     return false;
     		 }
     	  
       });
-  
-
-
+      $("#confirm_no").click(function(){
+    	  if (confirm("반려하시겠습니까?") == true){    //확인
+        	  $("#deleteform").submit();
+    		 }else{   //취소
+    		     return false;
+    		 }
+    	  
+      });
+      
+      $("#ok_cancel").click(function(){
+    	  if (confirm("승인을 취소하시겠습니까?") == true){    //확인
+        	  $("#deleteform").submit();
+    		 }else{   //취소
+    		     return false;
+    		 }
+    	  
+      });
+      $("#no_cancel").click(function(){
+    	  if (confirm("반려를 취소하시겠습니까?") == true){    //확인
+        	  $("#deleteform").submit();
+    		 }else{   //취소
+    		     return false;
+    		 }
+    	  
+      });
 
   </script>
 

@@ -49,9 +49,14 @@ public class MypageController {
 
 	//방 업로드 폼
 	@GetMapping("mypage/upload")
-	public String form() {
+	public String form( @AuthenticationPrincipal SecurityUser user) {
 		System.out.println("업로드폼");
 
+		if(user.getUsers().getId().isEmpty())
+		{
+			throw new IllegalArgumentException("접근 권한이 없습니다.");
+
+		}
 		return "mypage/roomUploadForm";
 	}
 	
