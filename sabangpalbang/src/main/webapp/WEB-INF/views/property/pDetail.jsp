@@ -14,7 +14,7 @@
 	<p>매물 ID: ${pdetail.property_id}</p>
 	<p>주소: ${pdetail.address}</p>
 	<p>매물명: ${pdetail.pname}</p>
-	<p>가격: ${pdetaill.price}</p>
+	<p>가격: ${pdetail.price}</p>
 	<p>보증금: ${pdetail.deposit}</p>
 	<p>면적: ${pdetail.feet}</p>
 	<p>층수: ${pdetail.floor}</p>

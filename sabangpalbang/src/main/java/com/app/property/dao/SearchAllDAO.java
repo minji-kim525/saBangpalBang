@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
@@ -34,4 +35,7 @@ public interface SearchAllDAO {
 	
 	//서비스매물 정보
 	List<PropertyServiceDTO> getServiceProperties();
+	
+	//confirm
+	List<ConfirmDTO> getConfirm(@Param("property_service_id") int property_service_id);
 }
