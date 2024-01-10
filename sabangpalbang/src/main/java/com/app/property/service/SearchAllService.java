@@ -88,9 +88,10 @@ public class SearchAllService {
 		return result;
 	}
 	
-//	//confirm
-//	public void getConfirm(){
-//		ConfirmDTO confirm = alldao.getConfirm();
-//	}
+	//confirm
+	public List<ConfirmDTO> getConfirm(int property_service_id) {
+		List<ConfirmDTO> confirm =  alldao.getConfirm(property_service_id);
+	    return confirm;
+	}
 
 }

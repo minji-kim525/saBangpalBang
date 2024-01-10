@@ -75,27 +75,30 @@
 	<p>서비스 매물</p>
 	<div class="property-container">
 		<c:forEach var="propertyService" items="${getServiceProperties}">
-			<c:if test="${propertyService.private_property == false}">
-				<c:if test="${propertyService.ps_service_type == 1}">
-					<div class="property"
-						onclick="{ location.href='/property/psDetail?ps_service_type=${propertyService.ps_service_type}&propertyId=${propertyService.property_service_id}'; }"
-						style="cursor: pointer;">
-						<img src="/roomImg/${propertyService.images.filename}" alt=""><br>
-						<c:choose>
-							<c:when test="${propertyService.property_type_id == 1}">
-								<span class="property-type">매매</span>
-							</c:when>
-							<c:when test="${propertyService.property_type_id == 2}">
-								<span class="property-type">전세</span>
-							</c:when>
-							<c:when test="${propertyService.property_type_id == 3}">
-								<span class="property-type">월세</span>
-							</c:when>
-						</c:choose>
-						<span class="price">${ChargeFunction.formatNumberWithUnit(propertyService.price)}</span>
-						<span class="pname">${propertyService.pname}</span>
-					</div>
-				</c:if>
+			<c:if
+				test="${propertyService.private_property == false && propertyService.ps_service_type == 1 }">
+				<c:forEach var="confirmItem" items="${confirm}">
+					<c:if test="${confirmItem.confirm_check == 1}">
+						<div class="property"
+							onclick="{ location.href='/property/psDetail?ps_service_type=${propertyService.ps_service_type}&propertyId=${propertyService.property_service_id}'; }"
+							style="cursor: pointer;">
+							<img src="/roomImg/${propertyService.images.filename}" alt=""><br>
+							<c:choose>
+								<c:when test="${propertyService.property_type_id == 1}">
+									<span class="property-type">매매</span>
+								</c:when>
+								<c:when test="${propertyService.property_type_id == 2}">
+									<span class="property-type">전세</span>
+								</c:when>
+								<c:when test="${propertyService.property_type_id == 3}">
+									<span class="property-type">월세</span>
+								</c:when>
+							</c:choose>
+							<span class="price">${ChargeFunction.formatNumberWithUnit(propertyService.price)}</span>
+							<span class="pname">${propertyService.pname}</span>
+						</div>
+					</c:if>
+				</c:forEach>
 			</c:if>
 		</c:forEach>
 	</div>

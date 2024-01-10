@@ -23,56 +23,58 @@ public class SearchAllController {
 	@Autowired
 	SearchAllService allservice;
 
-	//검색창
+	// 검색창
 	@GetMapping("/searchAll")
 	public String searchAll() {
 		return "property/searchAll";
 	}
 
-	//검색결과
+	// 검색결과
 	@GetMapping("/property/searchAllResult")
 	public String searchResult(@RequestParam("keyword") String keyword, Model m) {
 		List<PropertyResultDTO> allProperties = allservice.getAllProperties(keyword);
+//		ConfirmDTO confirm = allservice.getConfirm();
 //		System.out.println("keyword : "+ keyword);
-//		System.out.println("allProperties : " + allProperties);
 		m.addAttribute("allProperties", allProperties);
 		m.addAttribute("keyword", keyword);
 		return "property/searchAllResult";
 	}
-	
-	//서비스매물 상세정보
+
+	// 서비스매물 상세정보
 	@GetMapping("/property/psDetail")
-	public String psDetail(@AuthenticationPrincipal SecurityUser user, @RequestParam("propertyId") int propertyId, @RequestParam("ps_service_type") int psServiceType, Model m) {
-		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType); 
+	public String psDetail(@AuthenticationPrincipal SecurityUser user, @RequestParam("propertyId") int propertyId,
+			@RequestParam("ps_service_type") int psServiceType, Model m) {
+		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType);
 		m.addAttribute("psdetail", psdetail);
 //		System.out.println(psdetail);
 		return "property/psDetail";
 	}
-	
-	//크롤링매물 상세정보
+
+	// 크롤링매물 상세정보
 	@GetMapping("/property/pDetail")
-	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,Model m) {
-		PropertyDetailDTO pdetail = allservice.getpDetail(propertyId, pServiceType); 
+	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,
+			Model m) {
+		PropertyDetailDTO pdetail = allservice.getpDetail(propertyId, pServiceType);
 		m.addAttribute("pdetail", pdetail);
+//		System.out.println(pdetail);
 		return "property/pDetail";
 	}
-	
-	//메인
+
+	// 메인
 	@GetMapping("/main")
 	public String Main(Model m) {
-	    List<PropertyDTO> getProperties = allservice.getProperties();
-	    List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
-	    m.addAttribute("getProperties", getProperties);
-	    m.addAttribute("getServiceProperties", getServiceProperties);
-	    return "main/main";
+		List<PropertyDTO> getProperties = allservice.getProperties();
+		List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
+		m.addAttribute("getProperties", getProperties);
+		m.addAttribute("getServiceProperties", getServiceProperties);
+		return "main/main";
 	}
-	
-//	//confirm
-//	public String confirm() {
-//		ConfirmDTO getConfirm = allservice.confirm();
-//	}
+
+	// confirm
+	public String getConfirm(@RequestParam("property_service_id") int property_service_id, Model m) {
+		List<ConfirmDTO> confirm = allservice.getConfirm(property_service_id);
+		m.addAttribute("confirm", confirm);
+		return "main/main";
+	}
 
 }
-
-	
-	

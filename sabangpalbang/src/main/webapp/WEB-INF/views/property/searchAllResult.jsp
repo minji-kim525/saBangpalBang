@@ -46,9 +46,7 @@
 </style>
 </head>
 <body>
-
 	<h3>'${keyword}'로 검색한 결과입니다.</h3>
-
 	<c:choose>
 		<c:when test="${empty allProperties}">
 			<p>검색 결과가 없습니다.</p>
@@ -68,11 +66,13 @@
 		<div class="property-container">
 			<c:forEach var="property" items="${allProperties}">
 				<c:if test="${property.private_property == false}">
+					<%-- <c:forEach var="confirm" items="${confirm}">
+						<c:if test="${confirm.confirm_check == 1}"> --%>
 					<div class="property"
 						onclick="if(${property.ps_service_type} == 1)
-						{ location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}'; }
-						else if(${property.p_service_type} == 2)
-						{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
+                                { location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}'; }
+                                else if(${property.p_service_type} == 2)
+                                { location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
 						style="cursor: pointer;">
 						<c:if test="${not empty property.imagesList}">
 							<img src="/roomImg/${property.imagesList[0].filename}" alt=""
@@ -94,9 +94,12 @@
 						<span class="pname">${property.pname}</span>
 					</div>
 				</c:if>
+				<%-- 					</c:forEach>
+				</c:if> --%>
 			</c:forEach>
 		</div>
 	</c:if>
+
 
 
 </body>

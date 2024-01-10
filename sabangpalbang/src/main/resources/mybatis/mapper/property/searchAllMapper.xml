@@ -174,5 +174,6 @@
 		ps_service_type,
 		property_service_id
 		FROM confirm
+		WHERE property_service_id = #{property_service_id}
 	</select>
 </mapper>

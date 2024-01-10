@@ -36,6 +36,6 @@ public interface SearchAllDAO {
 	//서비스매물 정보
 	List<PropertyServiceDTO> getServiceProperties();
 	
-//	//confirm
-//	ConfirmDTO getConfirm();
+	//confirm
+	List<ConfirmDTO> getConfirm(@Param("property_service_id") int property_service_id);
 }
