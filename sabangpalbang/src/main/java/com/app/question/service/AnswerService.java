@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dto.AnswerDTO;
 import com.app.dto.QuestionDTO;
@@ -21,8 +22,12 @@ public class AnswerService {
 		return dao.titleSelect();
 	}
 
-	public int answerInsert(AnswerDto dto) {
-		return dao.answerInsert(dto);
+	@Transactional
+	public void answerInsert(AnswerDto dto) {
+		
+		dao.answerInsert(dto);
+		//알림
+		dao.insertNotifyAnswer(dto.getQuestion_id(), dto.getUser_id());
 	}
 
 	public List<AnswerDto> answerSelect(int question_id) {
@@ -40,5 +45,6 @@ public class AnswerService {
 	public int updateAnswer(AnswerDto dto){
 		return dao.updateAnswer(dto);
 	}
+	
 
 }

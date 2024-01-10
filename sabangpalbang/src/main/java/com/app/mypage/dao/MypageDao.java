@@ -12,6 +12,7 @@ import org.springframework.security.access.method.P;
 import com.app.dto.ImagesDTO;
 import com.app.dto.LikeListDTO;
 import com.app.mypage.dto.MyUploadResponseDto;
+import com.app.mypage.dto.NotifyResponseDto;
 import com.app.mypage.dto.UploadRequestDto;
 import com.app.question.dto.titleDto;
 
@@ -40,6 +41,8 @@ public interface MypageDao {
   
 	@Select("select question_id,title,created_at,id from question natural join users where user_id=#{user_id}")
 	List<titleDto> myQuestionList(@Param("user_id")int user_id);
+
+	List<NotifyResponseDto> getNotify(int user_id);
 	
 }
 
