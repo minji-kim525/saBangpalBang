@@ -52,6 +52,14 @@ public class UserService {
         return this.encoder;
     }
     
+    public int idCheck(String id) {
+        int result = 0;
+        //System.out.println("service 값" + id);
+        result = userMapper.idCheck(id);
+        //System.out.println(" result 값 "+ result);
+        return result;
+    }
+    
     public boolean pwcheck(String password, String dbPassword) {
     	return encoder.matches(password, dbPassword);
     }
