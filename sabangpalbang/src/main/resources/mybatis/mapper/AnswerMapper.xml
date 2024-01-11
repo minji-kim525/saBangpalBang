@@ -10,6 +10,13 @@
 		answer(answer_id,question_id,user_id,title,content)
 		values(0,#{question_id},#{user_id},#{title},#{content})
 	</insert>
+	
+	<insert id="insertNotifyAnswer">
+	insert into
+	notify(notify_check, question_id, user_id)
+	values(0,#{question_id},#{user_id})
+	
+	</insert>
 
 	<update id="updateAnswer"
 		parameterType="com.app.question.dto.AnswerDto">

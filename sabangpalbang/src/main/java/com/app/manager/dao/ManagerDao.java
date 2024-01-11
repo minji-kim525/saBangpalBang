@@ -3,8 +3,11 @@ package com.app.manager.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.app.dto.SearchDto;
@@ -38,5 +41,14 @@ public interface ManagerDao {
 	//사용자 삭제
 	@Delete("delete from users where user_id = #{user_id}")
 	int deleteUser(int user_id);
+	
+	@Select("select user_id from property_service where property_service_id=#{property_service_id}")
+	int findUser(int property_service_id);
+	
+	@Select("select confirm_id from confirm where property_service_id=#{property_service_id}")
+	int findConfirm(int property_service_id);
+	
+	@Insert("insert into notify(notify_check, user_id, confirm_id)values(0,#{user_id},#{confirm_id})")
+	int insertNotify(@Param("user_id")int user_id,@Param("confirm_id")int confirm_id);
 	
 }
