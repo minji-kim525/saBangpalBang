@@ -75,6 +75,7 @@ public class SearchAllService {
 	// 서비스매물 정보
 	public List<PropertyServiceDTO> getServiceProperties() {
 		List<PropertyServiceDTO> result = new ArrayList<>();
+//		List<ConfirmDTO> confirmList = alldao.getConfirm();
 		// 매물 서비스 정보 가져오기
 		List<PropertyServiceDTO> propertyServiceList = alldao.getServiceProperties();
 		for (PropertyServiceDTO propertyServiceDTO : propertyServiceList) {
@@ -89,9 +90,9 @@ public class SearchAllService {
 	}
 	
 	//confirm
-	public List<ConfirmDTO> getConfirm(int property_service_id) {
-		List<ConfirmDTO> confirm =  alldao.getConfirm(property_service_id);
-	    return confirm;
-	}
+//	public List<ConfirmDTO> getConfirm() {
+//		List<ConfirmDTO> confirm =  alldao.getConfirm();
+//	    return confirm;
+//	}
 
 }

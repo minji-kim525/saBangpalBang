@@ -2,6 +2,7 @@ package com.app.property.dto;
 import java.sql.Date;
 import java.util.List;
 
+import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
 import lombok.Data;
 
@@ -23,6 +24,8 @@ public class PropertyDetailDTO {
 	private int charge;
 	private int p_service_type;
 	private int ps_service_type;
-	
+    private String telephone;
+    private int month_price;
+
 	private List<ImagesDTO> images;
 }

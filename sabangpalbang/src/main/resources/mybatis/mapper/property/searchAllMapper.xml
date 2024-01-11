@@ -8,36 +8,35 @@
 	<select id="getAllProperties"
 		resultType="com.app.property.dto.PropertyResultDTO">
 		SELECT
-		pname,
-		property_id,
+		p.pname,
+		p.property_id,
 		NULL AS property_service_id,
-		p_service_type,
+		p.p_service_type,
 		NULL AS ps_service_type,
-		price,
-		property_type_id,
-		NULL AS
-		private_property
+		p.price,
+		p.property_type_id,
+		NULL AS private_property,
+		NULL AS confirm_check
 		FROM
-		property
-		WHERE pname LIKE CONCAT('%', #{keyword},
-		'%')
+		property p
+		WHERE p.pname LIKE
+		CONCAT('%', #{keyword},'%')
 
 		UNION ALL
 
 		SELECT
-		pname,
+		ps.pname,
 		NULL AS property_id,
-		property_service_id,
-		NULL
-		AS p_service_type,
-		ps_service_type,
-		price,
-		property_type_id,
-		private_property
-		FROM
-		property_service
-		WHERE pname LIKE CONCAT('%',
-		#{keyword}, '%');
+		ps.property_service_id,
+		NULL AS p_service_type,
+		ps.ps_service_type,
+		ps.price,
+		ps.property_type_id,
+		ps.private_property,
+		c.confirm_check
+		FROM property_service ps
+		LEFT JOIN confirm c ON ps.property_service_id = c.property_service_id
+		WHERE ps.pname LIKE CONCAT('%', #{keyword}, '%') AND c.confirm_check = 1
 	</select>
 
 	<!-- 서비스 매물 상세 정보 -->
@@ -55,11 +54,16 @@
 		count,
 		registration_date,
 		description,
-		ps_service_type
+		ps_service_type,
+		telephone,
+		month_price,
+		property_type_id
 		FROM
 		property_service
-		WHERE ps_service_type =
-		#{psServiceType} AND property_service_id = #{propertyId}
+		WHERE
+		ps_service_type =
+		#{psServiceType} AND property_service_id =
+		#{propertyId}
 	</select>
 
 	<!-- 크롤링 매물 상세 정보 -->
@@ -77,11 +81,15 @@
 		count,
 		registration_date,
 		description,
-		p_service_type
+		p_service_type,
+		telephone,
+		month_price,
+		property_type_id
 		FROM
 		property
 		WHERE p_service_type =
-		#{pServiceType} AND property_id = #{propertyId}
+		#{pServiceType} AND
+		property_id = #{propertyId}
 	</select>
 
 	<!-- Property 매물 정보 -->
@@ -109,24 +117,28 @@
 	<select id="getServiceProperties"
 		resultType="com.app.dto.PropertyServiceDTO">
 		SELECT
-		property_service_id ,
-		ps_service_type ,
-		user_id ,
-		property_type_id,
-		price,
-		feet,
-		pname,
-		deposit,
-		charge,
-		count,
-		registration_date,
-		move_date,
-		address,
-		description,
-		floor,
-		private_property
-		FROM property_service
+		ps.property_service_id,
+		ps.ps_service_type,
+		ps.user_id,
+		ps.property_type_id,
+		ps.price,
+		ps.feet,
+		ps.pname,
+		ps.deposit,
+		ps.charge,
+		ps.count,
+		ps.registration_date,
+		ps.move_date,
+		ps.address,
+		ps.description,
+		ps.floor,
+		ps.private_property,
+		c.confirm_check
+		FROM property_service ps
+		LEFT JOIN confirm c ON ps.property_service_id = c.property_service_id
+		WHERE c.confirm_check = 1
 	</select>
+
 
 	<!-- 다중 이미지 -->
 	<select id="AllImages" resultType="com.app.dto.ImagesDTO">
@@ -167,13 +179,7 @@
 	</select>
 
 	<!-- confirm -->
-	<select id="getConfirm" resultType="com.app.dto.ConfirmDTO">
-		SELECT
-		confirm_id,
-		confirm_check,
-		ps_service_type,
-		property_service_id
-		FROM confirm
-		WHERE property_service_id = #{property_service_id}
-	</select>
+	<!-- <select id="getConfirm" resultType="com.app.dto.ConfirmDTO"> SELECT 
+		confirm_id, confirm_check, ps_service_type, property_service_id FROM confirm 
+		WHERE confirm_check = 1 </select> -->
 </mapper>

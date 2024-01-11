@@ -2,7 +2,6 @@ package com.app.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,8 +23,7 @@ import com.app.security.handler.LoginFailHandler;
 @Configuration
 
 @EnableWebSecurity
-public class SecurityConfig{
-
+public class SecurityConfig {
 
 	@Autowired
 	private BoardUserDetailsService boardUserDetailsService;
@@ -33,27 +31,28 @@ public class SecurityConfig{
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-				http.csrf(AbstractHttpConfigurer::disable)
-		
+		http.csrf(AbstractHttpConfigurer::disable)
+
 				.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 
 				.authorizeHttpRequests(auth -> {
 					try {
 						auth.requestMatchers(new AntPathRequestMatcher("/mypage/**"),
+								new AntPathRequestMatcher("/property/psDetail"),
 								new AntPathRequestMatcher("/js/**")).authenticated()
-								.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-								.anyRequest().permitAll()
-								;
+								.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN").anyRequest()
+								.permitAll();
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 
-
-				).formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/", true).failureHandler(loginFailHandler())
-				).logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.invalidateHttpSession(true).logoutSuccessUrl("/"))
-				 .exceptionHandling((exception)-> exception.accessDeniedPage("/accessDenied"));
+				)
+				.formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/", true)
+						.failureHandler(loginFailHandler()))
+				.logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+						.invalidateHttpSession(true).logoutSuccessUrl("/"))
+				.exceptionHandling((exception) -> exception.accessDeniedPage("/accessDenied"));
 
 		http.userDetailsService(boardUserDetailsService);
 		return http.build();
@@ -65,22 +64,18 @@ public class SecurityConfig{
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
-	
-	
 	public void configure(WebSecurity web) throws Exception {
 		web.httpFirewall(defaultHttpFirewall());
 	}
-	
+
 	@Bean
 	public HttpFirewall defaultHttpFirewall() {
 		return new DefaultHttpFirewall();
 	}
-	
+
 	@Bean
-    public LoginFailHandler loginFailHandler(){
-        return new LoginFailHandler();
-    }
-
-
+	public LoginFailHandler loginFailHandler() {
+		return new LoginFailHandler();
+	}
 
 }
