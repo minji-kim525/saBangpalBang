@@ -23,7 +23,11 @@ public class PropertyServiceDTO {
     private String description;
     private int floor;
     private int property_type_id;
+    private String telephone;
+    private int month_price;
+    private int confirm_check;
     
+    ConfirmDTO confirmDTO;
     UserDTO userDTO;
     PropertyTypeDTO propertyTypeDTO;
 	private ImagesDTO images;
