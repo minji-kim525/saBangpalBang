@@ -23,9 +23,11 @@
 			floor,
 			description,
 			private_property,
-			user_id
+			user_id,
+			telephone,
+			month_price
 		)values
-			(1, #{property_type_id},#{price},#{feet},#{pname},#{deposit},#{charge},#{count},now(),#{move_date},#{address},#{floor},#{description},0,#{user_id})
+			(1, #{property_type_id},#{price},#{feet},#{pname},#{deposit},#{charge},#{count},now(),#{move_date},#{address},#{floor},#{description},0,#{user_id},#{telephone},#{month_price})
 	</insert>
 
 	<insert id="insertFile"> 
@@ -74,6 +76,8 @@
     		COALESCE(p.pname, ps.pname)pname,
     		l.like_list_id,
     		COALESCE(p.price, ps.price) AS price,
+    		COALESCE(p.deposit,ps.deposit) AS deposit,
+    		COALESCE(p.month_price,ps.month_price) AS month_price,
     		COALESCE(p.property_type_id, ps.property_type_id) AS property_type_id,
     		l.property_service_id,
     		l.property_id,

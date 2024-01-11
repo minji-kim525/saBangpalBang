@@ -14,12 +14,19 @@
 			<c:choose>
 				<c:when test="${like.property_type_id==1}">
 				<p>매매 </p>
+				<p>${like.price}</p>
+				<p>${like.pname}</p><br>
 				</c:when>
 				<c:when test="${like.property_type_id==2}">
 				<p>전세 </p>
+				<p>${like.deposit}</p>
+				<p>${like.pname}</p><br>
 				</c:when>
 				<c:when test="${like.property_type_id==3}">
 				<p>월세 </p>
+				<p>${like.deposit}/</p>
+				<p>${like.month_price}</p>
+				<p>${like.pname}</p><br>
 				</c:when>
 			</c:choose>
 			<p>${like.price}</p>
