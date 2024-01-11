@@ -65,7 +65,7 @@
 								<form method="post" id="deleteform" action="/manager/property/search">
 									<input type="hidden" name="_method" value="delete">
 									<input type="hidden" name="property_service_id" value="${property.property_service_id}">									
-									<button id="chagePrivate" >삭제</button>
+									<button >삭제</button>
 								
 								</form>
 							
