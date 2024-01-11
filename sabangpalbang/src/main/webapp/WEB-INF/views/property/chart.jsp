@@ -4,18 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Line Chart Test</title>
+<title>Line Chart</title>
 <!-- Include Chart.js library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-#lineChart {
-	width: 400px;
-	height: 400px;
-}
-</style>
 </head>
 <body>
-	<canvas id="lineChart" style="height:50vh; width:50vw"></canvas>
+	<canvas id="lineChart" style="height: 50vh; width: 30vw"></canvas>
 	<script>
         var chartData = ${chart};
 
@@ -32,10 +26,18 @@
                     borderColor: 'blue',
                     data: values
                 }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
             }
         });
-        options: {
-			responsive: false}
     </script>
 </body>
 </html>

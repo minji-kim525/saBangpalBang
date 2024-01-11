@@ -201,7 +201,6 @@
 		deal_day,
 		transaction_price_id
 		FROM transaction_price
-		WHERE  dong LIKE CONCAT('%', #{address}, '%')
-		AND apartment_name LIKE CONCAT('%', #{keyword}, '%')
+		WHERE apartment_name = #{pname}
 	</select>
 </mapper>

@@ -45,7 +45,7 @@ public class SearchAllService {
 //		for(ImagesDTO i : Idto) {
 //			
 //		}
-		System.out.println(Idto);
+//		System.out.println(Idto);
 		return psImagedto;
 	}
 
@@ -54,7 +54,7 @@ public class SearchAllService {
 		PropertyDetailDTO pImagedto = alldao.getpDetail(propertyId, pServiceType);
 		List<ImagesDTO> Idto = alldao.AllImages(propertyId, pServiceType);
 		pImagedto.setImages(Idto);
-		System.out.println(Idto);
+//		System.out.println(Idto);
 		return pImagedto;
 	}
 
@@ -93,6 +93,7 @@ public class SearchAllService {
 	//chart test
 	public List<TransactionPriceDTO> getTransaction() {
 		List<TransactionPriceDTO> chart =  alldao.getTransaction();
+		System.out.println("service chart : " + chart);
 	    return chart;
 	}
 

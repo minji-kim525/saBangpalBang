@@ -50,6 +50,7 @@ public class SearchAllController {
 		List<TransactionPriceDTO> chart = allservice.getTransaction();
 		m.addAttribute("psdetail", psdetail);
 		m.addAttribute("chart", chart);
+		System.out.println("controller chart : " + chart);
 		return "property/psDetail";
 	}
 
