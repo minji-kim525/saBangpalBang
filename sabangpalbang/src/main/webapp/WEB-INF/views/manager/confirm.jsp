@@ -115,45 +115,47 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
-
+$(document).ready(function() {
 	
 	$("#search_submit").click(function(){
 	  	  $("#searchForm").submit();
 	});
       
-      $("#confirm_ok").click(function(){
+	$(document).on('click', "#confirm_ok",function(){
     	  if (confirm("승인하시겠습니까?") == true){    //확인
-        	  $("#deleteform").submit();
+        	  $("#updateform").submit();
     		 }else{   //취소
     		     return false;
     		 }
     	  
       });
-      $("#confirm_no").click(function(){
+	$(document).on('click', "#confirm_no",function(){
     	  if (confirm("반려하시겠습니까?") == true){    //확인
-        	  $("#deleteform").submit();
+        	  $("#updateform").submit();
     		 }else{   //취소
     		     return false;
     		 }
     	  
       });
       
-      $("#ok_cancel").click(function(){
+	$(document).on('click', "#ok_cancel",function(){
     	  if (confirm("승인을 취소하시겠습니까?") == true){    //확인
-        	  $("#deleteform").submit();
+        	  $("#updateform").submit();
     		 }else{   //취소
     		     return false;
     		 }
     	  
       });
-      $("#no_cancel").click(function(){
+      $(document).on('click', "#no_cancel",function(){
     	  if (confirm("반려를 취소하시겠습니까?") == true){    //확인
-        	  $("#deleteform").submit();
+        	  $("#updateform").submit();
     		 }else{   //취소
     		     return false;
     		 }
     	  
       });
+      
+});
 
   </script>
 

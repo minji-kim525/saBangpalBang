@@ -12,6 +12,7 @@ import org.springframework.security.access.method.P;
 import com.app.dto.ImagesDTO;
 import com.app.dto.LikeListDTO;
 import com.app.mypage.dto.MyUploadResponseDto;
+import com.app.mypage.dto.NotifyResponseDto;
 import com.app.mypage.dto.UploadRequestDto;
 import com.app.question.dto.titleDto;
 
@@ -26,7 +27,7 @@ public interface MypageDao {
 			+ "values(0,1,#{property_service_id})")
 	int insertConfirm(@Param("property_service_id") int property_service_id);
 
-	@Select("select property_service_id, ps_service_type,property_type_id,price,pname,private_property from property_service where user_id=#{user_id}")
+	@Select("select property_service_id, ps_service_type,property_type_id,price,pname,private_property,telephone,month_price,deposit from property_service where user_id=#{user_id}")
 	List<MyUploadResponseDto> getMyUploadAll(int user_id);
 
 	ImagesDTO getImage(@Param("id1") int id, @Param("id2") int ps_type);
@@ -40,6 +41,8 @@ public interface MypageDao {
   
 	@Select("select question_id,title,created_at,id from question natural join users where user_id=#{user_id}")
 	List<titleDto> myQuestionList(@Param("user_id")int user_id);
+
+	List<NotifyResponseDto> getNotify(int user_id);
 	
 }
 

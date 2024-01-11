@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
@@ -74,6 +75,7 @@ public class SearchAllService {
 	// 서비스매물 정보
 	public List<PropertyServiceDTO> getServiceProperties() {
 		List<PropertyServiceDTO> result = new ArrayList<>();
+//		List<ConfirmDTO> confirmList = alldao.getConfirm();
 		// 매물 서비스 정보 가져오기
 		List<PropertyServiceDTO> propertyServiceList = alldao.getServiceProperties();
 		for (PropertyServiceDTO propertyServiceDTO : propertyServiceList) {
@@ -86,5 +88,11 @@ public class SearchAllService {
 		}
 		return result;
 	}
+	
+	//confirm
+//	public List<ConfirmDTO> getConfirm() {
+//		List<ConfirmDTO> confirm =  alldao.getConfirm();
+//	    return confirm;
+//	}
 
 }

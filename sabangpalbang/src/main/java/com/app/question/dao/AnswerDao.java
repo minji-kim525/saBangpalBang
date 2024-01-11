@@ -3,8 +3,8 @@ package com.app.question.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
-import com.app.dto.AnswerDTO;
 import com.app.question.dto.AnswerDto;
 import com.app.question.dto.titleDto;
 
@@ -23,4 +23,5 @@ public interface AnswerDao {
 	
 	int updateAnswer(AnswerDto dto);
 	
+	int insertNotifyAnswer(@Param("question_id")int question_id,@Param("user_id")int user_id);
 }

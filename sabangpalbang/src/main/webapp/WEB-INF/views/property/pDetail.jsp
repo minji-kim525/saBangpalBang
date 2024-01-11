@@ -14,8 +14,18 @@
 	<p>매물 ID: ${pdetail.property_id}</p>
 	<p>주소: ${pdetail.address}</p>
 	<p>매물명: ${pdetail.pname}</p>
-	<p>가격: ${pdetaill.price}</p>
-	<p>보증금: ${pdetail.deposit}</p>
+	<c:choose>
+		<c:when test="${pdetail.property_type_id == 1}">
+			<p>매매가 : ${pdetail.price}</p>
+		</c:when>
+		<c:when test="${pdetail.property_type_id == 2}">
+			<p>보증금: ${pdetail.deposit}</p>
+		</c:when>
+		<c:when test="${pdetail.property_type_id == 3}">
+			<p>월세 : ${pdetail.month_price}</p>
+			<p>보증금 : ${pdetail.deposit}</p>
+		</c:when>
+	</c:choose>
 	<p>면적: ${pdetail.feet}</p>
 	<p>층수: ${pdetail.floor}</p>
 	<p>관리비: ${pdetail.charge}</p>

@@ -24,6 +24,8 @@ public class PropertyDTO {
     private String description;
     private int floor;
     private int property_type_id;
+    private String telephone;
+    private int month_price;
     
     UserDTO userDTO;
     PropertyTypeDTO propertyTypeDTO;

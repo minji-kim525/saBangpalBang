@@ -46,9 +46,7 @@
 </style>
 </head>
 <body>
-
 	<h3>'${keyword}'로 검색한 결과입니다.</h3>
-
 	<c:choose>
 		<c:when test="${empty allProperties}">
 			<p>검색 결과가 없습니다.</p>
@@ -70,9 +68,9 @@
 				<c:if test="${property.private_property == false}">
 					<div class="property"
 						onclick="if(${property.ps_service_type} == 1)
-						{ location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}'; }
-						else if(${property.p_service_type} == 2)
-						{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
+                                { location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}'; }
+                                else if(${property.p_service_type} == 2)
+                                { location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
 						style="cursor: pointer;">
 						<c:if test="${not empty property.imagesList}">
 							<img src="/roomImg/${property.imagesList[0].filename}" alt=""
@@ -82,21 +80,25 @@
 						<c:choose>
 							<c:when test="${property.property_type_id == 1}">
 								<span class="property-type">매매</span>
+								<span class="price">${ChargeFunction.formatNumberWithUnit(property.price)}</span>
 							</c:when>
 							<c:when test="${property.property_type_id == 2}">
 								<span class="property-type">전세</span>
+								<span class="price">${ChargeFunction.formatNumberWithUnit(property.price)}</span>
 							</c:when>
 							<c:when test="${property.property_type_id == 3}">
 								<span class="property-type">월세</span>
+								<span class="price"> ${property.deposit} /
+									${property.month_price}</span>
 							</c:when>
 						</c:choose>
-						<span class="price">${ChargeFunction.formatNumberWithUnit(property.price)}</span>
 						<span class="pname">${property.pname}</span>
 					</div>
 				</c:if>
 			</c:forEach>
 		</div>
 	</c:if>
+
 
 
 </body>

@@ -16,6 +16,7 @@ import com.app.dto.ImagesDTO;
 import com.app.dto.LikeListDTO;
 import com.app.mypage.dao.MypageDao;
 import com.app.mypage.dto.MyUploadResponseDto;
+import com.app.mypage.dto.NotifyResponseDto;
 import com.app.mypage.dto.UploadAndQuestionDto;
 import com.app.mypage.dto.UploadRequestDto;
 import com.app.question.dto.titleDto;
@@ -95,5 +96,10 @@ public class MypageService {
 	public void insertLikeList(LikeListDTO likeListDto, int user_id) {
 		likeListDto.setUser_id(user_id);
 		dao.insertLikeList(likeListDto);		
+	}
+
+
+	public List<NotifyResponseDto> getNotify(int user_id) {
+		return dao.getNotify(user_id);
 	}
 }
