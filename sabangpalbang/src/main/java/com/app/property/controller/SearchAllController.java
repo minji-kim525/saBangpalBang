@@ -47,8 +47,9 @@ public class SearchAllController {
 	public String psDetail(@AuthenticationPrincipal SecurityUser user, @RequestParam("propertyId") int propertyId,
 			@RequestParam("ps_service_type") int psServiceType, Model m) {
 		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType);
+		List<TransactionPriceDTO> chart = allservice.getTransaction();
 		m.addAttribute("psdetail", psdetail);
-//		System.out.println(psdetail);
+		m.addAttribute("chart", chart);
 		return "property/psDetail";
 	}
 
@@ -57,8 +58,9 @@ public class SearchAllController {
 	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,
 			Model m) {
 		PropertyDetailDTO pdetail = allservice.getpDetail(propertyId, pServiceType);
+		List<TransactionPriceDTO> chart = allservice.getTransaction();
 		m.addAttribute("pdetail", pdetail);
-//		System.out.println(pdetail);
+		m.addAttribute("chart", chart);
 		return "property/pDetail";
 	}
 
@@ -69,15 +71,7 @@ public class SearchAllController {
 		List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
 		m.addAttribute("getProperties", getProperties);
 		m.addAttribute("getServiceProperties", getServiceProperties);
- 		return "main/main";
-	}
-
-	// chart test
-	@GetMapping("/chart")
-	public String getConfirm(Model m) {
-		List<TransactionPriceDTO> chart = allservice.getTransaction();
-		m.addAttribute("chart", chart);
-		return "property/chart";
+		return "main/main";
 	}
 
 }

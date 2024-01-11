@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>크롤링 매물 상세 정보</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -40,6 +41,6 @@
 	<c:forEach items="${pdetail.images}" var="image">
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
-
+	<%@ include file="chart.jsp"%>
 </body>
 </html>

@@ -201,7 +201,7 @@
 		deal_day,
 		transaction_price_id
 		FROM transaction_price
-		WHERE regional_cd = #{regional_cd} AND dong = #{dong} AND jibun = #{jibun}
+		WHERE  dong LIKE CONCAT('%', #{address}, '%')
 		AND apartment_name LIKE CONCAT('%', #{keyword}, '%')
 	</select>
 </mapper>
