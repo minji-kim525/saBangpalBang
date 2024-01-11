@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.app.dto.ConfirmDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
+import com.app.dto.TransactionPriceDTO;
 import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.dto.PropertyResultDTO;
 import com.app.property.service.SearchAllService;
@@ -71,11 +72,12 @@ public class SearchAllController {
  		return "main/main";
 	}
 
-	// confirm
-//	public String getConfirm(Model m) {
-//		List<ConfirmDTO> confirm = allservice.getConfirm();
-//		m.addAttribute("confirm", confirm);
-//		return "main/main";
-//	}
+	// chart test
+	@GetMapping("/chart")
+	public String getConfirm(Model m) {
+		List<TransactionPriceDTO> chart = allservice.getTransaction();
+		m.addAttribute("chart", chart);
+		return "property/chart";
+	}
 
 }

@@ -9,6 +9,7 @@ import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
+import com.app.dto.TransactionPriceDTO;
 import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.dto.PropertyResultDTO;
 
@@ -36,6 +37,6 @@ public interface SearchAllDAO {
 	//서비스매물 정보
 	List<PropertyServiceDTO> getServiceProperties();
 	
-	//confirm
-//	List<ConfirmDTO> getConfirm();
+	//chart test
+	List<TransactionPriceDTO> getTransaction();
 }

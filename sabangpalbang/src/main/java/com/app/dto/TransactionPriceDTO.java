@@ -6,8 +6,8 @@ import lombok.Data;
 public class TransactionPriceDTO {
 	private int transaction_price_id;
     private int regional_cd;
-    private int dong;
-    private int jibun;
+    private String dong;
+    private String jibun;
     private String apartment_name;
     private int floor;
     private int deal_amount;

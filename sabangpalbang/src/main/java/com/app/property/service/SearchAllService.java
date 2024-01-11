@@ -10,6 +10,7 @@ import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
+import com.app.dto.TransactionPriceDTO;
 import com.app.property.dao.SearchAllDAO;
 import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.dto.PropertyResultDTO;
@@ -89,10 +90,10 @@ public class SearchAllService {
 		return result;
 	}
 	
-	//confirm
-//	public List<ConfirmDTO> getConfirm() {
-//		List<ConfirmDTO> confirm =  alldao.getConfirm();
-//	    return confirm;
-//	}
+	//chart test
+	public List<TransactionPriceDTO> getTransaction() {
+		List<TransactionPriceDTO> chart =  alldao.getTransaction();
+	    return chart;
+	}
 
 }

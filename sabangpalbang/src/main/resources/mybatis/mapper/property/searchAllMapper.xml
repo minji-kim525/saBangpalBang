@@ -19,14 +19,16 @@
 		NULL AS confirm_check
 		FROM
 		property p
-		WHERE p.pname LIKE
+		WHERE
+		p.pname LIKE
 		CONCAT('%', #{keyword},'%')
 
 		UNION ALL
 
 		SELECT
 		ps.pname,
-		NULL AS property_id,
+		NULL AS
+		property_id,
 		ps.property_service_id,
 		NULL AS p_service_type,
 		ps.ps_service_type,
@@ -35,8 +37,10 @@
 		ps.private_property,
 		c.confirm_check
 		FROM property_service ps
-		LEFT JOIN confirm c ON ps.property_service_id = c.property_service_id
-		WHERE ps.pname LIKE CONCAT('%', #{keyword}, '%') AND c.confirm_check = 1
+		LEFT JOIN confirm c ON
+		ps.property_service_id = c.property_service_id
+		WHERE ps.pname LIKE
+		CONCAT('%', #{keyword}, '%') AND c.confirm_check = 1
 	</select>
 
 	<!-- 서비스 매물 상세 정보 -->
@@ -62,7 +66,8 @@
 		property_service
 		WHERE
 		ps_service_type =
-		#{psServiceType} AND property_service_id =
+		#{psServiceType} AND
+		property_service_id =
 		#{propertyId}
 	</select>
 
@@ -134,8 +139,10 @@
 		ps.floor,
 		ps.private_property,
 		c.confirm_check
-		FROM property_service ps
-		LEFT JOIN confirm c ON ps.property_service_id = c.property_service_id
+		FROM
+		property_service ps
+		LEFT JOIN confirm c ON ps.property_service_id =
+		c.property_service_id
 		WHERE c.confirm_check = 1
 	</select>
 
@@ -178,8 +185,23 @@
 		ps_service_type=#{id2}
 	</select>
 
-	<!-- confirm -->
-	<!-- <select id="getConfirm" resultType="com.app.dto.ConfirmDTO"> SELECT 
-		confirm_id, confirm_check, ps_service_type, property_service_id FROM confirm 
-		WHERE confirm_check = 1 </select> -->
+	<!-- 실거래가 -->
+	<select id="getTransaction"
+		resultType="com.app.dto.TransactionPriceDTO">
+		SELECT
+		property_type_id,
+		regional_cd,
+		dong,
+		jibun,
+		apartment_name,
+		floor,
+		deal_amount,
+		deal_year,
+		deal_month,
+		deal_day,
+		transaction_price_id
+		FROM transaction_price
+		WHERE regional_cd = #{regional_cd} AND dong = #{dong} AND jibun = #{jibun}
+		AND apartment_name LIKE CONCAT('%', #{keyword}, '%')
+	</select>
 </mapper>
