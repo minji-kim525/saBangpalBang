@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.app.dto.ImagesDTO;
 import com.app.dto.LikeListDTO;
 import com.app.mypage.dto.MyUploadResponseDto;
+import com.app.mypage.dto.NotifyResponseDto;
 import com.app.mypage.dto.UploadAndQuestionDto;
 import com.app.mypage.dto.UploadRequestDto;
 import com.app.mypage.service.MypageService;
@@ -97,6 +98,18 @@ public class MypageController {
 		}
 		return "mypage/likelist";
 		
+	}
+	
+//	//알림확인
+	@GetMapping("/mypage/notify")
+	public String getNotify(@AuthenticationPrincipal SecurityUser user,Model model) {
+		List<NotifyResponseDto>list=service.getNotify(user.getUsers().getUser_id());
+		if(!list.isEmpty()) {
+			model.addAttribute("list",list);
+		}else {
+			model.addAttribute("listcheck",0);
+		}
+		return "/mypage/notify";
 	}
 	
 	

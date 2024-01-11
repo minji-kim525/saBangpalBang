@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.app.dto.PaginationDto;
 import com.app.dto.PagingResponseDto;
@@ -53,9 +54,14 @@ public class ManagerService {
 		return new PagingResponseDto<>(list, paginationDto);
 	}
 	
+	@Transactional
 	//승인및반려
-	public void  updateConfirm(int property_service_id,int confirmcheck) {
+	public void updateConfirm(int property_service_id,int confirmcheck) {
 		dao.updateConfirm(property_service_id,confirmcheck);
+		int user_id=dao.findUser(property_service_id);
+		int confirm_id=dao.findConfirm(property_service_id);
+		dao.insertNotify(user_id,confirm_id);
+		
 	}
 
 	
