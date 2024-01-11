@@ -3,6 +3,7 @@ package com.app.property.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,14 +68,14 @@ public class SearchAllController {
 		List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
 		m.addAttribute("getProperties", getProperties);
 		m.addAttribute("getServiceProperties", getServiceProperties);
-		return "main/main";
+ 		return "main/main";
 	}
 
 	// confirm
-	public String getConfirm(@RequestParam("property_service_id") int property_service_id, Model m) {
-		List<ConfirmDTO> confirm = allservice.getConfirm(property_service_id);
-		m.addAttribute("confirm", confirm);
-		return "main/main";
-	}
+//	public String getConfirm(Model m) {
+//		List<ConfirmDTO> confirm = allservice.getConfirm();
+//		m.addAttribute("confirm", confirm);
+//		return "main/main";
+//	}
 
 }
