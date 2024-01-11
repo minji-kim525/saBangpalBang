@@ -32,6 +32,8 @@ public class UploadRequestDto {
     private String description;
     private int user_id;
     private boolean private_property;
+    private int month_price;
+    private String telephone;
     List<MultipartFile> files; 
 
 }
