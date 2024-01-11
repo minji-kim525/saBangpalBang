@@ -5,7 +5,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 글번호:${content.question_id}<br> 작성자:${content.id}<br> 
 제목:${content.title}<br> 내용:${content.content}<br>
 등록날짜:${content.created_at}<br>

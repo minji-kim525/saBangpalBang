@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.app.dto.QuestionDTO;
 import com.app.question.dto.AnswerDto;
 import com.app.question.dto.InsertDto;
@@ -19,6 +23,9 @@ import com.app.question.dto.titleDto;
 import com.app.question.service.AnswerService;
 import com.app.question.service.QuestionService;
 import com.app.security.config.SecurityUser;
+import com.mysql.cj.log.Log;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class QuestionController {
@@ -97,7 +104,12 @@ public class QuestionController {
 
 	// 문의 등록
 	@PostMapping("question/insert")
-	public String insert(InsertDto dto, @AuthenticationPrincipal SecurityUser user) {
+	public String insert(@Validated InsertDto dto, BindingResult error,
+			@AuthenticationPrincipal SecurityUser user, Model m) {
+		if (error.hasErrors()) {	
+			error.reject("nocood", "제목을입력해주세요");
+			return "question/insert";
+		} 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", user.getUsers().getUser_id());
 		map.put("title", dto.getTitle());
@@ -105,7 +117,8 @@ public class QuestionController {
 		service.addQuestion(map);
 
 		return "redirect:/question/" + map.get("question_id");
-	}
+		}
+	
 
 	@GetMapping("question/insert")
 	public String view(@AuthenticationPrincipal SecurityUser user) {

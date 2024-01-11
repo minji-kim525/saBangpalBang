@@ -1,4 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,10 +7,17 @@
 </head>
 <body>
 
-<form method="post">
- 제목 <input type="text" name="title">
- 내용 <input type="text" name="content">
- <input type="submit" value="전송">
-</form>
+	<form method="post">
+		<div>
+			제목 <input type="text" name="title">
+			<form:errors path="title"></form:errors>
+		</div>
+		<div>
+			내용 <input type="text" name="content"> <input type="submit"
+				value="전송">
+		</div>
+	</form>
+
+
 </body>
 </html>

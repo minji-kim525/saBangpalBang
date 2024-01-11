@@ -47,7 +47,7 @@
 </c:if>
 </c:forEach>
 </c:if>
-<c:if test="${role == 'ADMIN'}">
+<c:if test="${role == 'ADMIN' and count == 0}">
 <form action="answer" method="post">
 <input type="hidden" value="${content.question_id}" name="question_id">
 <input type="hidden" value="${content.title}" name="title">
