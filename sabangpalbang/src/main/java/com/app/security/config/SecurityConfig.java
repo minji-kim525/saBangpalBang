@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,6 +26,8 @@ import com.app.security.handler.LoginFailHandler;
 @EnableWebSecurity
 public class SecurityConfig {
 
+
+	
 	@Autowired
 	private BoardUserDetailsService boardUserDetailsService;
 
@@ -77,5 +80,6 @@ public class SecurityConfig {
 	public LoginFailHandler loginFailHandler() {
 		return new LoginFailHandler();
 	}
+	
 
 }

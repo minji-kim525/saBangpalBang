@@ -8,15 +8,16 @@
 </head>
 <body>
     <h2>회원가입</h2>
-    <form action="/insert" method="post">
+    <form action="/insert" method="post" name="userInfo" onsubmit="return checkValue()">
 
         <div>
 	            <input type="text" name="id" id="id" placeholder="id"/>
-				<button type="button" id="idCheck">아이디중복확인</button>	        
+				<button type="button" id="idCheck">아이디중복확인</button>	    
+				<input type="hidden" name=idDuplication  id=idDuplication value="idUncheck"/>    
         </div>       
         <div><span id="result_checkId" style="font-size:12px;"></span></div>
         <div>
-            <input type="text" name="email" placeholder="*Email"/>
+            <input type="text" name="email" placeholder="Email"/>
         </div>
         <div>
             <input type="password" name="password" placeholder="Password"/>
@@ -28,6 +29,7 @@
 	
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+
 $(function(){
 
     $("#idCheck").click(function(){
@@ -40,19 +42,22 @@ $(function(){
             dataType: "html", // text로 넘겨주는데 응답을 받는쪽이 json으로 받아서 수정
             data: {"id":id}, 
             success: function(data){ 
-                if(data == "N"){ // 만약 성공할시
+                if(data == "N" && id.length > 0){ // 만약 성공할시
                     result = "사용 가능한 아이디입니다.";
-                    $("#result_checkId").html(result).css("color", "green"); 
+                    $("#result_checkId").html(result).css("color", "green");
+                    $("#idDuplication").attr("value","idCheck");
                  
-             }else{ // 만약 실패할시
+             }else if(data != "N" && id.length > 0){ // 만약 실패할시
                  result="이미 사용중인 아이디입니다.";
                  $("#result_checkId").html(result).css("color","red"); 
+             }else {
+            	 result = "아이디를 입력해주세요"
+            	 $("#result_checkId").html(result).css("color","red"); 	
              }
                  
          },
-         error: function (request, status,error) {
-             alert("ajax 실행 실패");
-             alert("code:" + request.status + "\n" + "error :" + error);
+         error: function () {
+             alert("에러 발생");
          }
         });
         
@@ -61,4 +66,5 @@ $(function(){
 });
 
 </script>
+
 </html>
