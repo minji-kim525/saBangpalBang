@@ -15,6 +15,9 @@ public class MyUploadResponseDto {
 	private int ps_service_type;
 	private int property_type_id;
     private int price;
+    private int deposit;
+    private int month_price;
+    private String telephone;
     private boolean private_property;
     private String pname;
     private int like_list_id;

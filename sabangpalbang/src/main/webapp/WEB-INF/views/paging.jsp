@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="paging">
-<c:choose><c:when test="${param.searchType==null&&param.searchType==null}"><c:url var="action" value="${requestScope['javax.servlet.forward.servlet_path']}?"/></c:when>
+<c:choose><c:when test="${param.searchType==null&&param.keyword==null}"><c:url var="action" value="${requestScope['javax.servlet.forward.servlet_path']}?"/></c:when>
 <c:otherwise><c:url var="action" value="${requestScope['javax.servlet.forward.servlet_path']}?searchType=${param.searchType}&keyword=${param.keyword}&"/></c:otherwise>
 </c:choose>
 <c:if test="${param.existPrevPage}">

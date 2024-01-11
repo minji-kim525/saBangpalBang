@@ -27,7 +27,7 @@ public interface MypageDao {
 			+ "values(0,1,#{property_service_id})")
 	int insertConfirm(@Param("property_service_id") int property_service_id);
 
-	@Select("select property_service_id, ps_service_type,property_type_id,price,pname,private_property from property_service where user_id=#{user_id}")
+	@Select("select property_service_id, ps_service_type,property_type_id,price,pname,private_property,telephone,month_price,deposit from property_service where user_id=#{user_id}")
 	List<MyUploadResponseDto> getMyUploadAll(int user_id);
 
 	ImagesDTO getImage(@Param("id1") int id, @Param("id2") int ps_type);
