@@ -38,6 +38,16 @@ public class SecurityController {
 		return "index";
 	}
     
+    @GetMapping("/admin")
+	public String admin() {
+		return "admin";
+	}
+    
+    @GetMapping("/accessDenied")
+	public String accessdenied() {
+		return "accessDenied";
+	}
+    
     //유저정보
     @GetMapping("/user")
 	public String forUser(@AuthenticationPrincipal SecurityUser user, Model model) {

@@ -45,7 +45,6 @@ $(function(){
                 if(data == "N" && id.length > 0){ // 만약 성공할시
                     result = "사용 가능한 아이디입니다.";
                     $("#result_checkId").html(result).css("color", "green");
-                    $("#idDuplication").attr("value","idCheck");
                  
              }else if(data != "N" && id.length > 0){ // 만약 실패할시
                  result="이미 사용중인 아이디입니다.";
