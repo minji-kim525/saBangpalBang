@@ -28,11 +28,11 @@ public class ManagerController {
 	public String searchPropertyManage(@AuthenticationPrincipal SecurityUser user,
 			@ModelAttribute SearchDto searchDto,Model model) {
 		PagingResponseDto<PropertyResponseDto>list=service.searchPropertyManage(searchDto);
-		if(user.getUsers().getRole().equals("ADMIN")&&!list.getList().isEmpty())
+		if(user.getUsers().getRole().equals("ROLE_ADMIN")&&!list.getList().isEmpty())
 			{
 			model.addAttribute("list", list.getList());
 			model.addAttribute("pagination",list.getPaginationDto());
-			}else if(!user.getUsers().getRole().equals("ADMIN")){
+			}else if(!user.getUsers().getRole().equals("ROLE_ADMIN")){
 				throw new IllegalArgumentException("접근 권한이 없습니다.");
 			}else {
 				model.addAttribute("listcheck",0);
@@ -53,11 +53,11 @@ public class ManagerController {
 		public String getConfirm(@AuthenticationPrincipal SecurityUser user,
 				@ModelAttribute SearchDto searchDto,Model model) {
 			PagingResponseDto<PropertyResponseDto>list=service.getConfirm(searchDto);
-			if(user.getUsers().getRole().equals("ADMIN")&&!list.getList().isEmpty())
+			if(user.getUsers().getRole().equals("ROLE_ADMIN")&&!list.getList().isEmpty())
 				{
 				model.addAttribute("list", list.getList());
 				model.addAttribute("pagination",list.getPaginationDto());
-				}else if(!user.getUsers().getRole().equals("ADMIN")){
+				}else if(!user.getUsers().getRole().equals("ROLE_ADMIN")){
 					throw new IllegalArgumentException("접근 권한이 없습니다.");
 				}else {
 					model.addAttribute("listcheck",0);
@@ -79,11 +79,11 @@ public class ManagerController {
 		public String getUsers(@AuthenticationPrincipal SecurityUser user,
 				@ModelAttribute SearchDto searchDto,Model model) {
 			PagingResponseDto<UsersResponseDto>list=service.getUsers(searchDto);
-			if(user.getUsers().getRole().equals("ADMIN")&&!list.getList().isEmpty())
+			if(user.getUsers().getRole().equals("ROLE_ADMIN")&&!list.getList().isEmpty())
 				{
 				model.addAttribute("list", list.getList());
 				model.addAttribute("pagination",list.getPaginationDto());
-				}else if(!user.getUsers().getRole().equals("ADMIN")){
+				}else if(!user.getUsers().getRole().equals("ROLE_ADMIN")){
 					throw new IllegalArgumentException("접근 권한이 없습니다.");
 				}else {
 					model.addAttribute("listcheck",0);
