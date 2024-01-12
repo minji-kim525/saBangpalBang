@@ -43,6 +43,14 @@ public interface MypageDao {
 	List<titleDto> myQuestionList(@Param("user_id")int user_id);
 
 	List<NotifyResponseDto> getNotify(int user_id);
+
+	@Select("select title from question where question_id=#{question_id}")
+	String getNotifyQ(Integer question_id);
+	@Select("select pname from property_service where property_service_id=#{property_service_id}")
+	String getNotifyP(int property_service_id);
+
+	@Update("update notify set notify_check = not notify_check where notify_id = #{notify_id}")
+	void updateNotifyStatus(int notify_id);
 	
 }
 
