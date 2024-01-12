@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,12 +105,12 @@ public class QuestionController {
 
 	// 문의 등록
 	@PostMapping("question/insert")
-	public String insert(@Validated InsertDto dto, BindingResult error,
+	public String insert(@ModelAttribute("dto")@Valid InsertDto dto, BindingResult error,
 			@AuthenticationPrincipal SecurityUser user, Model m) {
-		if (error.hasErrors()) {	
-			error.reject("nocood", "제목을입력해주세요");
+		if (error.hasErrors()) {
 			return "question/insert";
-		} 
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_id", user.getUsers().getUser_id());
 		map.put("title", dto.getTitle());

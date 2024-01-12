@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +11,10 @@
 등록날짜:${content.created_at}<br>
 ===================답변=========================<br>
 
+
 <form action="update" method="post">
 <input type="text" value="${answer}" name="content">
+<form:errors path="content"></form:errors>
 <input type="hidden" value="${answer_id}" name="answer_id">
 <input type="hidden" value="${question_id}" name="question_id">
 <input type="submit" value="답변하기"/>
