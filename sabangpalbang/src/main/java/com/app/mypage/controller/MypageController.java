@@ -7,12 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,7 +24,6 @@ import com.app.mypage.service.MypageService;
 import com.app.security.config.SecurityUser;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 
 @Controller
 public class MypageController {
@@ -54,7 +50,7 @@ public class MypageController {
 
 	//방 업로드 폼
 	@GetMapping("mypage/upload")
-	public String form( @AuthenticationPrincipal SecurityUser user, @ModelAttribute("uploadRequestDto") UploadRequestDto uploadRequestDto) {
+	public String form( @AuthenticationPrincipal SecurityUser user) {
 
 		if(user.getUsers().getId().isEmpty())
 		{
@@ -66,10 +62,8 @@ public class MypageController {
 	
     //방업로드
 	@PostMapping("mypage/upload")
-	public String upload( @AuthenticationPrincipal SecurityUser user, @Valid @ModelAttribute("uploadRequestDto") UploadRequestDto uploadRequestDto,BindingResult error,HttpServletRequest request) throws IllegalStateException,IOException {
-		 if(error.hasErrors()) {
-		        return "mypage/roomUploadForm";
-		    }
+	public String upload( @AuthenticationPrincipal SecurityUser user, UploadRequestDto uploadRequestDto,HttpServletRequest request) throws IllegalStateException,IOException {
+		
 		List<MultipartFile>files=uploadRequestDto.getFiles();
 //		String path=request.getServletContext().getRealPath("/roomImg");
 		String path = request.getServletContext().getRealPath("/roomImg");
