@@ -3,6 +3,7 @@ package com.app.mypage.dto;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +25,8 @@ public class UploadRequestDto {
     private int deposit;
     private int charge;
     private int count;
-//    private Date registration_date;
+    private Date registration_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date move_date;
     private String address;
     private String description;
@@ -32,6 +34,6 @@ public class UploadRequestDto {
     private boolean private_property;
     private int month_price;
     private String telephone;
-    List<MultipartFile> files; 
+    List<MultipartFile> files;
 
 }
