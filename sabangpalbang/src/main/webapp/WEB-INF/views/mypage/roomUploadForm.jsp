@@ -22,39 +22,6 @@
 	<option value = "3">월세</option>
 	</select>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript">
-		function show_form(select_btn){
-		  if(select_btn == "1") {
-		    $("#price").show();
-		    $("#price input").prop('disabled', false); // 매매가 입력란 활성화
-
-		    $("#deposit, #month_price").hide();
-		    $("#deposit input, #month_price input").val('').prop('disabled', true); // 전세, 월세 입력란 비활성화 및 비우기
-		  } else if(select_btn=="2") {
-			  $("#price,#month_price").hide();
-			  $("#price input, #month_price input").val('').prop('disabled', true); // 매매가 입력란 비활성화 및 비우기
-
-			  $("#deposit").show();
-			  $("#deposit input").prop('disabled', false); // 전세 입력란 활성화
-		
-			}else{
-				$("#price").hide();
-			    $("#price input").val('').prop('disabled', true); // 매매가 입력란 비활성화 및 비우기
-
-			    $("#deposit, #month_price").show();
-			    $("#deposit input, #month_price input").prop('disabled', false); // 전세, 월세 입력란 활성화
-			}
-		}
-		
-		$(document).ready(function() {
-		    // 초기에 숨김 상태 설정
-		    $("#deposit").hide();
-		    $("#month_price").hide();
-		});
-		
-		
-	</script>
 	
 	<div>건물명 : <input type="text" name="pname"></div>
 	<div id="price">매매가 : <input type="number" name="price"/></div>
@@ -87,18 +54,47 @@
 	
 	<input type="button" value="등록" id="submit_form">
 	</form>
-	
-	<script>
-		$("#submit_form").click(function() {
-				if (confirm("해당 게시물을 등록 하시겠습니까?") == true) { //확인
-					$("#allsubmit").submit();
-				} else { //취소
-					return false;
-				}
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+	 $(document).ready(function() {
+	        // 초기 상태 설정을 위해 show_form 함수 호출
+	        show_form("1");
 
-			});
+	        $("#submit_form").click(function() {
+	            if (confirm("해당 게시물을 등록 하시겠습니까?") == true) {
+	                $("#allsubmit").submit();
+	            } else {
+	                return false;
+	            }
+	        });
+	    });
 	
+		function show_form(select_btn){
+		  if(select_btn == "1") {
+		    $("#price").show();
+		    $("#price input").prop('disabled', false); // 매매가 입력란 활성화
+
+		    $("#deposit, #month_price").hide();
+		    $("#deposit input, #month_price input").val('').prop('disabled', true); // 전세, 월세 입력란 비활성화 및 비우기
+		  } else if(select_btn=="2") {
+			  $("#price,#month_price").hide();
+			  $("#price input, #month_price input").val('').prop('disabled', true); // 매매가 입력란 비활성화 및 비우기
+
+			  $("#deposit").show();
+			  $("#deposit input").prop('disabled', false); // 전세 입력란 활성화
+		
+			}else{
+				$("#price").hide();
+			    $("#price input").val('').prop('disabled', true); // 매매가 입력란 비활성화 및 비우기
+
+			    $("#deposit, #month_price").show();
+			    $("#deposit input, #month_price input").prop('disabled', false); // 전세, 월세 입력란 활성화
+			}
+		}
+		
+		
+		
 	</script>
-
+	
 </body>
 </html>
