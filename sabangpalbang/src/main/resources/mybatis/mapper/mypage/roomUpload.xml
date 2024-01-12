@@ -96,13 +96,16 @@
 		    n.notify_id,
 		    n.notify_check,
 		    n.confirm_id,
-		   	n.quesition_id
-		    c.confirm_check
+		   	n.question_id,
+		    c.confirm_check,
+		    c.property_service_id,
+		    c.ps_service_type
 		FROM 
 		    notify n   
 		INNER JOIN 
 		    confirm c ON n.confirm_id = c.confirm_id
 		WHERE user_id=#{user_id}
+		ORDER BY n.notify_id
 			
 	</select>
 </mapper>

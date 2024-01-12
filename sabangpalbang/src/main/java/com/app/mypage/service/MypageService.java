@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +73,7 @@ public class MypageService {
 		return uploadAndQuestionDto;
 	}
 	
+	@Transactional
 	//비공개 설정
 	public int updatePrivate(int property_service_id,int user_id) {
 		return dao.updatePrivate(property_service_id,user_id);
@@ -91,7 +91,7 @@ public class MypageService {
 		}
 		return list;
 	}
-	
+	@Transactional
 	//찜하기
 	public void insertLikeList(LikeListDTO likeListDto, int user_id) {
 		likeListDto.setUser_id(user_id);
@@ -100,6 +100,20 @@ public class MypageService {
 
 
 	public List<NotifyResponseDto> getNotify(int user_id) {
-		return dao.getNotify(user_id);
+		 List<NotifyResponseDto>dto=dao.getNotify(user_id);
+		 for(NotifyResponseDto d:dto ) {
+			 if(d.getQuestion_id()!=null) {
+				 d.setTitle(dao.getNotifyQ(d.getQuestion_id()));
+				 }
+			 if(d.getConfirm_id()!=null) {
+				 d.setPname(dao.getNotifyP(d.getProperty_service_id()));
+			 }
+		 }
+		 return dto;
+	}
+	@Transactional
+	public void updateNotifyStatus(int notify_id) {
+
+		dao.updateNotifyStatus(notify_id);
 	}
 }
