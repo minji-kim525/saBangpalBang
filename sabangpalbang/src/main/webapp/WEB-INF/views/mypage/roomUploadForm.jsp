@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,18 +9,20 @@
 </head>
 <body>
 <h3>방 내놓기</h3>
-<form method="post" enctype="multipart/form-data" id="allsubmit">
+<form:form action="upload" method="post" enctype="multipart/form-data" id="allsubmit" modelAttribute="uploadRequestDto">
 	<input type="hidden" name="ps_service_type" value=1>
-	주소 : <input type="text" name="address" id="sample4_postcode" placeholder="우편번호"><br>
+	<div>주소 : <input type="text" name="address" id="sample4_postcode" placeholder="우편번호">
+	</div>
+	
 	<!-- <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
 	<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
 	<input type="text" id="sample4_jibunAddress" placeholder="지번주소"> -->
-	매물유형 : <select  name="property_type_id" onchange="show_form(this.value)">
+	<div>매물유형 : <select  name="property_type_id" onchange="show_form(this.value)">
 	<option value = "1">매매</option>
 	<option value = "2">전세</option>
 	<option value = "3">월세</option>
 	</select>
-	
+	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript">
 		function show_form(select_btn){
@@ -54,25 +58,36 @@
 	</script>
 	
 	<div>건물명 : <input type="text" name="pname"></div>
-	<div id="price">매매가 : <input type="number" name="price"></div>
+	<div id="price">매매가 : <input id="forminput" type="number" name="price"/></div>
 	<div id="deposit">보증금 : <input type="number" name="deposit"></div>
 	<div id="month_price">월세 : <input type="number" name="month_price"></div>
 	
-	<div>평수 : <input type="number" name="feet"></div>
-	<div>층 : <input type="number" name="floor"></div>
-	<div>관리비 : <input type="number" name="charge"></div>
-	<div>방 개수 : <input type="number" name="count"></div>
-	<div>입주 가능일 : <input type="date" name="move_date"></div>
+	<div>평수 : <input type="number" name="feet" value="${uploadRequestDto.feet}"></div>
+	
+	<div>층 : <input type="number" name="floor" value="${uploadRequestDto.floor}"></div>
+	
+	
+	<div>관리비 : <input name="charge" value="${uploadRequestDto.charge}"></div>
+	
+
+	<div>방 개수 : <input name="count" value="${uploadRequestDto.count}"></div>
+	
+
+	<div>입주 가능일 : <input type="date" name="move_date" value="${uploadRequestDto.move_date}"></div>
+	
+	
 	<div>상세 설명 : <input type="text" name="description"></div>
-	<div>연락처 : <input type="text" name="telephone"></div>
-<!-- 	기타정보 : <input type="text" name="description"><br>
- --><div>파일첨부 :<input type="file" name="files" multiple="multiple"></div>
+	<div>연락처 : <input type="text" name="telephone" value="${uploadRequestDto.telephone}"></div>
+	
+
+	<div>파일첨부 :<input type="file" name="files" multiple="multiple" ></div>
+
 	
 	
 	
 	
 	<input type="button" value="등록" id="submit_form">
-	</form>
+	</form:form>
 	
 	<script>
 		$("#submit_form").click(function() {

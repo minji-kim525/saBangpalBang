@@ -54,7 +54,7 @@
 								<c:when test="${property.property_type_id==2}">
 								전세
 								</c:when>
-								<c:when test="${property.property_type_id==2}">
+								<c:when test="${property.property_type_id==3}">
 								월세
 								</c:when>
 								</c:choose>
