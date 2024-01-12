@@ -17,10 +17,6 @@
             Email<br>
             <input type="text" name="email" value="${user.email}"/>
         </p>
-        <p>
-            현재 비밀번호<br>
-            <input type="password" name="password" placeholder="현재 비밀번호"/>
-        </p>
         <tr>
             <td>새 비밀번호</td>
             <td><input type="password" id="newpassword" name="newpassword" placeholder="새 비밀번호"/></td>

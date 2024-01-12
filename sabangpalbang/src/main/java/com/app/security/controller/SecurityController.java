@@ -5,6 +5,7 @@ import com.app.security.service.UserService;
 import com.app.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.acls.model.NotFoundException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,7 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
@@ -32,6 +36,16 @@ public class SecurityController {
     @GetMapping("/")
 	public String index() {
 		return "index";
+	}
+    
+    @GetMapping("/admin")
+	public String admin() {
+		return "admin";
+	}
+    
+    @GetMapping("/accessDenied")
+	public String accessdenied() {
+		return "accessDenied";
 	}
     
     //유저정보
@@ -70,8 +84,20 @@ public class SecurityController {
             return "insert";
         return "redirect:/";
     }
+    
+    @RequestMapping("/idCheck")
+    @ResponseBody  
+    public String idCheck(@RequestParam(value="id") String id) {
+        String result="N";
+        //System.out.println("controller id"+id);
+        int flag = userService.idCheck(id);
+        //System.out.println("flag 값" +flag);
+        if(flag == 1) result ="Y"; 
+        //아이디가 있을시 Y 없을시 N 으로jsp view 로 보냄
+        return result;
+    }
 
-    @PostMapping("/insert")
+    @PostMapping("/insert") // 오류 메세지 추가
     public String signup(UserDTO userVo) { // 회원 가입
         try {
             userService.signup(userVo);
@@ -93,7 +119,6 @@ public class SecurityController {
     public String pwcheck(@AuthenticationPrincipal SecurityUser user,@RequestParam("password")String pw,RedirectAttributes rttr,Model model) {
         String userpw = user.getUsers().getPassword();
         if(passwordEncoder.matches(pw, userpw)) {
-            
             return "redirect:/update";
         }
         else {
