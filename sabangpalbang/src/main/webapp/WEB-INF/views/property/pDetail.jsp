@@ -40,6 +40,6 @@
 	<c:forEach items="${pdetail.images}" var="image">
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
-
+	<jsp:include page="/WEB-INF/views/property/chartP.jsp" />
 </body>
 </html>

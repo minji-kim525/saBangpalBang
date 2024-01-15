@@ -84,7 +84,7 @@
 							</c:when>
 							<c:when test="${property.property_type_id == 2}">
 								<span class="property-type">전세</span>
-								<span class="price">${ChargeFunction.formatNumberWithUnit(property.price)}</span>
+								<span class="price">${ChargeFunction.formatNumberWithUnit(property.deposit)}</span>
 							</c:when>
 							<c:when test="${property.property_type_id == 3}">
 								<span class="property-type">월세</span>

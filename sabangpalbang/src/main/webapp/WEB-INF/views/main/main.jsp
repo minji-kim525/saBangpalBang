@@ -60,11 +60,12 @@
 						</c:when>
 						<c:when test="${property.property_type_id == 2}">
 							<span class="property-type">전세</span>
-							<span class="price">${ChargeFunction.formatNumberWithUnit(property.price)}</span>
+							<span class="price">${ChargeFunction.formatNumberWithUnit(property.deposit)}</span>
 						</c:when>
 						<c:when test="${property.property_type_id == 3}">
 							<span class="property-type">월세</span>
-							<span class="price"> ${property.deposit} / ${property.month_price}</span>
+							<span class="price"> ${property.deposit} /
+								${property.month_price}</span>
 						</c:when>
 					</c:choose>
 					<span class="pname">${property.pname}</span>
@@ -90,11 +91,12 @@
 						</c:when>
 						<c:when test="${propertyService.property_type_id == 2}">
 							<span class="property-type">전세</span>
-							<span class="price">${ChargeFunction.formatNumberWithUnit(propertyService.price)}</span>
+							<span class="price">${ChargeFunction.formatNumberWithUnit(propertyService.deposit)}</span>
 						</c:when>
 						<c:when test="${propertyService.property_type_id == 3}">
 							<span class="property-type">월세</span>
-							<span class="price"> ${propertyService.deposit} / ${propertyService.month_price}</span>
+							<span class="price">${propertyService.deposit} /
+								${propertyService.month_price}</span>
 						</c:when>
 					</c:choose>
 					<span class="pname">${propertyService.pname}</span>

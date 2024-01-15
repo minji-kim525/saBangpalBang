@@ -36,10 +36,9 @@
 	</p>
 	<p>설명: ${psdetail.description}</p>
 	<!-- 필요한 다른 속성들도 추가 -->
-
 	<c:forEach items="${psdetail.images}" var="image">
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
-
+	<jsp:include page="/WEB-INF/views/property/chartPs.jsp" />
 </body>
 </html>
