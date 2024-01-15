@@ -16,7 +16,9 @@
 		p.price,
 		p.property_type_id,
 		NULL AS private_property,
-		NULL AS confirm_check
+		NULL AS confirm_check,
+		p.month_price,
+		p.telephone
 		FROM
 		property p
 		WHERE
@@ -35,7 +37,9 @@
 		ps.price,
 		ps.property_type_id,
 		ps.private_property,
-		c.confirm_check
+		c.confirm_check,
+		ps.month_price,
+		ps.telephone
 		FROM property_service ps
 		LEFT JOIN confirm c ON
 		ps.property_service_id = c.property_service_id
@@ -114,7 +118,9 @@
 		move_date,
 		address,
 		description,
-		floor
+		floor,
+		month_price,
+		telephone
 		FROM property
 	</select>
 
@@ -138,6 +144,8 @@
 		ps.description,
 		ps.floor,
 		ps.private_property,
+		ps.month_price,
+		ps.telephone,
 		c.confirm_check
 		FROM
 		property_service ps
@@ -185,22 +193,59 @@
 		ps_service_type=#{id2}
 	</select>
 
-	<!-- 실거래가 -->
+	<!-- 상세정보 실거래가 -->
 	<select id="getTransaction"
 		resultType="com.app.dto.TransactionPriceDTO">
 		SELECT
-		property_type_id,
 		regional_cd,
 		dong,
-		jibun,
 		apartment_name,
-		floor,
 		deal_amount,
 		deal_year,
-		deal_month,
-		deal_day,
-		transaction_price_id
+		deal_month
 		FROM transaction_price
-		WHERE apartment_name = #{pname}
+		WHERE #{address} LIKE CONCAT('%', dong, '%') AND
+		apartment_name LIKE CONCAT('%', #{pname}, '%')
+	</select>
+
+	<!-- 아파트 실거래가 비교 -->
+	<select id="getAllTransaction"
+		resultType="com.app.dto.TransactionPriceDTO">
+		SELECT
+		regional_cd,
+		apartment_name,
+		deal_amount,
+		deal_year,
+		dong_cd
+		FROM transaction_price
+		<!-- WHERE regional_cd = #{regional_cd} AND dong_cd = #{dong_cd} -->
+	</select>
+	
+	<!-- 아파트 실거래가 그래프 정보 -->
+ 	<select id="getTransGraph"
+		resultType="com.app.dto.TransactionPriceDTO">
+		SELECT
+		regional_cd,
+		apartment_name,
+		deal_amount,
+		deal_year,
+		dong_cd,
+		apart_cd
+		FROM transaction_price
+		WHERE regional_cd = #{regional_cd} AND dong_cd = #{dong_cd} AND apart_cd= #{apart_cd}
+	</select>
+	
+	<!-- 동 이름 목록 -->
+	<select id="getAllDong" resultType="com.app.dto.TransactionPriceDTO">
+		SELECT DISTINCT dong, regional_cd, dong_cd
+		FROM transaction_price
+		WHERE regional_cd = #{regional_cd}
+	</select>
+	
+	<!--  아파트 이름 목록 -->
+	<select id="getAllName" resultType="com.app.dto.TransactionPriceDTO">
+		SELECT DISTINCT dong, apartment_name, dong_cd, apart_cd, regional_cd
+		FROM transaction_price
+		WHERE regional_cd = #{regional_cd} AND dong_cd = #{dong_cd}
 	</select>
 </mapper>

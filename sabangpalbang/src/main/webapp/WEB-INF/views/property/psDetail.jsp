@@ -8,7 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>서비스 매물 상세정보</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -37,10 +36,9 @@
 	</p>
 	<p>설명: ${psdetail.description}</p>
 	<!-- 필요한 다른 속성들도 추가 -->
-
 	<c:forEach items="${psdetail.images}" var="image">
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
-	<%@ include file="chart.jsp"%>
+	<jsp:include page="/WEB-INF/views/property/chartPs.jsp" />
 </body>
 </html>

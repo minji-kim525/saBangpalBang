@@ -14,6 +14,8 @@ public class TransactionPriceDTO {
     private int deal_year;
     private int deal_month;
     private int deal_day;
+    private int dong_cd;
+    private int apart_cd;
     
     PropertyTypeDTO property_type_id;
 
