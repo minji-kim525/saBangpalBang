@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -29,19 +30,32 @@ public class AuthProvider implements AuthenticationProvider {
         PasswordEncoder passwordEncoder = userService.passwordEncoder();
         UsernamePasswordAuthenticationToken token;
         UserDTO userVo = userService.getUserById(id);
-
-        if (userVo != null && passwordEncoder.matches(password, userVo.getPassword())) { // 일치하는 user 정보가 있는지 확인
-            List<GrantedAuthority> roles = new ArrayList<>();
-            roles.add(new SimpleGrantedAuthority("USER")); // 권한 부여
-
-            token = new UsernamePasswordAuthenticationToken(userVo.getId(), null, roles);
-//            userVo.setPassword(null);
-//            token.setDetails(userVo);
-
-            return token;
+        
+        if(userVo == null) {
+            throw new UsernameNotFoundException(id);
+        }
+        
+        if (!passwordEncoder.matches(password, userVo.getPassword())) {
+            throw new BadCredentialsException(id);
         }
 
-        throw new BadCredentialsException("No such user or wrong password.");
+        List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority("USER")); // 권한 부여
+        return new UsernamePasswordAuthenticationToken(userVo.getId(), null, roles);
+
+
+//        if (userVo != null && passwordEncoder.matches(password, userVo.getPassword())) { // 일치하는 user 정보가 있는지 확인
+//            List<GrantedAuthority> roles = new ArrayList<>();
+//            roles.add(new SimpleGrantedAuthority("USER")); // 권한 부여
+//
+//            token = new UsernamePasswordAuthenticationToken(userVo.getId(), null, roles);
+////            userVo.setPassword(null);
+////            token.setDetails(userVo);
+//
+//            return token;
+//        }
+//
+//        throw new BadCredentialsException("No such user or wrong password.");
     }
 
     @Override

@@ -25,8 +25,8 @@ public class UploadRequestDto {
     private int deposit;
     private int charge;
     private int count;
-//    private Date registration_date;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date registration_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date move_date;
     private String address;
     private String description;
@@ -34,6 +34,6 @@ public class UploadRequestDto {
     private boolean private_property;
     private int month_price;
     private String telephone;
-    List<MultipartFile> files; 
+    List<MultipartFile> files;
 
 }
