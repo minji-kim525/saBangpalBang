@@ -22,6 +22,8 @@ import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.dto.PropertyResultDTO;
 import com.app.property.service.SearchAllService;
 import com.app.security.config.SecurityUser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class SearchAllController {
@@ -47,37 +49,26 @@ public class SearchAllController {
 	// 서비스매물 상세정보
 	@GetMapping("/property/psDetail")
 	public String psDetail(@AuthenticationPrincipal SecurityUser user, @RequestParam("propertyId") int propertyId,
-			@RequestParam("ps_service_type") int psServiceType, 
-			@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) {
+			@RequestParam("ps_service_type") int psServiceType,  
+			@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) throws JsonProcessingException {
 		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType);
-		List<TransactionPriceDTO> chart = allservice.getTransaction(address, pname);
-		m.addAttribute("chart", chart);
 		m.addAttribute("psdetail", psdetail);
-//		System.out.println(chart);
 		return "property/psDetail";
 	}
 	
-	@GetMapping("/property/psDetailJson")
-	@ResponseBody
-	public PropertyDetailDTO psDetailJson(@AuthenticationPrincipal SecurityUser user,
-			@RequestParam("propertyId") int propertyId, @RequestParam("ps_service_type") int psServiceType) {
-		return allservice.getpsDetail(propertyId, psServiceType);
-	}
-	
-	@GetMapping("/property/psApartJson")
-	@ResponseBody
-	public List<TransactionPriceDTO> psApartJson(@RequestParam String address,
-	                                      @RequestParam String pname) {
-	    return allservice.getTransaction(address, pname);
-	}
+	// 상세정보 실거래가 그래프
+		@GetMapping("/getTransGraph")
+		@ResponseBody
+		public List<TransactionPriceDTO> getTransaction(@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) {
+			List<TransactionPriceDTO> chart = allservice.getTransaction(address, pname);
+			m.addAttribute("chart", chart);
+			return chart;
+		}
 	
 	// 크롤링매물 상세정보
 	@GetMapping("/property/pDetail")
-	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,
-			@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) {
+	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,Model m) {
 		PropertyDetailDTO pdetail = allservice.getpDetail(propertyId, pServiceType);
-		List<TransactionPriceDTO> chart = allservice.getTransaction(address, pname);
-		m.addAttribute("chart", chart);
 		m.addAttribute("pdetail", pdetail);
 		return "property/pDetail";
 	}
@@ -93,11 +84,11 @@ public class SearchAllController {
 	}
 
 	// 실거래가 비교
-	@GetMapping("/transaction")
+//	@GetMapping("/transaction")
 //	@ResponseBody
-	public String getAllTransaction() {
-		return "/property/transaction";
-	}
+//	public String getAllTransaction() {
+//		return "/property/transaction";
+//	}
 	
 	@GetMapping("/transactionJson")
 	@ResponseBody
