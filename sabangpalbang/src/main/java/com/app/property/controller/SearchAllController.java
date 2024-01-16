@@ -64,7 +64,7 @@ public class SearchAllController {
 		return allservice.getpsDetail(propertyId, psServiceType);
 	}
 	
-	@GetMapping("/property/psApartJson")
+	@GetMapping("/property/getApartJson")
 	@ResponseBody
 	public List<TransactionPriceDTO> psApartJson(@RequestParam String address,
 	                                      @RequestParam String pname) {

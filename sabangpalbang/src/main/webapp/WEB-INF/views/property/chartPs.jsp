@@ -43,7 +43,7 @@
 						console.log('pname:', pname);
 
 						var queryXhr = new XMLHttpRequest();
-						queryXhr.open('POST', '/property/psApartJson?address='
+						queryXhr.open('GET', '/property/getApartJson?address='
 								+ address + '&pname=' + pname, true);
 						queryXhr.onreadystatechange = function() {
 							if (queryXhr.readyState == 4

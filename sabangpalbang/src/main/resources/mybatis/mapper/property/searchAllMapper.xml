@@ -215,8 +215,7 @@
 		regional_cd,
 		apartment_name,
 		deal_amount,
-		deal_year,
-		dong_cd
+		deal_year
 		FROM transaction_price
 		<!-- WHERE regional_cd = #{regional_cd} AND dong_cd = #{dong_cd} -->
 	</select>
