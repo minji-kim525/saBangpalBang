@@ -60,7 +60,7 @@ console.log('pname:' + pname);
     fetch('/getTransGraph?address=' + address + '&pname=' + pname)
         .then(response => response.json())
         .then(chartData => {
-            console.log('chartData:', chartData);
+           /*  console.log('chartData:', chartData); */
 
             var ctx = document.getElementById('myChart').getContext('2d');
 

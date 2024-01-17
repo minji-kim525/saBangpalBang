@@ -137,7 +137,7 @@
 		}
 	</script>
 
-	<canvas id="realEstateChart" style="height: 50vh; width: 50vw"></canvas>
+	<canvas id="realEstateChart" style="height: 40vh; width: 30vw"></canvas>
 
 	<!-- 동에 따라 아파트 이름이 바뀌는 스크립트 -->
 	<script>
@@ -198,105 +198,106 @@
 
 		// Graph() 함수 내에서 그래프 생성 코드 추가
 		function Graph() {
-			var selectedCode = document.getElementById("apartment_name").value;
-			var selectedCode2 = document.getElementById("apartment_name2").value;
+    var selectedCode = document.getElementById("apartment_name").value;
+    var selectedCode2 = document.getElementById("apartment_name2").value;
 
-			// '아파트' 옵션이 선택되지 않았거나 '아파트' 옵션일 경우 함수 실행을 중단
-			if (!selectedCode || selectedCode === '아파트') {
-				regionCode = '00000';
-				dongCode = '00000';
-				apartCode = '00000';
-			} else {
-				regionCode = selectedCode.slice(0, 5); // 지역코드
-				dongCode = selectedCode.slice(5, 10); // 동코드
-				apartCode = selectedCode.slice(10); // 아파트 코드
-			}
-			if (!selectedCode2 || selectedCode2 === '아파트') {
-				regionCode2 = '00000';
-				dongCode2 = '00000';
-				apartCode2 = '00000';
-			} else {
-				regionCode2 = selectedCode2.slice(0, 5); // 지역코드
-				dongCode2 = selectedCode2.slice(5, 10); // 동코드
-				apartCode2 = selectedCode2.slice(10); // 아파트 코드
-			}
+    // '아파트' 옵션이 선택되지 않았거나 '아파트' 옵션일 경우 함수 실행을 중단
+    if (!selectedCode || selectedCode === '아파트') {
+        regionCode = '00000';
+        dongCode = '00000';
+        apartCode = '00000';
+    } else {
+        regionCode = selectedCode.slice(0, 5); // 지역코드
+        dongCode = selectedCode.slice(5, 10); // 동코드
+        apartCode = selectedCode.slice(10); // 아파트 코드
+    }
+    if (!selectedCode2 || selectedCode2 === '아파트') {
+        regionCode2 = '00000';
+        dongCode2 = '00000';
+        apartCode2 = '00000';
+    } else {
+        regionCode2 = selectedCode2.slice(0, 5); // 지역코드
+        dongCode2 = selectedCode2.slice(5, 10); // 동코드
+        apartCode2 = selectedCode2.slice(10); // 아파트 코드
+    }
 
-			var existingChart = Chart.getChart("realEstateChart");
-		    if (existingChart) {
-		        existingChart.destroy();
-		    }
+    var existingChart = Chart.getChart("realEstateChart");
+    if (existingChart) {
+        existingChart.destroy();
+    }
 
-		    // 첫 번째 아파트와 두 번째 아파트의 데이터를 병렬로 로드합니다.
-		    var xhr = new XMLHttpRequest();
-		    var xhr2 = new XMLHttpRequest();
+    // 첫 번째 아파트 데이터를 로드합니다.
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = handleResponse;
+    xhr.open("GET", "/transactionJson?regional_cd=" + regionCode + "&dong_cd=" + dongCode + "&apart_cd=" + apartCode, true);
+    xhr.send();
 
-		    xhr.onreadystatechange = handleResponse;
-		    xhr2.onreadystatechange = handleResponse;
+    // 두 번째 아파트 데이터를 로드합니다.
+    if (selectedCode2 && selectedCode2 !== '아파트') {
+        var xhr2 = new XMLHttpRequest();
+        xhr2.onreadystatechange = handleResponse;
+        xhr2.open("GET", "/transactionJson?regional_cd=" + regionCode2 + "&dong_cd=" + dongCode2 + "&apart_cd=" + apartCode2, true);
+        xhr2.send();
+    }
 
-		    function handleResponse() {
-		        if (xhr.readyState === 4 && xhr.status === 200 && xhr2.readyState === 4 && xhr2.status === 200) {
-		            var data = JSON.parse(xhr.responseText);
-		            var data2 = JSON.parse(xhr2.responseText);
+    function handleResponse() {
+        if ((xhr.readyState === 4 && xhr.status === 200) || (xhr2 && xhr2.readyState === 4 && xhr2.status === 200)) {
+            var data = JSON.parse(xhr.responseText);
+            var data2 = xhr2 ? JSON.parse(xhr2.responseText) : [];
 
-		            var chartData = {
-		                labels: data.map(function(item) {
-		                    return item.deal_year;
-		                }),
-		                datasets: [{
-		                    label: data[0]?.apartment_name + ' (단위 : 만 원)',
-		                    data: data.map(function(item) {
-		                        return item.deal_amount;
-		                    }),
-		                    borderColor: 'rgb(32,164,132)',
-		                    borderWidth: 1,
-		                    fill: false
-		                }]
-		            };
+            var chartData = {
+                labels: data.map(function (item) {
+                    return item.deal_year;
+                }),
+                datasets: []
+            };
 
-		            if (data2.length > 0) {
-		                chartData.datasets.push({
-		                    label: data2[0]?.apartment_name + ' (단위 : 만 원)',
-		                    data: data2.map(function(item) {
-		                        return item.deal_amount;
-		                    }),
-		                    borderColor: 'rgb(82,33,163)',
-		                    borderWidth: 1,
-		                    fill: false
-		                });
-		            }
+            if (data.length > 0) {
+                chartData.datasets.push({
+                    label: data[0]?.apartment_name + ' (단위 : 만 원)',
+                    data: data.map(function (item) {
+                        return item.deal_amount;
+                    }),
+                    borderColor: 'rgb(32,164,132)',
+                    borderWidth: 1,
+                    fill: false
+                });
+            }
 
-		            createChart(chartData);
-		        }
-		    }
+            if (data2.length > 0) {
+                chartData.datasets.push({
+                    label: data2[0]?.apartment_name + ' (단위 : 만 원)',
+                    data: data2.map(function (item) {
+                        return item.deal_amount;
+                    }),
+                    borderColor: 'rgb(82,33,163)',
+                    borderWidth: 1,
+                    fill: false
+                });
+            }
 
-		    xhr.open("GET", "/transactionJson?regional_cd=" + regionCode + "&dong_cd=" + dongCode + "&apart_cd=" + apartCode, true);
-		    xhr.send();
+            createChart(chartData);
+        }
+    }
 
-		    // 두 번째 아파트에 대한 데이터를 로드합니다.
-		    if (selectedCode2 && selectedCode2 !== '아파트') {
-		        xhr2.open("GET", "/transactionJson?regional_cd=" + regionCode2 + "&dong_cd=" + dongCode2 + "&apart_cd=" + apartCode2, true);
-		        xhr2.send();
-		    }
-		}
-
-		// 그래프를 생성하는 함수
-		function createChart(chartData) {
-			var ctx = document.getElementById('realEstateChart').getContext(
-					'2d');
-			var myChart = new Chart(ctx, {
-				type : 'line',
-				data : chartData,
-				options : {
-					responsive : false,
-					maintainAspectRatio : false,
-					scales : {
-						y : {
-							beginAtZero : true
-						}
-					}
-				}
-			});
-		}
+    // 그래프를 생성하는 함수
+    function createChart(chartData) {
+        var ctx = document.getElementById('realEstateChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+}
 	</script>
 </body>
 </html>
