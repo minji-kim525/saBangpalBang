@@ -21,6 +21,9 @@ public class PropertyResultDTO {
 	private int property_type_id;
 	private boolean private_property;
     private int confirm_check;
+    private String address;
+    private int deposit;
+    private int month_price;
     
     ConfirmDTO confirmDTO;
 	private List<ImagesDTO> imagesList;

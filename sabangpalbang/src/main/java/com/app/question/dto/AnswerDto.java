@@ -1,6 +1,9 @@
 package com.app.question.dto;
 
 import java.util.Date;
+
+import jakarta.validation.constraints.NotBlank;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
