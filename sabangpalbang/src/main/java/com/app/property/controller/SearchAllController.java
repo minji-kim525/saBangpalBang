@@ -87,6 +87,24 @@ public class SearchAllController {
 		m.addAttribute("getServiceProperties", getServiceProperties);
 		return "main/main";
 	}
+	
+	@GetMapping("/")
+	public String index(Model m) {
+		List<PropertyDTO> getProperties = allservice.getProperties();
+		List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
+		m.addAttribute("getProperties", getProperties);
+		m.addAttribute("getServiceProperties", getServiceProperties);
+ 		return "index";
+	}
+	
+	@GetMapping("/map")
+	public String map(Model m) {
+		List<PropertyDTO> getProperties = allservice.getProperties();
+		List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
+		m.addAttribute("getProperties", getProperties);
+		m.addAttribute("getServiceProperties", getServiceProperties);
+ 		return "map/map";
+	}
 
 	// 실거래가 비교
 	@GetMapping("/transaction")
