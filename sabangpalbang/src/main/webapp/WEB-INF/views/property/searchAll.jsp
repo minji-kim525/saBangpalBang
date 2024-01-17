@@ -17,7 +17,7 @@
 </script>
 </head>
 <body>
-	<h3>아파트 또는 오피스텔명을 입력하세요</h3>
+	<h3>아파트명을 입력하세요</h3>
 	<form action="/property/searchAllResult" method="get"
 		onsubmit="return validateSearch();">
 		검색: <input type="search" name="keyword" id="keyword"> <input type="submit" value="검색">

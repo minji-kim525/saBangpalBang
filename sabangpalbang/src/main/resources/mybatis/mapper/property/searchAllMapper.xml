@@ -18,7 +18,8 @@
 		NULL AS private_property,
 		NULL AS confirm_check,
 		p.month_price,
-		p.telephone
+		p.telephone,
+		p.address
 		FROM
 		property p
 		WHERE
@@ -39,7 +40,8 @@
 		ps.private_property,
 		c.confirm_check,
 		ps.month_price,
-		ps.telephone
+		ps.telephone,
+		ps.address
 		FROM property_service ps
 		LEFT JOIN confirm c ON
 		ps.property_service_id = c.property_service_id
