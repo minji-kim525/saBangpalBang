@@ -1,8 +1,12 @@
 package com.app.question.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.app.security.config.SecurityUser;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,15 +14,14 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class HistoryController {
 
+	
+	//최근 본 내역
+	
 	@GetMapping("history")
-	public String historyView(@CookieValue(value = "onjCounter", defaultValue = "0") String onjCounter,
-			HttpServletResponse response) {
-		onjCounter = "http://localhost:8081/question/59";
-		 Cookie cookie = new Cookie("onjCounter", 
-				 onjCounter.toString());
-				response.addCookie(cookie);
+	public String historyView(@AuthenticationPrincipal SecurityUser user, Model m) {
+		m.addAttribute("id", user.getUsers().getId());
+		
 				 return "history/history";
-
 	}
 
 }
