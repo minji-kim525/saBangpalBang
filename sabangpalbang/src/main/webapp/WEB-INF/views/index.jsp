@@ -24,7 +24,7 @@
 	<div class="header">
         <header
           class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" 
-          style="margin-bottom:0!important; padding-bottom:0!important;"
+          style="margin-bottom:0!important;"
         >
           <div class="col-md-3 mb-2 mb-md-0">
 	          <a
@@ -88,11 +88,12 @@
 					<li>
 						<div>
 							<a>
-								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important;">
+								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important; cursor:pointer" 
+								onclick="{ location.href='/property/psDetail?ps_service_type=${getServiceProperties[0].ps_service_type}&propertyId=${getServiceProperties[0].property_service_id}&address=${getServiceProperties[0].address}&pname=${getServiceProperties[0].pname}'; }">
 			                        <div class="card h-100">
 			                        <img class="card-img-top" src="/roomImg/${getServiceProperties[0].images.filename}" alt="..." style="width:280px; height:186px;"/>
-			                        <div class="card-body p-4" style="padding: 0!important;">
-			                                <div class="text-center">
+			                        <div class="card-body p-4" style="padding: 0!important;"> 
+			                                <div class="text-center">  
 			                                    <p class="Roomtype">방 개수: ${getServiceProperties[0].count}</p>
 			                                    <c:choose>
 													<c:when test="${getServiceProperties[0].property_type_id == 1}">
@@ -118,7 +119,8 @@
 						<div>
 							<a>
 								
-								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important;">
+								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important; cursor:pointer" 
+								onclick="{ location.href='/property/psDetail?ps_service_type=${getServiceProperties[1].ps_service_type}&propertyId=${getServiceProperties[1].property_service_id}&address=${getServiceProperties[1].address}&pname=${getServiceProperties[1].pname}'; }">
 			                        <div class="card h-100">
 			                        <img class="card-img-top" src="/roomImg/${getServiceProperties[1].images.filename}" alt="..." style="width:280px; height:186px;"/>
 			                        <div class="card-body p-4" style="padding: 0!important;">
@@ -149,7 +151,8 @@
 						<div>
 							<a>
 								
-								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important;">
+								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important; cursor:pointer" 
+								onclick="{ location.href='/property/psDetail?ps_service_type=${getServiceProperties[2].ps_service_type}&propertyId=${getServiceProperties[2].property_service_id}&address=${getServiceProperties[2].address}&pname=${getServiceProperties[2].pname}'; }">
 			                        <div class="card h-100">
 			                        <img class="card-img-top" src="/roomImg/${getServiceProperties[2].images.filename}" alt="..." style="width:280px; height:186px;"/>
 			                        <div class="card-body p-4" style="padding: 0!important;">
@@ -180,7 +183,8 @@
 					<li>
 						<div>
 							<a>
-								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important;">
+								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important; cursor:pointer" 
+								onclick="{ location.href='/property/psDetail?ps_service_type=${getServiceProperties[3].ps_service_type}&propertyId=${getServiceProperties[3].property_service_id}&address=${getServiceProperties[3].address}&pname=${getServiceProperties[3].pname}'; }">
 			                        <div class="card h-100">
 			                        <img class="card-img-top" src="/roomImg/${getServiceProperties[3].images.filename}" alt="..." style="width:280px; height:186px;"/>
 			                        <div class="card-body p-4" style="padding: 0!important;">

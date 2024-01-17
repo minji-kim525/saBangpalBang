@@ -90,6 +90,8 @@ public class MypageController {
 	//찜목록
 	@GetMapping("/mypage/likelist")
 	public String getMyLikeList(@AuthenticationPrincipal SecurityUser user,Model model) {
+		model.addAttribute("loginId", user.getUsername());
+    	model.addAttribute("loginEmail", user.getUsers().getEmail());
 		List<MyUploadResponseDto> likelist =service.getMyLikeList(user.getUsers().getUser_id());
 		if(!likelist.isEmpty()) {
 			model.addAttribute("likelist",likelist);
@@ -104,6 +106,8 @@ public class MypageController {
 	@GetMapping("/mypage/notify")
 	public String getNotify(@AuthenticationPrincipal SecurityUser user,Model model) {
 		List<NotifyResponseDto>list=service.getNotify(user.getUsers().getUser_id());
+		model.addAttribute("loginId", user.getUsername());
+    	model.addAttribute("loginEmail", user.getUsers().getEmail());
 		if(!list.isEmpty()) {
 			model.addAttribute("list",list);
 		}else {
