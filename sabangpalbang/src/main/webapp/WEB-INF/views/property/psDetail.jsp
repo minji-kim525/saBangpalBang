@@ -42,7 +42,7 @@
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
 
-<<<<<<< HEAD
+<!-- 로컬스토리지 저장  -->
 	<script>
  // 로컬 스토리지에 데이터를 저장하는 함수
  function saveDataToLocalStorage(data) {
@@ -87,7 +87,7 @@
   saveDataToLocalStorage(dataToSave);
 </script>
 
-=======
+
 	<!-- 서비스매물 실거래가 그래프 -->
 	<div>
 		<canvas id="myChart" style="height: 40vh; width: 30vw"></canvas>
@@ -138,6 +138,5 @@ console.log('pname:' + pname);
         })
         .catch(error => console.error('Error fetching chart data:', error));
 </script>
->>>>>>> refs/remotes/origin/master
 </body>
 </html>
