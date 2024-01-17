@@ -53,6 +53,11 @@ public class SearchAllController {
 			@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) throws JsonProcessingException {
 		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType);
 		m.addAttribute("psdetail", psdetail);
+
+		m.addAttribute("id", user.getUsers().getId());
+		m.addAttribute("propertyId", propertyId);
+//		System.out.println(psdetail);
+
 		return "property/psDetail";
 	}
 	

@@ -42,6 +42,52 @@
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
 
+<!-- 로컬스토리지 저장  -->
+	<script>
+ // 로컬 스토리지에 데이터를 저장하는 함수
+ function saveDataToLocalStorage(data) {
+   // 기존에 저장된 데이터 가져오기
+   var savedData = JSON.parse(localStorage.getItem('user:${id}'));
+
+   // 기존에 저장된 데이터가 없는 경우 새로운 배열 생성
+   if (!savedData) {
+     savedData = [];
+   }
+   
+   // 중복 값을 제거하고 새로운 값이 들어오면 최신 값으로 업데이트
+   var updatedData = savedData.filter(function(item) {
+     return item.propertyId !== data.propertyId;
+   });
+   updatedData.unshift(data);
+
+// 배열을 문자열로 변환하여 로컬 스토리지에 저장
+   localStorage.setItem('user:${id}', JSON.stringify(updatedData));
+ }
+ 
+ // 이미지 파일 경로 생성 함수
+ function getImageFilePaths() {
+   var imageFilePaths = [];
+   <c:forEach items="${psdetail.images}" var="image">
+     var imagePath = "/roomImg/" + "${image.filename}";
+     imageFilePaths.push(imagePath);
+   </c:forEach>
+   return imageFilePaths;
+ }
+
+</script>
+<script>
+  // content.question_id와 content.title을 로컬 스토리지에 저장
+  var dataToSave = {
+    propertyId: ${propertyId},
+    price: ${psdetail.price},
+    pname: "${psdetail.pname}",
+    property_type_id: ${psdetail.property_type_id},
+    image: getImageFilePaths()
+  };
+  saveDataToLocalStorage(dataToSave);
+</script>
+
+
 	<!-- 서비스매물 실거래가 그래프 -->
 	<div>
 		<canvas id="myChart" style="height: 40vh; width: 30vw"></canvas>
