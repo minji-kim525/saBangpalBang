@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,8 @@ import com.app.question.dto.titleDto;
 import com.app.question.service.AnswerService;
 import com.app.question.service.QuestionService;
 import com.app.security.config.SecurityUser;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class AnswerController {
@@ -59,7 +62,7 @@ public class AnswerController {
 	}
     // =========관리자 답변=========
 	@PostMapping("question/answer/insert")
-	public String insertAnswer(AnswerDto dto, Model m) {		
+	public String insertAnswer(@ModelAttribute("dto")AnswerDto dto,Model m) {
 		service.answerInsert(dto); 
 		return "redirect:/question/"+dto.getQuestion_id();
 	}
