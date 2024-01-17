@@ -36,7 +36,7 @@ for (var i = 0; i < savedData.length; i++) {
   
   // 이미지 표시를 위한 <img> 태그 추가
   var imageLink = document.createElement("a");
-  imageLink.href = "http://localhost:8081/property/psDetail?ps_service_type=" + data.property_type_id +"&propertyId=" + data.propertyId; // 페이지 URL에 질문 ID를 추가하여 동적으로 링크 생성
+  imageLink.href = "http://localhost:8081/property/psDetail?ps_service_type=" + data.property_type_id +"&propertyId=" + data.propertyId +"&address=" + data.address + "&pname=" + data.pname; // 페이지 URL에 질문 ID를 추가하여 동적으로 링크 생성
   var image = document.createElement("img");
   image.src = data.image;
   imageLink.appendChild(image);
@@ -47,7 +47,7 @@ var text = document.createElement("p");
   
   // 매물 이름에 링크 추가
   var nameLink = document.createElement("a");
-  nameLink.href = "http://localhost:8081/property/psDetail?ps_service_type=" + data.property_type_id +"&propertyId=" + data.propertyId; // 페이지 URL에 질문 ID를 추가하여 동적으로 링크 생성
+  nameLink.href = "http://localhost:8081/property/psDetail?ps_service_type=" + data.property_type_id +"&propertyId=" + data.propertyId +"&address=" + data.address + "&pname=" + data.pname; // 페이지 URL에 질문 ID를 추가하여 동적으로 링크 생성
   nameLink.textContent = "매물 이름: " + data.pname +  '\n' + "가격: " + data.price;
   text.appendChild(nameLink);
   

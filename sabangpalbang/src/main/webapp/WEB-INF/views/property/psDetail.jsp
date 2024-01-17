@@ -82,6 +82,7 @@
     price: ${psdetail.price},
     pname: "${psdetail.pname}",
     property_type_id: ${psdetail.property_type_id},
+    address: "${psdetail.address}",
     image: getImageFilePaths()
   };
   saveDataToLocalStorage(dataToSave);
