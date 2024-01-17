@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>서비스 매물 상세정보</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
@@ -36,11 +38,11 @@
 	</p>
 	<p>설명: ${psdetail.description}</p>
 	<!-- 필요한 다른 속성들도 추가 -->
-
 	<c:forEach items="${psdetail.images}" var="image">
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
 
+<<<<<<< HEAD
 	<script>
  // 로컬 스토리지에 데이터를 저장하는 함수
  function saveDataToLocalStorage(data) {
@@ -85,5 +87,57 @@
   saveDataToLocalStorage(dataToSave);
 </script>
 
+=======
+	<!-- 서비스매물 실거래가 그래프 -->
+	<div>
+		<canvas id="myChart" style="height: 40vh; width: 30vw"></canvas>
+	</div>
+	<script>
+	
+function getParameterByName(name) {
+	const urlSearchParams = new URLSearchParams(window.location.search);
+	return urlSearchParams.get(name);
+}
+var address = getParameterByName('address');
+var pname = getParameterByName('pname');
+console.log('address:' +address);
+console.log('pname:' + pname);
+
+    fetch('/getTransGraph?address=' + address + '&pname=' + pname)
+        .then(response => response.json())
+        .then(chartData => {
+            console.log('chartData:', chartData);
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+
+            var myChart = new Chart(ctx, {
+                type : 'line',
+                data : {
+                    labels : chartData.map(function(item) {
+	                    return item.deal_year;
+	                }),
+                    datasets : [ {
+                        label : '실거래가 변동 그래프( 단위 : 만 원)',
+                        data : chartData.map(function(item) {
+    	                    return item.deal_amount;
+    	                }),
+                        backgroundColor : 'rgb(32, 164, 132)',
+                        borderWidth : 1
+                    } ]
+                },
+                options : {
+                    responsive : false,
+                    maintainAspectRatio : false,
+                    scales : {
+                        y : {
+                            beginAtZero : true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching chart data:', error));
+</script>
+>>>>>>> refs/remotes/origin/master
 </body>
 </html>

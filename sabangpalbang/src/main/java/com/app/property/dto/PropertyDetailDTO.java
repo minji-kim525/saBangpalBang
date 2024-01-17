@@ -28,4 +28,11 @@ public class PropertyDetailDTO {
     private int month_price;
 
 	private List<ImagesDTO> images;
+	
+	public String getAddress() {
+        return address;
+    }
+	public String getPname() {
+		return pname;
+	}
 }

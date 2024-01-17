@@ -50,7 +50,7 @@
 		<c:forEach var="property" items="${getProperties}">
 			<c:if test="${property.p_service_type == 2}">
 				<div class="property"
-					onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
+					onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
 					style="cursor: pointer;">
 					<img src="/roomImg/${property.images.filename}" alt=""><br>
 					<c:choose>
@@ -60,11 +60,12 @@
 						</c:when>
 						<c:when test="${property.property_type_id == 2}">
 							<span class="property-type">전세</span>
-							<span class="price">${ChargeFunction.formatNumberWithUnit(property.price)}</span>
+							<span class="price">${ChargeFunction.formatNumberWithUnit(property.deposit)}</span>
 						</c:when>
 						<c:when test="${property.property_type_id == 3}">
 							<span class="property-type">월세</span>
-							<span class="price"> ${property.deposit} / ${property.month_price}</span>
+							<span class="price"> ${property.deposit} /
+								${property.month_price}</span>
 						</c:when>
 					</c:choose>
 					<span class="pname">${property.pname}</span>
@@ -80,7 +81,7 @@
 			<c:if
 				test="${propertyService.private_property == false && propertyService.ps_service_type == 1}">
 				<div class="property"
-					onclick="{ location.href='/property/psDetail?ps_service_type=${propertyService.ps_service_type}&propertyId=${propertyService.property_service_id}'; }"
+					onclick="{ location.href='/property/psDetail?ps_service_type=${propertyService.ps_service_type}&propertyId=${propertyService.property_service_id}&address=${propertyService.address}&pname=${propertyService.pname}'; }"
 					style="cursor: pointer;">
 					<img src="/roomImg/${propertyService.images.filename}" alt=""><br>
 					<c:choose>
@@ -90,11 +91,12 @@
 						</c:when>
 						<c:when test="${propertyService.property_type_id == 2}">
 							<span class="property-type">전세</span>
-							<span class="price">${ChargeFunction.formatNumberWithUnit(propertyService.price)}</span>
+							<span class="price">${ChargeFunction.formatNumberWithUnit(propertyService.deposit)}</span>
 						</c:when>
 						<c:when test="${propertyService.property_type_id == 3}">
 							<span class="property-type">월세</span>
-							<span class="price"> ${propertyService.deposit} / ${propertyService.month_price}</span>
+							<span class="price">${propertyService.deposit} /
+								${propertyService.month_price}</span>
 						</c:when>
 					</c:choose>
 					<span class="pname">${propertyService.pname}</span>

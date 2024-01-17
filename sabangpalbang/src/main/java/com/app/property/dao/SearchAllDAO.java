@@ -1,14 +1,15 @@
 package com.app.property.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.app.dto.ConfirmDTO;
 import com.app.dto.ImagesDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
+import com.app.dto.TransactionPriceDTO;
 import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.dto.PropertyResultDTO;
 
@@ -36,6 +37,18 @@ public interface SearchAllDAO {
 	//서비스매물 정보
 	List<PropertyServiceDTO> getServiceProperties();
 	
-	//confirm
-//	List<ConfirmDTO> getConfirm();
+	//상세정보 실거래가 그래프
+	List<TransactionPriceDTO> getTransaction(@Param("address") String address, @Param("pname") String pname);
+	
+	//아파트 실거래가 비교
+	List<TransactionPriceDTO> getAllTransaction();
+	
+	//아파트 실거래가 비교 그래프 정보
+	List<TransactionPriceDTO> getTransGraph(@Param("regional_cd") int regcd, @Param("dong_cd") int dongcd, @Param("apart_cd") int apartcd);
+	
+	//동 이름
+	List<TransactionPriceDTO> getAllDong(@Param("regional_cd") int regcd);
+	
+	//아파트 이름
+	List<TransactionPriceDTO> getAllName(@Param("regional_cd") int regcd, @Param("dong_cd") int dongcd);
 }

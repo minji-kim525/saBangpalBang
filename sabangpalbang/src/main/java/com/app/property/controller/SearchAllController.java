@@ -1,6 +1,7 @@
 package com.app.property.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,15 +9,21 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.dto.ConfirmDTO;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
+import com.app.dto.TransactionPriceDTO;
 import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.dto.PropertyResultDTO;
 import com.app.property.service.SearchAllService;
 import com.app.security.config.SecurityUser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class SearchAllController {
@@ -34,8 +41,6 @@ public class SearchAllController {
 	@GetMapping("/property/searchAllResult")
 	public String searchResult(@RequestParam("keyword") String keyword, Model m) {
 		List<PropertyResultDTO> allProperties = allservice.getAllProperties(keyword);
-//		ConfirmDTO confirm = allservice.getConfirm();
-//		System.out.println("keyword : "+ keyword);
 		m.addAttribute("allProperties", allProperties);
 		m.addAttribute("keyword", keyword);
 		return "property/searchAllResult";
@@ -44,22 +49,32 @@ public class SearchAllController {
 	// 서비스매물 상세정보
 	@GetMapping("/property/psDetail")
 	public String psDetail(@AuthenticationPrincipal SecurityUser user, @RequestParam("propertyId") int propertyId,
-			@RequestParam("ps_service_type") int psServiceType, Model m) {
+			@RequestParam("ps_service_type") int psServiceType,  
+			@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) throws JsonProcessingException {
 		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType);
 		m.addAttribute("psdetail", psdetail);
+
 		m.addAttribute("id", user.getUsers().getId());
 		m.addAttribute("propertyId", propertyId);
 //		System.out.println(psdetail);
+
 		return "property/psDetail";
 	}
-
+	
+	// 상세정보 실거래가 그래프
+		@GetMapping("/getTransGraph")
+		@ResponseBody
+		public List<TransactionPriceDTO> getTransaction(@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) {
+			List<TransactionPriceDTO> chart = allservice.getTransaction(address, pname);
+			m.addAttribute("chart", chart);
+			return chart;
+		}
+	
 	// 크롤링매물 상세정보
 	@GetMapping("/property/pDetail")
-	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,
-			Model m) {
+	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,Model m) {
 		PropertyDetailDTO pdetail = allservice.getpDetail(propertyId, pServiceType);
 		m.addAttribute("pdetail", pdetail);
-//		System.out.println(pdetail);
 		return "property/pDetail";
 	}
 
@@ -70,14 +85,35 @@ public class SearchAllController {
 		List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
 		m.addAttribute("getProperties", getProperties);
 		m.addAttribute("getServiceProperties", getServiceProperties);
- 		return "main/main";
+		return "main/main";
 	}
 
-	// confirm
-//	public String getConfirm(Model m) {
-//		List<ConfirmDTO> confirm = allservice.getConfirm();
-//		m.addAttribute("confirm", confirm);
-//		return "main/main";
+	// 실거래가 비교
+//	@GetMapping("/transaction")
+//	@ResponseBody
+//	public String getAllTransaction() {
+//		return "/property/transaction";
 //	}
+	
+	@GetMapping("/transactionJson")
+	@ResponseBody
+	public List<TransactionPriceDTO> getTransGraph(@RequestParam("regional_cd") int regcd, @RequestParam("dong_cd") int dongcd,
+			@RequestParam("apart_cd") int apartcd) {
+		return allservice.getTransGraph(regcd, dongcd, apartcd);
+	}
 
+	// 동 이름 목록
+	@GetMapping("/getDongsJson")
+	@ResponseBody
+	public List<TransactionPriceDTO> getDongsJson(@RequestParam("regional_cd") int regcd) {
+		return allservice.getAllDong(regcd);
+	}
+
+	// 아파트 이름 목록
+	@GetMapping("/getApartmentsJson")
+	@ResponseBody
+	public List<TransactionPriceDTO> getApartmentsJson(@RequestParam("regional_cd") int regcd,
+			@RequestParam("dong_cd") int dongcd) {
+		return allservice.getAllName(regcd, dongcd);
+	}
 }
