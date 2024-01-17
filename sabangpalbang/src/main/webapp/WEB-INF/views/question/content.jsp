@@ -22,7 +22,7 @@
 		pattern="yyyy-MM-dd HH:mm:ss" />
 	<br>
 
-	<c:if test="${content.id == id || role == 'ADMIN'}">
+	<c:if test="${content.id == id || role == 'ROLE_ADMIN'}">
 		<form action="delete/${content.question_id}" method="post">
 			<input type="submit" value="삭제"
 				onclick="if(!confirm('정말로 삭제하시겠습니까?')){return false;}" />
@@ -45,7 +45,7 @@
 등록날짜 : <fmt:formatDate value="${alist.created_at}"
 				pattern="yyyy-MM-dd HH:mm:ss" />
 			<br>
-			<c:if test="${role == 'ADMIN'}">
+			<c:if test="${role == 'ROLE_ADMIN'}">
 				<form action="answer/updatepage" method="post">
 					<input type="hidden" value="${content.question_id}"
 						name="question_id"> <input type="hidden"
@@ -62,7 +62,7 @@
 			</c:if>
 		</c:forEach>
 	</c:if>
-	<c:if test="${role == 'ADMIN' and count == 0}">
+	<c:if test="${role == 'ROLE_ADMIN' and count == 0}">
 		<form action="answer" method="post">
 			<input type="hidden" value="${content.question_id}"
 				name="question_id"> <input type="hidden"
