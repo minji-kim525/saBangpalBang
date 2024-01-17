@@ -40,6 +40,56 @@
 	<c:forEach items="${pdetail.images}" var="image">
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
+	
+	<!-- 서비스매물 실거래가 그래프 -->
+	<div>
+		<canvas id="myChart" style="height: 40vh; width: 30vw"></canvas>
+	</div>
+	<script>
+	
+function getParameterByName(name) {
+	const urlSearchParams = new URLSearchParams(window.location.search);
+	return urlSearchParams.get(name);
+}
+var address = getParameterByName('address');
+var pname = getParameterByName('pname');
+console.log('address:' +address);
+console.log('pname:' + pname);
 
+    fetch('/getTransGraph?address=' + address + '&pname=' + pname)
+        .then(response => response.json())
+        .then(chartData => {
+            console.log('chartData:', chartData);
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+
+            var myChart = new Chart(ctx, {
+                type : 'line',
+                data : {
+                    labels : chartData.map(function(item) {
+	                    return item.deal_year;
+	                }),
+                    datasets : [ {
+                        label : '실거래가 변동 그래프( 단위 : 만 원)',
+                        data : chartData.map(function(item) {
+    	                    return item.deal_amount;
+    	                }),
+                        backgroundColor : 'rgb(32, 164, 132)',
+                        borderWidth : 1
+                    } ]
+                },
+                options : {
+                    responsive : false,
+                    maintainAspectRatio : false,
+                    scales : {
+                        y : {
+                            beginAtZero : true
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching chart data:', error));
+</script>
 </body>
 </html>

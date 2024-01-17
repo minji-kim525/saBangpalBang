@@ -68,9 +68,9 @@
 				<c:if test="${property.private_property == false}">
 					<div class="property"
 						onclick="if(${property.ps_service_type} == 1)
-                                { location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}'; }
+                                { location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}&address=${property.address}&pname=${property.pname}'; }
                                 else if(${property.p_service_type} == 2)
-                                { location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
+                                { location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
 						style="cursor: pointer;">
 						<c:if test="${not empty property.imagesList}">
 							<img src="/roomImg/${property.imagesList[0].filename}" alt=""
@@ -84,7 +84,7 @@
 							</c:when>
 							<c:when test="${property.property_type_id == 2}">
 								<span class="property-type">전세</span>
-								<span class="price">${ChargeFunction.formatNumberWithUnit(property.price)}</span>
+								<span class="price">${ChargeFunction.formatNumberWithUnit(property.deposit)}</span>
 							</c:when>
 							<c:when test="${property.property_type_id == 3}">
 								<span class="property-type">월세</span>
