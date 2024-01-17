@@ -3,28 +3,48 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/insert.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Sign Up</title>
 </head>
 <body>
-    <h2>회원가입</h2>
-    <form action="/insert" method="post" name="userInfo" onsubmit="return checkValue()">
+    <div class="container">
+      <div class="input-form col-md-12 mx-auto">
+        <h4 class="mb-3">회원가입</h4>
+        <form class="validation-form" novalidate action="/insert" method="post" name="userInfo" onsubmit="return checkValue()">
+          <div class="row">
+            <div class="mb-3">
+              <label for="name">아이디</label>
+              <input type="text" name="id" class="form-control" id="id" placeholder="" value="" required>
+              <div class="invalid-feedback">
+                아이디를 입력해주세요. 
+              </div>	
+              <button type="button" class="btn btn-outline-primary" id="idCheck" style="margin-top:5px;">중복확인</button>
+			<div><span id="result_checkId" style="font-size:12px;"></span></div>
+            </div>
+          </div>
 
-        <div>
-	            <input type="text" name="id" id="id" placeholder="id"/>
-				<button type="button" id="idCheck">아이디중복확인</button>	    
-				<input type="hidden" name=idDuplication  id=idDuplication value="idUncheck"/>    
-        </div>       
-        <div><span id="result_checkId" style="font-size:12px;"></span></div>
-        <div>
-            <input type="text" name="email" placeholder="Email"/>
-        </div>
-        <div>
-            <input type="password" name="password" placeholder="Password"/>
-        </div>
+   <div class="row">
+      <div class="mb-3">
+         <label for="password">비밀번호</label> <input type="password"
+         class="form-control" name="password" id="password" placeholder="비밀번호를 입력해주세요"
+         value="" required>
 
-        <button type="submit" id="btn_id">회원가입</button>
-    </form>
+   </div>
+          <div class="mb-3">
+            <label for="email">이메일</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="you@example.com" required>
+            <div class="invalid-feedback">
+              이메일을 입력해주세요.
+            </div>
+          </div>
+
+          <hr class="mb-4">
+          <div class="mb-4"></div>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+        </form>
+      </div>
 </body>
 	
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>

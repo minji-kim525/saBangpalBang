@@ -32,11 +32,11 @@ public class SecurityController {
     @Autowired
     PasswordEncoder passwordEncoder;
     
-    //메인메뉴
-    @GetMapping("/")
-	public String index() {
-		return "index";
-	}
+	/*
+	 * //메인메뉴
+	 * 
+	 * @GetMapping("/") public String index() { return "index"; }
+	 */
     
     @GetMapping("/admin")
 	public String admin() {

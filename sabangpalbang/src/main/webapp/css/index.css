@@ -1,0 +1,138 @@
+	*	{
+		padding: 0;
+		margin: 0;
+	}
+	
+	p {
+		margin-bottom: 0;
+	}
+	
+	ul {
+		list-style: none;
+		padding-left: 0;
+	}
+	
+	.header {
+		width:100vw;
+	}
+	
+	.main {
+		width: 100vw;
+		height:1280px;
+		background-color: red;
+	}
+	
+	.main .container {
+		width: 100vw;
+		height: 200px;
+		margin-bottom: 30px;
+	}
+	
+	.main .container h2 {
+		position: relative;
+		top: 60px;
+	}
+	
+	.bi-search {
+		position: absolute;
+		top: 10px;
+		left: 30px;
+		z-index: 1;
+	}
+	
+	.main .recommend_property {
+		width: 100%;
+		height: 40%;
+		background-color: green;
+	}
+	
+	.main .recommend_property2 {
+		width: 100%;
+		height: 40%;
+		background-color: pink;
+	}
+	
+	.recommend_property > div {
+		width: 1320px;
+		height: 100%;
+		margin: 0px auto;
+		padding: 0px 10px;
+		background-color: aqua;
+	}
+	
+	.recommend_property2 > div {
+		width: 1320px;
+		height: 100%;
+		margin: 0px auto;
+		padding: 0px 10px;
+		background-color: blueviolet;
+	}
+	
+	
+	
+	.recommend_property > div > h3 {
+		position: relative;
+		top: 20px;
+	}
+	
+	.recommend_property2 > div > h3 {
+		position: relative;
+		top: 20px;
+	}
+	
+	
+	.RoomList {
+		position: relative;
+		top: 70px;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0px,1fr));
+		
+	}
+	
+	.Roomtype {
+		margin-top: 10px;
+		font-size: 12px;
+		line-height: 20px;
+		font-weight: 400;
+	}
+	
+	.Roomprice{
+		margin-top: 10px;
+		margin-bottom: 10px;
+		font-size: 18px;
+		line-height: 30px;
+		font-weight: 700;
+		
+	}
+	
+	.Roomprice2{
+		margin-top: 10px;
+		margin-bottom: 10px;
+		font-size: 18px;
+		line-height: 30px;
+		font-weight: 700;
+		
+	}
+	
+	.Roomprice3{
+		margin-top: 10px;
+		margin-bottom: 10px;
+		font-size: 18px;
+		line-height: 30px;
+		font-weight: 700;
+		
+	}
+	
+	.Roominfo {
+		font-size: 14px;
+		line-height: 24px;
+		font-weight: 400;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	.footer {
+		width:100vw;
+		height:10vh;
+		background-color:yellow;
+	}
