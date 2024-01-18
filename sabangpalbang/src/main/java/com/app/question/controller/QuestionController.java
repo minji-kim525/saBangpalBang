@@ -3,28 +3,27 @@ package com.app.question.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.app.dto.PagingResponseDto;
 import com.app.dto.QuestionDTO;
+import com.app.dto.SearchDto;
 import com.app.question.dto.AnswerDto;
 import com.app.question.dto.InsertDto;
-import com.app.question.dto.SearchDto;
 import com.app.question.dto.titleDto;
 import com.app.question.service.AnswerService;
 import com.app.question.service.QuestionService;
 import com.app.security.config.SecurityUser;
-import com.mysql.cj.log.Log;
 
 import jakarta.validation.Valid;
 
@@ -36,6 +35,7 @@ public class QuestionController {
 
 	@Autowired
 	AnswerService aservice; 
+	
 
 	// 문의 수정
 	@PostMapping("question/updatepage")
@@ -89,24 +89,11 @@ public class QuestionController {
 		}
 	}
 
-	// 검색
-	@GetMapping("question/search")
-	public String searchContent(SearchDto dto, Model m) {
-		if (dto.getId()!=null) {
-			List<titleDto> tlist = service.searchId(dto.getId());
-			m.addAttribute("tlist", tlist);
-			return "question/title";			
-		} else {
-			List<titleDto> tlist = service.searchTitle(dto.getTitle());
-			m.addAttribute("tlist", tlist);
-			return "question/title";
-		}
-	}
 
 	// 문의 등록
 	@PostMapping("question/insert")
 	public String insert(@ModelAttribute("dto")@Valid InsertDto dto, BindingResult error,
-			@AuthenticationPrincipal SecurityUser user, Model m) {
+			 @AuthenticationPrincipal SecurityUser user, Model m) {
 		if (error.hasErrors()) {
 			return "question/insert";
 		}
@@ -115,7 +102,9 @@ public class QuestionController {
 		map.put("user_id", user.getUsers().getUser_id());
 		map.put("title", dto.getTitle());
 		map.put("content", dto.getContent());
+		map.put("question_type", dto.getQuestion());
 		service.addQuestion(map);
+		
 
 		return "redirect:/question/" + map.get("question_id");
 		}
@@ -136,9 +125,10 @@ public class QuestionController {
 
 	// 문의 목록
 	@GetMapping("question/title")
-	public String titleSelect(Model m) {
-		List<titleDto> tlist = service.titleSelect();
-		m.addAttribute("tlist", tlist);
+	public String titleSelect(@ModelAttribute SearchDto searchDto, Model model) {
+		PagingResponseDto<titleDto>list=service.titleSelect(searchDto);
+		model.addAttribute("list", list.getList());
+		model.addAttribute("pagination",list.getPaginationDto());
 		return "question/title";
 	} 
 }

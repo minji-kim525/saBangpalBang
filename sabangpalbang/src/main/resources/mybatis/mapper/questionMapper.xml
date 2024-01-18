@@ -9,15 +9,14 @@
 			order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into question(question_id,user_id,title,content)
-		values(0,#{user_id},#{title},#{content})
+		insert into question(question_id,user_id,title,content,question_type)
+		values(0,#{user_id},#{title},#{content},#{question_type})
 	</insert>
 
 	<update id="updateQuestion"
 		parameterType="com.app.dto.QuestionDTO">
 		update question SET title = #{title},
-		content =
-		#{content}, updated_at = now()
+		content = #{content}, question_type = #{question_type},updated_at = now()
 		where question_id = #{question_id}
 	</update>
 
@@ -27,7 +26,13 @@
 	</delete>
 
 	<select id="count" resultType="int">
-		select count(*) from question
+		select count(*) 
+	    from question a left join
+		answer b
+		on a.question_id =
+		b.question_id
+		left join users c on a.user_id = c.user_id
+		<include refid ="search"/>		
 	</select>
 
 	<select id="questionList" parameterType="map"
@@ -40,7 +45,7 @@
 	<select id="contentSelect"
 		resultType="com.app.question.dto.titleDto" parameterType="int">
 		select
-		question_id,title,created_at,id,content,user_id
+		question_id,title,created_at,id,content,user_id,question_type
 		from question natural
 		join users where question_id = #{question_id}
 
@@ -49,33 +54,44 @@
 	<select id="titleSelect"
 		resultType="com.app.question.dto.titleDto">
 		select a.question_id , a.title , b.answer_id ,a.created_at
-		, c.id from question a left join
-		answer b
-		on a.question_id =
-		b.question_id
+		, c.id , a.question_type
+		from question a left join answer b
+		on a.question_id = b.question_id
 		left join users c on a.user_id = c.user_id
+		<include refid ="search"/>
 		ORDER BY
 		created_at DESC
+		LIMIT #{paginationDto.limitStart},#{recordSize}
+		
 	</select>
-
-	<select id="searchTitle"
-		resultType="com.app.question.dto.titleDto" parameterType="string">
-		select a.question_id,a.title,a.content,a.created_at,b.id,c.answer_id
-		from question a left join users b
-		on a.user_id = b.user_id
-		left join answer c on a.question_id = c.question_id
-		where a.title like CONCAT('%',#{title},'%')
-		ORDER BY created_at DESC;
-	</select>
-	<select id="searchId" resultType="com.app.question.dto.titleDto"
-		parameterType="string">
-		select a.question_id,a.title,a.content,a.created_at,b.id,c.answer_id
-		from question a left join users b
-		on a.user_id = b.user_id
-		left join answer c on a.question_id = c.question_id
-		where b.id like CONCAT('%',#{id},'%')
-		ORDER BY created_at DESC;
-	</select>
+	
+	<sql id ="search">
+		<where>
+		 <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <!-- 검색 유형이 있을 때 -->
+	                <when test="searchType != null and searchType != ''">
+	                    <choose>
+	                        <when test="'writer'.equals( searchType )">
+	                            c.id LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                        <when test="'name'.equals( searchType )">
+	                            a.title LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                    </choose>
+	                </when>
+	                
+	                <!-- 전체 검색일 때 -->
+	                <otherwise>
+	                    AND (
+	                         c.id LIKE CONCAT('%', #{keyword}, '%')
+	                        OR a.title LIKE CONCAT('%', #{keyword}, '%')
+	                    )
+	                </otherwise>
+	            </choose>
+	        </if>
+	        </where>
+	</sql>
 
 
 

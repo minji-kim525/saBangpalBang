@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.app.dto.PagingResponseDto;
 import com.app.dto.QuestionDTO;
+import com.app.dto.SearchDto;
 import com.app.question.dto.AnswerDto;
 import com.app.question.dto.titleDto;
 import com.app.question.service.AnswerService;
@@ -75,13 +77,15 @@ public class AnswerController {
 	}
     //=========관리자 문의 페이지 호출=========
 	@GetMapping("answer/title")
-	public String titleSelect(@AuthenticationPrincipal SecurityUser user,Model m) {
-		if(user.getUsers().getRole().equals("ADMIN")) {
-		List<titleDto> tlist = service.titleSelect();
-		m.addAttribute("tlist", tlist);
+	public String titleSelect(@ModelAttribute SearchDto searchDto,@AuthenticationPrincipal SecurityUser user,Model model) {
+		if(user.getUsers().getRole().equals("ROLE_ADMIN")) {
+			PagingResponseDto<titleDto>list=service.titleSelect(searchDto);
+			model.addAttribute("list", list.getList());
+			model.addAttribute("pagination",list.getPaginationDto());
 		return "answer/title";
 		}else {
 			return "redirect:/question/title";
 		}
 	}
+	
 }
