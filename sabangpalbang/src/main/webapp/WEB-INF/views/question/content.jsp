@@ -14,6 +14,7 @@
 		%>
 	</c:if>
 	글번호:${content.question_id}
+	<br> 질문유형:${content.question_type} 
 	<br> 작성자:${content.id}
 	<br> 제목:${content.title}
 	<br> 내용:${content.content}

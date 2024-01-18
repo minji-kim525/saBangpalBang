@@ -28,6 +28,16 @@
 	<delete id="deleteContent" parameterType="int">
 		delete from answer where answer_id = #{answer_id}
 	</delete>
+	
+	<select id="selectCount" resultType="int">
+		select count(*) 
+	    from question a left join
+		answer b
+		on a.question_id =
+		b.question_id
+		left join users c on a.user_id = c.user_id
+		<include refid ="search"/>		
+	</select>
 
 	<select id="count" resultType="int" parameterType="int">
 		select
@@ -43,12 +53,44 @@
 
 	<select id="titleSelect"
 		resultType="com.app.question.dto.titleDto">
-		select a.question_id,a.title , a.created_at , c.id from question a left
+		select a.question_id,a.title , a.created_at , c.id , a.question_type
+		from question a left
 		outer join answer b
 		on a.question_id = b.question_id
 		left join users c on a.user_id = c.user_id
 		where b.question_id is null
-		ORDER BY created_at DESC;
-	</select> 
+		<include refid ="search"/>
+		ORDER BY created_at DESC
+		LIMIT #{paginationDto.limitStart},#{recordSize}
+	</select>
+	
+	
+	<sql id ="search">
+		<where>
+		 <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <!-- 검색 유형이 있을 때 -->
+	                <when test="searchType != null and searchType != ''">
+	                    <choose>
+	                        <when test="'writer'.equals( searchType )">
+	                            c.id LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                        <when test="'name'.equals( searchType )">
+	                            a.title LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                    </choose>
+	                </when>
+	                
+	                <!-- 전체 검색일 때 -->
+	                <otherwise>
+	                    AND (
+	                         c.id LIKE CONCAT('%', #{keyword}, '%')
+	                        OR a.title LIKE CONCAT('%', #{keyword}, '%')
+	                    )
+	                </otherwise>
+	            </choose>
+	        </if>
+	        </where>
+	</sql> 
 
 </mapper>  

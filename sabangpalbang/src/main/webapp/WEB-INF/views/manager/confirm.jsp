@@ -79,10 +79,7 @@
 							 	<button id="no_cancel" name="confirmcheck" value="0">반려 취소</button>
 								</c:when>
 							</c:choose>
-							</form>
-		
-								
-							
+							</form>	
 							</td>
 						</tr>
 						</c:forEach>

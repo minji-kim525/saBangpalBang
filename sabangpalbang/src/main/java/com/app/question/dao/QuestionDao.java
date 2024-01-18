@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import com.app.dto.QuestionDTO;
+import com.app.dto.SearchDto;
 import com.app.dto.UserDTO;
 import com.app.question.dto.InsertDto;
 import com.app.question.dto.titleDto;
@@ -20,7 +21,9 @@ public interface QuestionDao {
 	
 	UserDTO idSelect(String id);
 	
-	List<titleDto> titleSelect();
+	List<titleDto> titleSelect(SearchDto searchDto);
+	
+	int count(SearchDto searchDto );
 	
 	titleDto contentSelect(int question_id);
 	
@@ -29,10 +32,6 @@ public interface QuestionDao {
 	int updateQuestion(QuestionDTO dto);
 	
 	int count();
-	
-	List<titleDto> searchTitle (String title);
-	
-	List<titleDto> searchId (String id);
 	
 	
 }
