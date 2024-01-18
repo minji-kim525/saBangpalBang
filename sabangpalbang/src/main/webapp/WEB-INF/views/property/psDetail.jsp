@@ -37,12 +37,19 @@
 			pattern="yyyy-MM-dd" />
 	</p>
 	<p>설명: ${psdetail.description}</p>
-	<!-- 필요한 다른 속성들도 추가 -->
+
+
+	<div class="modal">
+		<div class="modal_body">
+			<button type="button" id="telephone">연락처 보기</button>
+		</div>
+	</div>
+
 	<c:forEach items="${psdetail.images}" var="image">
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
 
-<!-- 로컬스토리지 저장  -->
+	<!-- 로컬스토리지 저장  -->
 	<script>
  // 로컬 스토리지에 데이터를 저장하는 함수
  function saveDataToLocalStorage(data) {
@@ -75,7 +82,7 @@
  }
 
 </script>
-<script>
+	<script>
   // content.question_id와 content.title을 로컬 스토리지에 저장
   var dataToSave = {
     propertyId: ${propertyId},

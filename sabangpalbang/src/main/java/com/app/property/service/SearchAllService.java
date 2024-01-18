@@ -40,16 +40,16 @@ public class SearchAllService {
 	}
 
 	// 서비스 매물 상세정보
-	public PropertyDetailDTO getpsDetail(int propertyId, int psServiceType) {
-		PropertyDetailDTO psImagedto = alldao.getpsDetail(propertyId, psServiceType);
+	public PropertyDetailDTO getpsDetail(int propertyId, int psServiceType, String address, String pname) {
+		PropertyDetailDTO psImagedto = alldao.getpsDetail(propertyId, psServiceType, address, pname);
 		List<ImagesDTO> Idto = alldao.AllImages(propertyId, psServiceType);
 		psImagedto.setImages(Idto);
 		return psImagedto;
 	}
 
 	// 크롤링 매물 상세정보
-	public PropertyDetailDTO getpDetail(int propertyId, int pServiceType) {
-		PropertyDetailDTO pImagedto = alldao.getpDetail(propertyId, pServiceType);
+	public PropertyDetailDTO getpDetail(int propertyId, int pServiceType, String address, String pname) {
+		PropertyDetailDTO pImagedto = alldao.getpDetail(propertyId, pServiceType, address, pname);
 		List<ImagesDTO> Idto = alldao.AllImages(propertyId, pServiceType);
 		pImagedto.setImages(Idto);
 		return pImagedto;

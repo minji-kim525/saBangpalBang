@@ -51,9 +51,8 @@ public class SearchAllController {
 	public String psDetail(@AuthenticationPrincipal SecurityUser user, @RequestParam("propertyId") int propertyId,
 			@RequestParam("ps_service_type") int psServiceType,  
 			@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) throws JsonProcessingException {
-		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType);
+		PropertyDetailDTO psdetail = allservice.getpsDetail(propertyId, psServiceType, address, pname);
 		m.addAttribute("psdetail", psdetail);
-
 		m.addAttribute("id", user.getUsers().getId());
 		m.addAttribute("propertyId", propertyId);
 //		System.out.println(psdetail);
@@ -72,8 +71,9 @@ public class SearchAllController {
 	
 	// 크롤링매물 상세정보
 	@GetMapping("/property/pDetail")
-	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,Model m) {
-		PropertyDetailDTO pdetail = allservice.getpDetail(propertyId, pServiceType);
+	public String pDetail(@RequestParam("propertyId") int propertyId, @RequestParam("p_service_type") int pServiceType,
+			@RequestParam("address") String address, @RequestParam("pname") String pname, Model m) {
+		PropertyDetailDTO pdetail = allservice.getpDetail(propertyId, pServiceType, address, pname);
 		m.addAttribute("pdetail", pdetail);
 		return "property/pDetail";
 	}

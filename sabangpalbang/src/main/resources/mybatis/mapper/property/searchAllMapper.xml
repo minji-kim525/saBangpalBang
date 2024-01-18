@@ -18,6 +18,7 @@
 		NULL AS private_property,
 		NULL AS confirm_check,
 		p.month_price,
+		p.deposit,
 		p.telephone,
 		p.address
 		FROM
@@ -40,6 +41,7 @@
 		ps.private_property,
 		c.confirm_check,
 		ps.month_price,
+		ps.deposit,
 		ps.telephone,
 		ps.address
 		FROM property_service ps
