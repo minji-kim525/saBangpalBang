@@ -35,12 +35,17 @@
 			pattern="yyyy-MM-dd" />
 	</p>
 	<p>설명: ${pdetail.description}</p>
-	<!-- 필요한 다른 속성들도 추가 -->
+
+	<div class="modal">
+		<div class="modal_body">
+			<button type="button" id="telephone">연락처 보기</button>
+		</div>
+	</div>
 
 	<c:forEach items="${pdetail.images}" var="image">
 		<img src="/roomImg/${image.filename}" alt="">
 	</c:forEach>
-	
+
 	<!-- 서비스매물 실거래가 그래프 -->
 	<div>
 		<canvas id="myChart" style="height: 40vh; width: 30vw"></canvas>
