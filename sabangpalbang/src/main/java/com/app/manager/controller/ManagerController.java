@@ -28,6 +28,8 @@ public class ManagerController {
 	public String searchPropertyManage(@AuthenticationPrincipal SecurityUser user,
 			@ModelAttribute SearchDto searchDto,Model model) {
 		PagingResponseDto<PropertyResponseDto>list=service.searchPropertyManage(searchDto);
+		model.addAttribute("loginId", user.getUsername());
+    	model.addAttribute("loginEmail", user.getUsers().getEmail());
 		if(user.getUsers().getRole().equals("ROLE_ADMIN")&&!list.getList().isEmpty())
 			{
 			model.addAttribute("list", list.getList());
@@ -53,6 +55,8 @@ public class ManagerController {
 		public String getConfirm(@AuthenticationPrincipal SecurityUser user,
 				@ModelAttribute SearchDto searchDto,Model model) {
 			PagingResponseDto<PropertyResponseDto>list=service.getConfirm(searchDto);
+			model.addAttribute("loginId", user.getUsername());
+	    	model.addAttribute("loginEmail", user.getUsers().getEmail());
 			if(user.getUsers().getRole().equals("ROLE_ADMIN")&&!list.getList().isEmpty())
 				{
 				model.addAttribute("list", list.getList());
@@ -79,6 +83,8 @@ public class ManagerController {
 		public String getUsers(@AuthenticationPrincipal SecurityUser user,
 				@ModelAttribute SearchDto searchDto,Model model) {
 			PagingResponseDto<UsersResponseDto>list=service.getUsers(searchDto);
+			model.addAttribute("loginId", user.getUsername());
+	    	model.addAttribute("loginEmail", user.getUsers().getEmail());
 			if(user.getUsers().getRole().equals("ROLE_ADMIN")&&!list.getList().isEmpty())
 				{
 				model.addAttribute("list", list.getList());

@@ -123,7 +123,7 @@ public class SecurityController {
         }
         else {
             rttr.addFlashAttribute("msg", "비밀번호를 다시 확인해 주세요.");
-            return "redirect:/";
+            return "redirect:/check";
         }
     	
     	
@@ -143,7 +143,7 @@ public class SecurityController {
         }
         else {
             rttr.addFlashAttribute("msg", "비밀번호를 다시 확인해 주세요.");
-            return "redirect:/";
+            return "redirect:/delcheck";
         }
     	
     	

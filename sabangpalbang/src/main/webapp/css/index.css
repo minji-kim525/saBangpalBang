@@ -12,10 +12,6 @@
 		padding-left: 0;
 	}
 	
-	.header {
-		width:100vw;
-	}
-	
 	.main {
 		width: 100vw;
 		height:1280px;
@@ -23,7 +19,8 @@
 	}
 	
 	.main .container {
-		width: 100vw;
+		max-width: 1320px!important;
+		width: 1320px;
 		height: 200px;
 		margin-bottom: 30px;
 	}

@@ -9,6 +9,8 @@
 <head>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/font.css">
+<link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/index.css">
 	<title>시큐리티 테스트</title>
 	<style>
@@ -30,17 +32,18 @@
 	          <a
 	              href="/"
 	            >
-	          <img src="/icon/logo.png" style="width:100px; height:60px">
+	          <img src="/icon/logo.png" style="width:100px; height:60px; margin-left:50px;">
 			  </a>
           </div>
 
-          <ul
+          <ul id="navbar"
             class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
             <li><a href="/map" class="nav-link px-2">지도</a></li>
             <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
-            <li><a href="#" class="nav-link px-2">문의게시판</a></li>
+            <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
+            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>	
           </ul>
 
           <div class="col-md-3 text-end">
@@ -48,16 +51,21 @@
 	            <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
 	              로그인
 	            </button>	        
-            	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'">회원가입</button>
+            	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'" style="margin-right:50px;">회원가입</button>
             </sec:authorize>
-            <sec:authorize access="isAuthenticated()"> 
-				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='user'">회원정보</button>
-				
+            <sec:authorize access="hasAuthority('USER')"> 
+				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
 				<form action="/logout" method="post" style="float:right">
-				<button type="submit" class="btn btn-primary">로그아웃</button>
+				<button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    		</form>
-	    		
+			</sec:authorize>
+			<sec:authorize access="hasRole('ADMIN')">
+			  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
+			  <form action="/logout" method="post" style="float:right">
+			  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
+			  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	    	  </form>
 			</sec:authorize>
           </div>
         </header>
