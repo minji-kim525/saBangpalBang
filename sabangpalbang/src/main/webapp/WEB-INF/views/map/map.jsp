@@ -151,7 +151,7 @@
 				<c:forEach var="property" items="${getProperties}">
 					<c:if test="${property.p_service_type == 2}">
 						<div class="property"
-							onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}'; }"
+							onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
 							style="cursor: pointer;">
 							<img class="roomimg" src="/roomImg/${property.images.filename}" alt=""><br>
 							<div class="roominfo">
@@ -176,7 +176,7 @@
 					<c:if
 						test="${propertyService.private_property == false && propertyService.ps_service_type == 1}">
 						<div class="property"
-							onclick="{ location.href='/property/psDetail?ps_service_type=${propertyService.ps_service_type}&propertyId=${propertyService.property_service_id}'; }"
+							onclick="{location.href='/property/psDetail?ps_service_type=${propertyService.ps_service_type}&propertyId=${propertyService.property_service_id}&address=${propertyService.address}&pname=${propertyService.pname}'; }"
 							style="cursor: pointer;">
 							<img src="/roomImg/${propertyService.images.filename}" alt=""><br>
 							<div class="roominfo">

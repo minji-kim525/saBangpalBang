@@ -26,10 +26,10 @@ public interface SearchAllDAO {
 	List<ImagesDTO> AllImages(@Param("Id") int Id, @Param("ServiceType") int ServiceType);
 	
 	//서비스 매물 상세정보
-	PropertyDetailDTO getpsDetail(@Param("propertyId") int propertyId, @Param("psServiceType") int psServiceType);
+	PropertyDetailDTO getpsDetail(@Param("propertyId") int propertyId, @Param("psServiceType") int psServiceType, @Param("address") String address, @Param("pname") String pname);
 	
 	//크롤링 매물 상세정보
-	PropertyDetailDTO getpDetail(@Param("propertyId") int propertyId, @Param("pServiceType") int pServiceType);
+	PropertyDetailDTO getpDetail(@Param("propertyId") int propertyId, @Param("pServiceType") int pServiceType, @Param("address") String address, @Param("pname") String pname);
 	
 	//크롤링매물 정보
 	List<PropertyDTO> getProperties();

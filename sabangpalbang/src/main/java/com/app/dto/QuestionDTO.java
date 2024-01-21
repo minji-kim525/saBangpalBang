@@ -10,6 +10,7 @@ public class QuestionDTO {
     private int question_id;
     private String title;
     private String content;
+    private String question_type;
     private Date created_at;
     private Date updated_at;   
     UserDTO user_id;
