@@ -5,6 +5,7 @@
 <head>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/login.css">
 
 <title>시큐리티 테스트</title>

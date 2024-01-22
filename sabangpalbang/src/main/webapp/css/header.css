@@ -1,0 +1,13 @@
+	.header {
+		min-width: 1060px;
+		width:100vw;
+	}
+	
+	#navbar {
+		font-size: 24px;
+		
+	}
+	
+	#navbar > li {
+		margin-right: 30px;
+	}

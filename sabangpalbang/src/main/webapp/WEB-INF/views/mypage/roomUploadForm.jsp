@@ -5,6 +5,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/font.css">
 <title>방 내놓기</title>
 
 </head>
@@ -70,14 +71,6 @@
             </div>
           </div>
 
-          <div class="mb-3">
-            <label for="address">주소</label>
-            <input type="text" name="address" class="form-control" id="address" placeholder="서울특별시 강남구" required>
-            <div class="invalid-feedback">
-              주소를 입력해주세요.
-            </div>
-          </div>
-
 	<div class="row">
 	  <div class="col-md-6 mb-3">
             <label for="feet">평수</label>
@@ -137,7 +130,7 @@
 		</div>
 	</div>
         <div class="custom-file" style="margin-bottom:5px;">
-            <input type="file" class="custom-file-input" id="customFile" multiple>
+            <input name="files" type="file" class="custom-file-input" id="customFile" multiple>
             <label class="custom-file-label" for="customFile"></label>
         </div>
 

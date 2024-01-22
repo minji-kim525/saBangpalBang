@@ -1,0 +1,64 @@
+	.card {
+	 	cursor: pointer;
+	  position: relative;
+	  border-bottom: 1px solid #ccc;
+	  padding: 10px;
+	  margin-bottom: 10px; 
+	}
+	.card:hover {
+	  background-color: #f5f5f5;
+	  border-color: #333; 
+	}
+	.unread-indicator {
+	  width: 10px;
+	  height: 10px;
+	  border-radius: 50%;
+	  background-color: red;
+	  position: absolute; /* 상대 위치 지정 */
+	  top: 10px;
+	  right: 10px;
+	}
+    .sidenav {
+      background-color: #f1f1f1;
+      position: fixed;
+      width: 200px;
+      height: 100%;
+    }
+    /* 본문 */
+    .page {
+     margin-left: 250px;
+    }
+
+	#nav_side {
+		display:block;
+	}
+
+	#nav_side > li {
+		text-align: center;
+		margin-bottom:20px;
+		text-decoration-line:none;
+	}
+	
+	#nav_side > li > a {
+		text-decoration-line:none;
+	}
+	
+	#nav_side2 {
+		display:block;
+	}
+
+	#nav_side2 > li {
+		font-size:20px;
+		text-align: center;
+		margin-bottom:20px;
+		text-decoration-line:none;
+	}
+	
+	#nav_side2 > li > a {
+		text-decoration-line:none;
+	}
+  
+  	.hr-solid {
+  		border : 0px;
+  		border-top: 3px solid #000000;
+  	}
