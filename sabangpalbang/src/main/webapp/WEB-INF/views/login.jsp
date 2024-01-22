@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
@@ -14,7 +15,7 @@
 <body class="text-center">
    <main class="form-signin">
       <form action="/login" method="post">
-         <img class="mb-4" src="/icon/logo.png" alt="" width="72" height="57">
+         <a href="/"><img class="mb-4" src="/icon/logo.png" alt="" width="72" height="57"></a>
          <h1 class="h3 mb-3 fw-normal">로그인 페이지</h1>
          
          <div class="form-floating">
@@ -25,7 +26,12 @@
             <input type="password" name="password" class="form-control" id="pwd" placeholder="Password">
             <label for="pwd">비밀번호</label>
          </div>
-
+		 
+		 <span> 
+		    <c:if test="${error}">
+		        <p id="valid" class="alert alert-danger">${exception}</p>
+		    </c:if>
+		</span>
          <button class="w-100 btn btn-lg btn-primary" type="submit" style="margin-bottom:10px;">로그인</button>
          <input class="w-100 btn btn-lg btn-primary" type="button" value="가입" onclick="location.href='/insert'" />
          <p class="mt-5 mb-3 text-muted">&copy; 2023–2024</p>

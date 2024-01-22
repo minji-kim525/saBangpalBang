@@ -73,10 +73,10 @@
 				<td class="col" scope="col">${pagination.totalRecordCount - ((searchDto.page - 1) * searchDto.recordSize)-i.index}</td>
 				<td class="col" scope="col">${title.question_type}</td>
 				<td class="col" scope="col">${title.id}</td>
-				<td class="col" scope="col"><a href="${title.question_id}">${title.title}</a></td>
+				<td class="col" scope="col"><a href="${title.question_id}">${title.title}</a> <c:if test="${title.answer_id != 0}">(답변완료)</c:if> </td>
 				<td class="col" scope="col"><fmt:formatDate value="${title.created_at}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				
-				<c:if test="${title.answer_id != 0}">(답변완료)</c:if><br>	
+				
 				
 				
 			</tr>
