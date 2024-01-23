@@ -33,6 +33,8 @@ public class MypageController {
     //나의 방 조회 및 나의 문의 조회
 	@GetMapping("/mypage/myupload")
 	public String getMyUpload(@AuthenticationPrincipal SecurityUser user,Model model){
+		model.addAttribute("loginId", user.getUsername());
+    	model.addAttribute("loginEmail", user.getUsers().getEmail());
 		UploadAndQuestionDto list=service.getMyUploadAll(user.getUsers().getUser_id());
 		if(!list.getList().isEmpty()) {
 			model.addAttribute("list",list.getList());

@@ -10,76 +10,7 @@
 <link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/navbar.css">
 <title>알림</title>
-<style>
 
-
-	.card {
-	 	cursor: pointer;
-	  position: relative;
-	  border-bottom: 1px solid #ccc;
-	  padding: 10px;
-	  margin-bottom: 10px; 
-	}
-	.card:hover {
-	  background-color: #f5f5f5;
-	  border-color: #333; 
-	}
-	.unread-indicator {
-	  width: 10px;
-	  height: 10px;
-	  border-radius: 50%;
-	  background-color: red;
-	  position: absolute; /* 상대 위치 지정 */
-	  top: 10px;
-	  right: 10px;
-	}
-    .sidenav {
-      background-color: #f1f1f1;
-      position: fixed;
-      width: 200px;
-      height: 100%;
-    }
-    /* 본문 */
-    .page {
-     margin-left: 250px;
-    }
-
-	#nav_side {
-		display:block;
-	}
-
-	#nav_side > li {
-		text-align: center;
-		margin-bottom:20px;
-		text-decoration-line:none;
-	}
-	
-	#nav_side > li > a {
-		text-decoration-line:none;
-	}
-	
-	#nav_side2 {
-		display:block;
-	}
-
-	#nav_side2 > li {
-		font-size:20px;
-		text-align: center;
-		margin-bottom:20px;
-		text-decoration-line:none;
-	}
-	
-	#nav_side2 > li > a {
-		text-decoration-line:none;
-	}
-  
-  	.hr-solid {
-  		border : 0px;
-  		border-top: 3px solid #000000;
-  	}
-  
-}
-</style>
 </head>
 <body>
 <div class="header">
@@ -101,7 +32,7 @@
             <li><a href="/map" class="nav-link px-2">지도</a></li>
             <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
-            <li><a href="#" class="nav-link px-2">문의게시판</a></li>
+            <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
             <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
@@ -109,14 +40,14 @@
             <sec:authorize access="hasAuthority('USER')"> 
 				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
 				<form action="/logout" method="post" style="float:right">
-				<button type="submit" class="btn btn-primary">로그아웃</button>
+				<button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    		</form>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ADMIN')">
 			  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
 			  <form action="/logout" method="post" style="float:right">
-			  <button type="submit" class="btn btn-primary">로그아웃</button>
+			  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
 			  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    	  </form>
 			</sec:authorize>
@@ -141,7 +72,7 @@
 	        <li><a href="/mypage/likelist">찜목록</a></li>
 	        <li><a href="#">최근 본 내역</a></li>
 	        <li><a href="/mypage/notify">알림</a></li>
-	        <li><a href="#">내가 올린 글</a></li>
+	        <li><a href="/mypage/myupload">내가 올린 글</a></li>
 	      </ul>
     </nav>
 

@@ -38,14 +38,14 @@
             <sec:authorize access="hasAuthority('USER')"> 
 				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
 				<form action="/logout" method="post" style="float:right">
-				<button type="submit" class="btn btn-primary">로그아웃</button>
+				<button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    		</form>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ADMIN')">
 			  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
 			  <form action="/logout" method="post" style="float:right">
-			  <button type="submit" class="btn btn-primary">로그아웃</button>
+			  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
 			  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    	  </form>
 			</sec:authorize>

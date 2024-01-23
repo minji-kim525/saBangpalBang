@@ -31,27 +31,27 @@
             <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-            <li><a href="#" class="nav-link px-2">1:1 상담</a></li>
+            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
             <sec:authorize access="hasAuthority('USER')"> 
 				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
 				<form action="/logout" method="post" style="float:right">
-				<button type="submit" class="btn btn-primary">로그아웃</button>
+				<button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
 			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    		</form>
 			</sec:authorize>
 			<sec:authorize access="hasRole('ADMIN')">
 			  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
 			  <form action="/logout" method="post" style="float:right">
-			  <button type="submit" class="btn btn-primary">로그아웃</button>
+			  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
 			  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    	  </form>
 			</sec:authorize>
           </div>
-	</header>
-</div>
+        </header>
+      </div>
       
 <div class="container-fluid" style="padding-left:0!important;">
 	<div class="col-sm-12 page">   

@@ -34,7 +34,7 @@
             <li><a href="/map" class="nav-link px-2">지도</a></li>
             <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
-            <li><a href="#" class="nav-link px-2">문의게시판</a></li>
+            <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
             <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
@@ -42,7 +42,7 @@
             <sec:authorize access="hasRole('ADMIN')">
 			  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
 			  <form action="/logout" method="post" style="float:right">
-			  <button type="submit" class="btn btn-primary">로그아웃</button>
+			  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
 			  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	    	  </form>
 			</sec:authorize>
@@ -65,7 +65,7 @@
 	        <li><a href="/manager/property/search">매물 관리</a></li>
 	        <li><a href="/manager/confirm/search">승인 요청</a></li>
 	        <li><a href="/manager/users/search">사용자 관리</a></li>
-	        <li><a href="#">문의</a></li>
+	        <li><a href="/question/title">문의</a></li>
 	        <li><a href="#">1대1 상담</a></li>
 	      </ul>
     </nav>
