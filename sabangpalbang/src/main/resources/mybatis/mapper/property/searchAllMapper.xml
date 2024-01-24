@@ -157,6 +157,36 @@
 		c.property_service_id
 		WHERE c.confirm_check = 1
 	</select>
+	
+	<select id="getRanServiceProperties"
+		resultType="com.app.dto.PropertyServiceDTO">
+		SELECT
+		ps.property_service_id,
+		ps.ps_service_type,
+		ps.user_id,
+		ps.property_type_id,
+		ps.price,
+		ps.feet,
+		ps.pname,
+		ps.deposit,
+		ps.charge,
+		ps.count,
+		ps.registration_date,
+		ps.move_date,
+		ps.address,
+		ps.description,
+		ps.floor,
+		ps.private_property,
+		ps.month_price,
+		ps.telephone,
+		c.confirm_check
+		FROM
+		property_service ps
+		LEFT JOIN confirm c ON ps.property_service_id =
+		c.property_service_id
+		WHERE c.confirm_check = 1
+		ORDER BY RAND()
+	</select>
 
 
 	<!-- 다중 이미지 -->

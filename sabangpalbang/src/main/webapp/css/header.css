@@ -12,6 +12,14 @@
 		
 	}
 	
+	#navbar > li:hover {
+    background-color: rgba(128,128,128,0.1);
+  	}
+  	
 	#navbar > li {
 		margin-right: 30px;
+	}
+	
+	#navbar > li > a {
+		color: black;
 	}

@@ -100,7 +100,7 @@
 					value="${searchDto.keyword}" style="display:inline; width:300px;"/>
 				<button class="btn btn-outline-success" type="button" id="search_submit" style="vertical-align:baseline;"><span class="skip_info">검색</span></button>
 				</form>
-				<button type="button" class="btn btn-outline-secondary" style="vertical-align:baseline; float:right"><a href="http://localhost:8081/question/insert" style="text-decoration-line:none;">글쓰기</a></button>
+				<button type="button" class="btn btn-outline-secondary" style="color:blue; vertical-align:baseline; float:right" onClick="location.href='http://localhost:8081/question/insert'">글쓰기</button>
 			</div>
 	</div>
 	</div>

@@ -58,25 +58,24 @@
 	
 	<form:form action="/question/insert" method="post" modelAttribute="dto">
 
-		<div class="mb-3">
-		<select name="question" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-top:15vh;">
+		<div class="mb-3"">
+		<select name="question" class="form-select form-select-sm" aria-label=".form-select-sm example" 
+		style="margin-top:15vh; margin-left:50px; display:inline-block; width:10%; font-size:1rem; padding-top:0.375rem; padding-bottom:0.375rem;">
 					<option value="" selected >문의사항</option>
 					<option value="사기">사기</option>
 					<option value="월세/전세/매매">월세/전세/매매</option>
 					<option value="지역">지역</option>
 					<option value="기타">기타</option>
 		</select>
-		</div>
-		<div class="mb-3">
-			제목 <input name="title" class="form-control">
+		 <input name="title" class="form-control" placeholder="제목" style="display:inline-block; width:80.1%; margin-left:10px;">
 			<form:errors path="title"></form:errors>
 		</div>
-		<div class="mb-3">
-			내용 <textarea name="content" class="form-control" rows="5"></textarea>
+		<div class="mb-3" style="width:91%; margin-left:50px;">
+			내용 <textarea name="content" class="form-control" rows="10"></textarea>
 			<form:errors path="content"></form:errors>
 		</div>
-		<input type="submit" value="전송">
-		<input type="button" value="취소" onclick="cancelUpdate()">
+		<input type="submit" value="등록" class="btn btn-outline-primary" style="margin-left:50px;">
+		<input type="button" value="취소" class="btn btn-outline-danger" onclick="cancelUpdate()">
 	</form:form>
 	</div>
 </div>	

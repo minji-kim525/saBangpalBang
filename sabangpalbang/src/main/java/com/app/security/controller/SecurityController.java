@@ -111,7 +111,9 @@ public class SecurityController {
     }
     
     @GetMapping("/check")
-    public String pwcheckPage() { // 비밀번호 확인
+    public String pwcheckPage(@AuthenticationPrincipal SecurityUser user,Model model) { // 비밀번호 확인
+    	model.addAttribute("loginId", user.getUsername());
+    	model.addAttribute("loginEmail", user.getUsers().getEmail());
     	return "pwcheck";
     }
     
@@ -130,7 +132,9 @@ public class SecurityController {
     }
     
     @GetMapping("/delcheck")
-    public String delcheckPage() {	// 아이디 삭제 시 비밀번호 확인
+    public String delcheckPage(@AuthenticationPrincipal SecurityUser user,Model model) {	// 아이디 삭제 시 비밀번호 확인
+    	model.addAttribute("loginId", user.getUsername());
+    	model.addAttribute("loginEmail", user.getUsers().getEmail());
     	return "delcheck";
     }
     
@@ -154,6 +158,8 @@ public class SecurityController {
     @GetMapping("/update")
     public String editPage(@AuthenticationPrincipal SecurityUser user, Model model) { // 회원 정보 수정 페이지
         UserDTO userVo = user.getUsers();
+        model.addAttribute("loginId", user.getUsername());
+    	model.addAttribute("loginEmail", user.getUsers().getEmail());
         model.addAttribute("user", userVo);
         return "editpage";
     }
@@ -165,7 +171,9 @@ public class SecurityController {
     }
     
     @GetMapping("/delete")
-    public String deletePage() {
+    public String deletePage(@AuthenticationPrincipal SecurityUser user,Model model) {
+    	model.addAttribute("loginId", user.getUsername());
+    	model.addAttribute("loginEmail", user.getUsers().getEmail());
     	return "delete";
     }
 

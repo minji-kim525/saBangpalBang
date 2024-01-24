@@ -20,6 +20,8 @@ public class HistoryController {
 	@GetMapping("history")
 	public String historyView(@AuthenticationPrincipal SecurityUser user, Model m) {
 		m.addAttribute("id", user.getUsers().getId());
+		m.addAttribute("loginId", user.getUsername());
+    	m.addAttribute("loginEmail", user.getUsers().getEmail());
 		
 				 return "history/history";
 	}
