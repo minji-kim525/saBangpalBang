@@ -96,9 +96,9 @@ public class SearchAllController {
 	@GetMapping("/")
 	public String index(Model m) {
 		List<PropertyDTO> getProperties = allservice.getProperties();
-		List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
+		List<PropertyServiceDTO> getRanServiceProperties = allservice.getRanServiceProperties();
 		m.addAttribute("getProperties", getProperties);
-		m.addAttribute("getServiceProperties", getServiceProperties);
+		m.addAttribute("getRanServiceProperties", getRanServiceProperties);
  		return "index";
 	}
 	

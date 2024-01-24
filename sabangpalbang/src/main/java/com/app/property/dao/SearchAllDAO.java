@@ -39,6 +39,8 @@ public interface SearchAllDAO {
 	//서비스매물 정보
 	List<PropertyServiceDTO> getServiceProperties();
 	
+	List<PropertyServiceDTO> getRanServiceProperties();
+	
 	//상세정보 실거래가 그래프
 	List<TransactionPriceDTO> getTransaction(@Param("address") String address, @Param("pname") String pname);
 	

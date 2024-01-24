@@ -2,13 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/font.css">
+
 </head>
 <body>
-<div id="paging">
+<div id="paging" style="text-align:center;">
 <c:choose><c:when test="${param.searchType==null&&param.keyword==null}"><c:url var="action" value="${requestScope['javax.servlet.forward.servlet_path']}?"/></c:when>
 <c:otherwise><c:url var="action" value="${requestScope['javax.servlet.forward.servlet_path']}?searchType=${param.searchType}&keyword=${param.keyword}&"/></c:otherwise>
 </c:choose>
