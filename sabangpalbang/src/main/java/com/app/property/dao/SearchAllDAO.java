@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.app.dto.ImagesDTO;
+import com.app.dto.MainSearchDto;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
 import com.app.dto.TransactionPriceDTO;
@@ -17,10 +18,11 @@ import com.app.property.dto.PropertyResultDTO;
 public interface SearchAllDAO {
 	
 	//검색정보
-	List<PropertyResultDTO> getAllProperties(@Param("keyword") String keyword);
+	List<PropertyResultDTO> getAllProperties(MainSearchDto mainSearchDto);
 	
 	//썸네일
-	ImagesDTO getImage(@Param("id1") int id, @Param("id2") int ps_type);
+	ImagesDTO getImagePs(@Param("id1") int id, @Param("id2") int ps_type);
+	ImagesDTO getImageP(@Param("id1") int id, @Param("id2") int p_type);
 	
 	//다중이미지
 	List<ImagesDTO> AllImages(@Param("Id") int Id, @Param("ServiceType") int ServiceType);
@@ -51,4 +53,6 @@ public interface SearchAllDAO {
 	
 	//아파트 이름
 	List<TransactionPriceDTO> getAllName(@Param("regional_cd") int regcd, @Param("dong_cd") int dongcd);
+
+	int count(MainSearchDto mainSearchDto);
 }

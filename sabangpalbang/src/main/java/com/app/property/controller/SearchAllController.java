@@ -9,15 +9,20 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.dto.ConfirmDTO;
+import com.app.dto.MainSearchDto;
+import com.app.dto.PagingResponseDto;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
+import com.app.dto.SearchDto;
 import com.app.dto.TransactionPriceDTO;
+import com.app.manager.dto.PropertyResponseDto;
 import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.dto.PropertyResultDTO;
 import com.app.property.service.SearchAllService;
@@ -37,14 +42,14 @@ public class SearchAllController {
 		return "property/searchAll";
 	}
 
-	// 검색결과
-	@GetMapping("/property/searchAllResult")
-	public String searchResult(@RequestParam("keyword") String keyword, Model m) {
-		List<PropertyResultDTO> allProperties = allservice.getAllProperties(keyword);
-		m.addAttribute("allProperties", allProperties);
-		m.addAttribute("keyword", keyword);
-		return "property/searchAllResult";
-	}
+//	// 검색결과
+//	@GetMapping("/property/searchAllResult")
+//	public String searchResult(@RequestParam("keyword") String keyword, Model m) {
+//		List<PropertyResultDTO> allProperties = allservice.getAllProperties(keyword);
+//		m.addAttribute("allProperties", allProperties);
+//		m.addAttribute("keyword", keyword);
+//		return "property/searchAllResult";
+//	}
 
 	// 서비스매물 상세정보
 	@GetMapping("/property/psDetail")
@@ -98,11 +103,10 @@ public class SearchAllController {
 	}
 	
 	@GetMapping("/map")
-	public String map(Model m) {
-		List<PropertyDTO> getProperties = allservice.getProperties();
-		List<PropertyServiceDTO> getServiceProperties = allservice.getServiceProperties();
-		m.addAttribute("getProperties", getProperties);
-		m.addAttribute("getServiceProperties", getServiceProperties);
+	public String map(@ModelAttribute MainSearchDto mainSearchDto, Model m) {
+		PagingResponseDto<PropertyResultDTO>list = allservice.getAllProperties(mainSearchDto);
+		m.addAttribute("list", list.getList());
+		m.addAttribute("pagination",list.getPaginationDto());
  		return "map/map";
 	}
 
