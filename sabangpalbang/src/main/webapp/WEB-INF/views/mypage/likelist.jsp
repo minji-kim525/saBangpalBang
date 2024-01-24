@@ -77,7 +77,7 @@
 	    	  <hr class="hr-solid"/>
 		      <ul id="nav_side2" class="nav nav-pills nav-stacked">
 		        <li><a href="/mypage/likelist">찜목록</a></li>
-		        <li><a href="#">최근 본 내역</a></li>
+		        <li><a href="/history">최근 본 내역</a></li>
 		        <li><a href="/mypage/notify">알림</a></li>
 		        <li><a href="/mypage/myupload">내가 올린 글</a></li>
 		      </ul>

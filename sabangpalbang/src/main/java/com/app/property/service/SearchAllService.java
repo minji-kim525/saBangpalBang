@@ -86,6 +86,23 @@ public class SearchAllService {
 		}
 		return result;
 	}
+	
+	// 서비스매물 랜덤 정보
+	public List<PropertyServiceDTO> getRanServiceProperties() {
+		List<PropertyServiceDTO> result = new ArrayList<>();
+//		List<ConfirmDTO> confirmList = alldao.getConfirm();
+		// 매물 서비스 정보 가져오기
+		List<PropertyServiceDTO> propertyServiceList = alldao.getRanServiceProperties();
+		for (PropertyServiceDTO propertyServiceDTO : propertyServiceList) {
+			// 이미지 정보 가져오기
+			ImagesDTO imageDTO = alldao.getImage(propertyServiceDTO.getProperty_service_id(),
+					propertyServiceDTO.getPs_service_type());
+			// 이미지를 매물 서비스에 설정
+			propertyServiceDTO.setImages(imageDTO);
+			result.add(propertyServiceDTO);
+		}
+		return result;
+	}
 
 	// 상세정보 실거래가 그래프
 	public List<TransactionPriceDTO> getTransaction(String address, String pname) {

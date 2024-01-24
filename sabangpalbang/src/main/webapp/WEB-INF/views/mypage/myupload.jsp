@@ -135,10 +135,10 @@
 			
 			
 			<c:if test="${listcheck==0 }">
-			업로드한 방이 없습니다.
+			<strong>업로드한 방이 없습니다.</strong>
 			</c:if>
 			
-			<div>
+			<div style="margin-top:30px;">
 			<h3>나의 문의</h3>
 			<c:if test="${qlistcheck!=0 }">
 				<c:forEach items="${qlist}" var="question">
@@ -152,7 +152,7 @@
 			</div>
 			
 			<c:if test="${qlistcheck==0 }">
-			문의 내역이 없습니다.
+			<strong>문의 내역이 없습니다.</strong>
 			</c:if>
 			
 	</div>

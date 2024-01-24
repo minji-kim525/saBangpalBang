@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -17,11 +18,12 @@
 
 <style>
 
-	p {
+	.psdetail > p {
 		position:relative;
 		left:60px;
 		
 	}
+	
 	.modal_wrap {
 		display:none;
 		width:500px;
@@ -32,6 +34,11 @@
 		margin:-250px 0 0 -250px;
 		background:#eee;
 		z-index:2;
+	}
+	
+	.modal_wrap > p {
+		text-align:center;
+		margin-top:40px;
 	}
 	
 	.black_bg {
@@ -115,12 +122,31 @@
 						<img src="/roomImg/${image.filename}" alt="" style="width:400px; height:480px;">
 					</div>
 				</c:forEach>
-				<div style="display:inline-block;">
+				<c:set var="billions" value="${((psdetail.price / 100000000) - (psdetail.price % 100000000 / 100000000))}" />
+				<c:set var="millions" value="${((psdetail.price % 100000000) / 10000)}" />
+				
+				<fmt:formatNumber var="billionsFormatted" value="${billions}" pattern="#,##0" />
+				<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+				
+				
+				
+
+				
+				<div class="psdetail" style="display:inline-block;">
 					<p>주소: ${psdetail.address}</p>
 					<p>건물명: ${psdetail.pname}</p>
 					<c:choose>
 						<c:when test="${psdetail.property_type_id == 1}">
-							<p>매매가 : ${psdetail.price}</p>
+							<c:if test="${billions > 0}">
+				    <p>매매가 : ${billionsFormatted}억 ${millionsFormatted}만원</p>
+							</c:if>
+							<c:if test="${billions == 0 && millions > 0}">
+							    <p>매매가 : ${millionsFormatted}만원</p>
+							</c:if>
+							<c:if test="${billions == 0 && millions == 0}">
+							    <p>매매가 : 가격 정보 없음</p>
+							</c:if>
+								
 						</c:when>
 						<c:when test="${psdetail.property_type_id == 2}">
 							<p>보증금: ${psdetail.deposit}</p>
@@ -146,7 +172,26 @@
 				<div class="black_bg"></div>
 				<div class="modal_wrap">
 					<div class="modal_close"><a href="#">close</a></div>
-					<div>모달창 내용</div>
+					<h5 style="font-size:24px; margin-top:10px; margin-left:10px;"><strong>문의 전 꼭 확인해주세요!</strong></h5>
+					
+					<p>
+						계약할 상대방이 실소유자가 맞는지 꼭 체크하세요.<br>
+						(등기부등본상 소유자가 맞는지 주민등록증, 주민등록등본, 등기권리증 같은 서류 확인 필수)
+					</p>
+					<p>
+						거래 대상 목적물을 직접 찾아가 답사하세요.
+					</p>
+					<p>
+						위 내용을 충분히 확인한 후, 금전적인 거래를 진행해주세요.<br>
+						(보증금 또는 월세 선입금 요구 시 주의하세요.)
+					</p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16"
+					style="color:blue; position:relative; top:71px; left:130px;">
+					  <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+					</svg>
+					<p style="color:blue; text-align:center; font-size:24px;"><strong>${psdetail.telephone}</strong></p>
+					<p style="color:blue; margin-top:10px!important;">개인과의 직거래 시 언제나 안전에 유의하세요</p>
+					</div>
 				</div>
 			</div>
 			
@@ -158,7 +203,7 @@
 		
 	</div>
 	
-</div>
+
 
 
 
