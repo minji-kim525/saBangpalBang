@@ -253,6 +253,8 @@
 	    pname: "${psdetail.pname}",
 	    property_type_id: ${psdetail.property_type_id},
 	    address: "${psdetail.address}",
+	    deposit: ${psdetail.deposit},
+	    month_price: ${psdetail.month_price},
 	    image: getImageFilePaths()
 	  };
 	  saveDataToLocalStorage(dataToSave);
