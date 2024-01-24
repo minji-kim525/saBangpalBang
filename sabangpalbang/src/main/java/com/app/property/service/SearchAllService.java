@@ -111,7 +111,7 @@ public class SearchAllService {
 		List<PropertyServiceDTO> propertyServiceList = alldao.getRanServiceProperties();
 		for (PropertyServiceDTO propertyServiceDTO : propertyServiceList) {
 			// 이미지 정보 가져오기
-			ImagesDTO imageDTO = alldao.getImage(propertyServiceDTO.getProperty_service_id(),
+			ImagesDTO imageDTO = alldao.getImagePs(propertyServiceDTO.getProperty_service_id(),
 					propertyServiceDTO.getPs_service_type());
 			// 이미지를 매물 서비스에 설정
 			propertyServiceDTO.setImages(imageDTO);
