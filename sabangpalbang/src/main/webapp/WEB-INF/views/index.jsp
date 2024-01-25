@@ -449,9 +449,16 @@
 		</section>
 		
 	</div>
+	
 	<div class=footer>
-		<p>© 2024 SabangPalbang. All rights reserved.</p>
-    	<p>Contact: info@example.com</p>
+		<div class="container" id="footer_con">
+		<hr class="hr-solid"/>
+			<p id="footer">(주)사방팔방</p>
+			<p id="footer">대표: 홍길동</p>
+			<p>고객센터: 02-1234-5678 | 평일 10:00 ~ 18:30, 점심시간 : 12:30 ~ 13:30 (토·일요일, 공휴일 휴무)</p>
+			<p id="foot1">© 2024 SabangPalbang. All rights reserved.</p>
+	    	<p id="foot2">Contact: SabangPalbang@example.com</p>
+    	</div>
 	</div>
 	
 	
