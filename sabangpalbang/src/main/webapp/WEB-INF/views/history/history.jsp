@@ -12,6 +12,39 @@
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/navbar.css">
+
+<style>
+	#pagination> ul { 
+		text-align:center;
+		list-style-type:none;
+	}
+	
+	#pagination > ul > li {
+		display:inline;
+		margin-right:20px;
+	}
+	
+	a {
+		text-decoration:none;
+		color:black;
+	}
+	p {
+		text-align:center;
+		position:relative;
+		top:15px;
+	}
+	
+	.card {
+		width:18rem;
+		margin-right:50px;
+		margin-bottom:50px;
+	}
+	
+	img {
+		width:266px;
+		height:330px;
+	}
+</style>
 <body>
 	<div class="header">
 		<header
@@ -86,7 +119,10 @@
 
 		<div class="col-sm-9 page">
 			<h3 style="padding-top: 30px; margin-bottom: 20px;">최근 본 내역</h3>
-			<div id="view-container"></div>
+
+			<div id="view-container" style="display:flex;">
+				
+			</div>
 
 			<div id="pagination">
 				<ul id="page-numbers"></ul>
@@ -133,6 +169,7 @@
 			for (var i = startIndex; i < endIndex && i < savedData.length; i++) {
 				var data = savedData[i];
 				var item = document.createElement("div");
+				item.classList.add('card');
 
 				// 이미지 표시를 위한 <img> 태그 추가
 				var imageLink = document.createElement("a");
