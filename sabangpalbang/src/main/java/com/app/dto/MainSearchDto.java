@@ -15,6 +15,7 @@ public class MainSearchDto {
 	    private String dealAmount;
 	    private String jeonseAmount;
 	    private String wolseAmount;
+	    private String feetAmount;
 	    private PaginationDto paginationDto; //페이지정보
 	    private int dealPriceMin;
 	    private int dealPriceMax;
@@ -22,6 +23,9 @@ public class MainSearchDto {
 	    private int jeonsePriceMax;
 	    private int wolsePriceMin;
 	    private int wolsePriceMax;
+	    private int feetMin;
+	    private int feetMax;
+	   
 	    
 	    public MainSearchDto() {
 	        this.page = 1;
@@ -29,7 +33,7 @@ public class MainSearchDto {
 	        this.pageSize = 10;
 	    }
 
-	 // 가격 범위 문자열을 분석하여 숫자 범위로 변환
+	 // 가격 범위 문자열 숫자 변환
 	    public void parsePriceRanges() {
 	        int[] dealPrices = parsePriceRange(this.dealAmount);
 	        this.dealPriceMin = dealPrices[0];
@@ -42,6 +46,10 @@ public class MainSearchDto {
 	        int[] wolsePrices = parsePriceRange(this.wolseAmount);
 	        this.wolsePriceMin = wolsePrices[0];
 	        this.wolsePriceMax = wolsePrices[1];
+	        
+	        int[] feetPrices = parseFeet(this.feetAmount);
+	        this.feetMin = feetPrices[0];
+	        this.feetMax = feetPrices[1];
 	    }
 
 	    // 개별 가격 문자열을 숫자로 변환
@@ -65,6 +73,28 @@ public class MainSearchDto {
 	        }
 
 	        return new int[]{minPrice, maxPrice};
+	    }
+	    
+	    private int[] parseFeet(String feetRange) {
+	    	 if (feetRange == null) {
+		            return new int[]{0, 9999999};
+		        }
+
+		        int minPrice = 0;
+		        int maxPrice = 0;
+
+		        String[] ranges = feetRange.split(" - ");
+		        if (ranges.length == 2) {
+		        	if(ranges[1].equals("무제한")) {
+		        		maxPrice=9999999;
+		        	}else {
+		            maxPrice = Integer.parseInt(ranges[1].replace("평", ""));
+		            }
+		            minPrice = Integer.parseInt(ranges[0].replace("평", ""));
+
+		        }
+
+		        return new int[]{minPrice, maxPrice};
 	    }
 
 	    // 문자열에서 숫자를 추출하여 가격 계산

@@ -79,6 +79,10 @@
 		width:50%;
 	}
 	
+	#feet_filter{
+		width:50%;
+	}
+	
 	.roominfo {
 		width:220px;
 		margin-top:5px;
@@ -197,6 +201,14 @@
 		        <div class="slider-range" id="wolseRange"></div>
 	   		</div>
    		</div>
+   		<div id="feet_filter">
+	                    
+	    	<div id="feetSlider" class="slider">
+		        <label class="slider-label" for="feetAmount">전용평수:</label>
+		        <input type="text" id="feetAmount" name="feetAmount" readonly class="form-control bg-white">
+		        <div class="slider-range" id="feetRange"></div>
+	   		</div>
+   		</div>
      </form> 
 </div>
       
@@ -295,13 +307,21 @@ var map = new naver.maps.Map(mapDiv);
 	       	 $('#property_type_filter input[type="checkbox"]').click(function(event) {
 	 	        var checkedBoxes = $('#property_type_filter input[type="checkbox"]:checked');
 	 	        
-	 	        // 마지막 체크박스의 해제를 방지
+	 	        // 마지막 체크박스의 해제 방지
 	 	       if (checkedBoxes.length === 0) {
 	     		$(this).prop('checked', true);
 	 			}
 	 	    });
-            
-            
+	       	 
+	       	var dealMin = ${mainSearchDto.dealPriceMin != null ? mainSearchDto.dealPriceMin : 0};
+	        var dealMax = ${mainSearchDto.dealPriceMax != null ? mainSearchDto.dealPriceMax : 160000};
+	        var jeonseMin = ${mainSearchDto.jeonsePriceMin != null ? mainSearchDto.jeonsePriceMin : 0};
+	        var jeonseMax = ${mainSearchDto.jeonsePriceMax != null ? mainSearchDto.jeonsePriceMax : 95000};
+	        var wolseMin = ${mainSearchDto.wolsePriceMin != null ? mainSearchDto.wolsePriceMin : 0};
+	        var wolseMax = ${mainSearchDto.wolsePriceMax != null ? mainSearchDto.wolsePriceMax : 400};
+	        var feetMin = ${mainSearchDto.feetMin != null ? mainSearchDto.feetMin : 0};
+	        var feetMax = ${mainSearchDto.feetMax != null ? mainSearchDto.feetMax : 100};
+	        
         	$('#searchForm input[type="checkbox"]').change(function() {
                 // 매매 체크박스 변경 시
                 if (this.name === 'deal') {
@@ -324,7 +344,7 @@ var map = new naver.maps.Map(mapDiv);
         	        range: true,
         	        min: 0,
         	        max: 160000,
-        	        values: [0, 160000], // 초기값 설정
+        	        values: [dealMin, dealMax], // 초기값 설정
         	        create: function(event, ui) {
         	            var initialValue = $(this).slider("values", 0);
         	            var initialStep = determineStep(initialValue);
@@ -344,7 +364,7 @@ var map = new naver.maps.Map(mapDiv);
       	        range: true,
       	        min: 0,
       	        max: 95000,
-      	        values: [0, 95000], // 초기값 설정
+      	        values: [jeonseMin, jeonseMax], // 초기값 설정
       	        create: function(event, ui) {
       	            var initialValue = $(this).slider("values", 0);
       	            var initialStep = determineStep2(initialValue);
@@ -364,7 +384,7 @@ var map = new naver.maps.Map(mapDiv);
       	        range: true,
       	        min: 0,
       	        max: 400,
-      	        values: [0, 400], // 초기값 설정
+      	        values: [wolseMin, wolseMax], // 초기값 설정
       	        create: function(event, ui) {
       	            var initialValue = $(this).slider("values", 0);
       	            var initialStep = determineStep3(initialValue);
@@ -380,6 +400,17 @@ var map = new naver.maps.Map(mapDiv);
       	        }
       	    });
         	  
+        	  $('#feetRange').slider({
+      	        range: true,
+      	        min: 0,
+      	        max: 100,
+      	        values: [feetMin,feetMax], // 초기값 설정
+      	      	step: 1,
+      	   		slide: function(event, ui) {
+      	        $("#feetAmount").val(formatPrice4(ui.values[0]) + ' - ' + formatPrice4(ui.values[1]));
+      	    	}
+      	        
+      	    });
         	  
         		//매매
         	    function determineStep(value) {
@@ -412,6 +443,8 @@ var map = new naver.maps.Map(mapDiv);
         	    $('#wolseAmount').val(formatPrice3($('#wolseRange').slider('values', 0)) +
 	                    ' - ' + formatPrice3($('#wolseRange').slider('values', 1)));
         	    
+        	    $('#feetAmount').val(formatPrice4($('#feetRange').slider('values', 0)) +
+	                    ' - ' + formatPrice4($('#feetRange').slider('values', 1)));
         	    
         	    //매매
                 function formatPrice(value) {
@@ -468,7 +501,13 @@ var map = new naver.maps.Map(mapDiv);
                    }
                }
         	 
-        	    
+             //전용면적
+               function formatPrice4(value) {
+                   if (value === 100) {
+                       return '무제한';
+              		} else {
+                   return value+'평';}
+             }
         	});
        
      

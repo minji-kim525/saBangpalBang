@@ -88,6 +88,8 @@
 		AND (ps.price IS NULL OR ps.price BETWEEN #{dealPriceMin} AND #{dealPriceMax})
 		AND (ps.deposit IS NULL OR ps.deposit BETWEEN #{jeonsePriceMin} AND #{jeonsePriceMax})
 		AND (ps.month_price IS NULL OR ps.month_price BETWEEN #{wolsePriceMin} AND #{wolsePriceMax})
+		AND (ps.feet IS NULL OR ps.feet BETWEEN #{feetMin} AND #{feetMax})
+		
 		 <if test="keyword != null and keyword != ''">
 	            <choose>
 	                <!-- 검색 유형이 있을 때 -->
@@ -141,6 +143,8 @@
 		p.price IS NULL OR p.price BETWEEN #{dealPriceMin} AND #{dealPriceMax}
 		AND (p.deposit IS NULL OR p.deposit BETWEEN #{jeonsePriceMin} AND #{jeonsePriceMax})
 		AND (p.month_price IS NULL OR p.month_price BETWEEN #{wolsePriceMin} AND #{wolsePriceMax})
+		AND (p.feet IS NULL OR p.feet BETWEEN #{feetMin} AND #{feetMax})
+		
 		 <if test="keyword != null and keyword != ''">
 	            <choose>
 	                <!-- 검색 유형이 있을 때 -->
