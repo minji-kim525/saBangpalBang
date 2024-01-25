@@ -15,7 +15,6 @@
 	.main {
 		width: 100vw;
 		height:1280px;
-		background-color: red;
 	}
 	
 	.main .container {
@@ -40,13 +39,11 @@
 	.main .recommend_property {
 		width: 100%;
 		height: 40%;
-		background-color: green;
 	}
 	
 	.main .recommend_property2 {
 		width: 100%;
 		height: 40%;
-		background-color: pink;
 	}
 	
 	.recommend_property > div {
@@ -54,7 +51,6 @@
 		height: 100%;
 		margin: 0px auto;
 		padding: 0px 10px;
-		background-color: aqua;
 	}
 	
 	.recommend_property2 > div {
@@ -62,7 +58,6 @@
 		height: 100%;
 		margin: 0px auto;
 		padding: 0px 10px;
-		background-color: blueviolet;
 	}
 	
 	
@@ -129,7 +124,21 @@
 		overflow: hidden;
 	}
 	.footer {
+		background-color: #aaa;
 		width:100vw;
-		height:10vh;
-		background-color:yellow;
+		height:20vh;
+	}
+	
+	#footer {
+		margin-bottom: 10px;
+	}
+	
+	#foot1 {
+		position: relative;
+		top: 20px;
+	}
+	
+	#foot2 {
+		position: relative;
+		top: 25px;
 	}
