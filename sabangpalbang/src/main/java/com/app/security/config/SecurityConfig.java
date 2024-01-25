@@ -42,8 +42,9 @@ public class SecurityConfig {
 					try {
 						auth.requestMatchers(new AntPathRequestMatcher("/mypage/**"),
 								new AntPathRequestMatcher("/property/psDetail"),
+								new AntPathRequestMatcher("/history"),
 								new AntPathRequestMatcher("/js/**")).authenticated()
-								.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN").anyRequest()
+								.requestMatchers(new AntPathRequestMatcher("/answer/**","/manager/**")).hasRole("ADMIN").anyRequest()
 								.permitAll();
 					} catch (Exception e) {
 						e.printStackTrace();

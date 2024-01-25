@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>	
 <!DOCTYPE html>
 <html>
@@ -53,19 +54,61 @@
 	</header>
 </div>
 
-글번호:${content.question_id}<br> 작성자:${content.id}<br> 
-제목:${content.title}<br> 내용:${content.content}<br>
-등록날짜:${content.created_at}<br>
-===================답변=========================<br>
+<div class="container-fluid" style="padding-left:0!important;">
+	<div class="col-sm-12 page">
+	<div class="card mb-4">
+		<div class="card-body">   
+			<c:if test="${content.title == null}">
+				<%
+				response.sendRedirect("title");
+				%>
+			</c:if>
+			<div class="row">
+				<div class="col-md-6 mb-3">
+				글번호:${content.question_id}
+				</div>
+				<div class="col-md-6 mb-3">
+				등록날짜:
+				<fmt:formatDate value="${content.created_at}"
+					pattern="yyyy-MM-dd HH:mm:ss" />
+				</div>
+			</div>
+			<hr class="hr-solid"/>
+			<div class="row">
+				<div class="col-md-6 mb-3">
+				질문유형:${content.question_type}
+				</div>
+				<div class="col-md-6 mb-3">
+				작성자:${content.id} 
+				</div>
+			</div>
+			<hr class="hr-solid"/>
+			<div class="mb-3">
+				제목:${content.title}
+			</div>
+			<hr class="hr-solid"/>
+			<div class="mb-3">
+			내용:${content.content}
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
 
-<form:form action="answer/insert" method="post" modelAttribute="dto">
-<input type="hidden" value="${content.question_id}" name="question_id">
-<input type="hidden" value="${content.title}" name="title">
-<input type="hidden" value="${content.user_id}" name="user_id">
-<input type="text" name="content">
-<input type="submit" value="답변하기"/>
-</form:form>
-
+<div class="container-fluid" style="padding-left:0!important;">
+	<div class="col-sm-12 page">
+	<h5 style="margin-left:20px;">답변</h5>   
+		<form:form action="answer/insert" method="post" modelAttribute="dto">
+		<input type="hidden" value="${content.question_id}" name="question_id">
+		<input type="hidden" value="${content.title}" name="title">
+		<input type="hidden" value="${content.user_id}" name="user_id">
+		<textarea name="content" class="form-control" rows="10" style="width:99.3%; margin-left:12px"></textarea>
+		<input type="submit" value="등록" class="btn btn-outline-primary"
+		style="margin-left:12px; margin-top:10px;">
+		
+		</form:form>
+	</div>
+</div>
 
 </body>
 </html>
