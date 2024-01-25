@@ -14,36 +14,45 @@
 <link rel="stylesheet" href="/css/navbar.css">
 
 <style>
-	#pagination> ul { 
-		text-align:center;
-		list-style-type:none;
-	}
-	
-	#pagination > ul > li {
-		display:inline;
-		margin-right:20px;
-	}
-	
-	a {
-		text-decoration:none;
-		color:black;
-	}
-	p {
-		text-align:center;
-		position:relative;
-		top:15px;
-	}
-	
-	.card {
-		width:18rem;
-		margin-right:50px;
-		margin-bottom:50px;
-	}
-	
-	img {
-		width:266px;
-		height:330px;
-	}
+#pagination>ul {
+	text-align: center;
+	list-style-type: none;
+}
+
+#pagination>ul>li {
+	display: inline;
+	margin-right: 20px;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+p {
+	text-align: center;
+	position: relative;
+	top: 15px;
+}
+
+.card {
+	width: 18rem;
+	margin-right: 50px;
+	margin-bottom: 50px;
+}
+
+img {
+	width: 266px;
+	height: 330px;
+}
+
+.blue-text {
+	color: blue;
+}
+
+.black-text {
+	color: black;
+}
 </style>
 <body>
 	<div class="header">
@@ -120,19 +129,17 @@
 		<div class="col-sm-9 page">
 			<h3 style="padding-top: 30px; margin-bottom: 20px;">최근 본 내역</h3>
 
-			<div id="view-container" style="display:flex;">
-				
-			</div>
+			<div id="view-container" style="display: flex;"></div>
 
-			<div id="pagination">
+			<div id="pagination" class="page-number">
 				<ul id="page-numbers"></ul>
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
+
+
+
+
 	<script>
 		// 로컬 스토리지에서 데이터를 가져오는 함수
 		function getDataFromLocalStorage() {
@@ -173,12 +180,11 @@
 
 				// 이미지 표시를 위한 <img> 태그 추가
 				var imageLink = document.createElement("a");
-				imageLink.href = "http://localhost:8081/property/psDetail?ps_service_type=1"						
+				imageLink.href = "http://localhost:8081/property/psDetail?ps_service_type=1"
 						+ "&propertyId="
 						+ data.propertyId
 						+ "&address="
-						+ data.address
-						+ "&pname=" + data.pname; // 페이지 URL에 질문 ID를 추가하여 동적으로 링크 생성
+						+ data.address + "&pname=" + data.pname; // 페이지 URL에 질문 ID를 추가하여 동적으로 링크 생성
 				var image = document.createElement("img");
 				image.src = data.image;
 				imageLink.appendChild(image);
@@ -193,25 +199,24 @@
 						+ "&propertyId="
 						+ data.propertyId
 						+ "&address="
-						+ data.address
-						+ "&pname=" + data.pname; // 페이지 URL에 질문 ID를 추가하여 동적으로 링크 생성
-						
-						
-						var convertedValue = ""; // 변환된 값을 저장할 변수
+						+ data.address + "&pname=" + data.pname; // 페이지 URL에 질문 ID를 추가하여 동적으로 링크 생성
 
-						if (data.property_type_id === 1) { // 매매일 경우
-							convertedValue = "매매가: " + convertUnit(data.price);
-						} else if (data.property_type_id === 2) { // 전세일 경우
-							convertedValue = "전세가: " + convertUnit(data.deposit);
-						} else if (data.property_type_id === 3) { // 월세일 경우
-							convertedValue = "월세: " + convertUnit(data.deposit) + "/" + convertUnit(data.month_price);
-						}
+				var convertedValue = ""; // 변환된 값을 저장할 변수
 
-						nameLink.textContent = convertedValue;
-						text.appendChild(nameLink);
-						item.appendChild(text);
-						viewContainer.appendChild(item);
-				
+				if (data.property_type_id === 1) { // 매매일 경우
+					convertedValue = "매매가: " + convertUnit(data.price);
+				} else if (data.property_type_id === 2) { // 전세일 경우
+					convertedValue = "전세가: " + convertUnit(data.deposit);
+				} else if (data.property_type_id === 3) { // 월세일 경우
+					convertedValue = "월세: " + convertUnit(data.deposit) + "/"
+							+ convertUnit(data.month_price);
+				}
+
+				nameLink.textContent = convertedValue;
+				text.appendChild(nameLink);
+				item.appendChild(text);
+				viewContainer.appendChild(item);
+
 				function convertUnit(value) {
 					if (value >= 100000000) { // 1억 이상일 경우
 						return (value / 100000000) + "억";
@@ -248,15 +253,19 @@
 		}
 
 		// 페이지 번호 업데이트 함수
-		function updatePageNumbers() {
-			var pageNumbers = document.querySelectorAll("#page-numbers li");
-			pageNumbers.forEach(function(pageNumber) {
-				pageNumber.classList.remove("active");
-				if (parseInt(pageNumber.textContent) === currentPage) {
-					pageNumber.classList.add("active");
-				}
-			});
-		}
+function updatePageNumbers() {
+    var pageNumbers = document.querySelectorAll("#page-numbers li");
+    pageNumbers.forEach(function(pageNumber) {
+        pageNumber.classList.remove("active");
+        pageNumber.classList.remove("blue-text");
+        pageNumber.classList.add("black-text");
+        if (parseInt(pageNumber.textContent) === currentPage) {
+            pageNumber.classList.add("active");
+            pageNumber.classList.add("blue-text");
+            pageNumber.classList.remove("black-text");
+        }
+    });
+}
 
 		// 초기 페이지 로딩 시 페이지 번호 목록 생성
 		createPageNumbers();
@@ -264,6 +273,8 @@
 		// 초기 페이지 로딩 시 페이지 번호 스타일링
 		updatePageNumbers();
 	</script>
+
+
 </body>
 
 </html>
