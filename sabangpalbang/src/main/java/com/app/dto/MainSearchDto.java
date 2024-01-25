@@ -46,9 +46,9 @@ public class MainSearchDto {
 
 	    // 개별 가격 문자열을 숫자로 변환
 	    private int[] parsePriceRange(String priceRange) {
-//	        if (priceRange == null || priceRange.equals("무제한")) {
-//	            return new int[]{0, 9999999};
-//	        }
+	        if (priceRange == null) {
+	            return new int[]{0, 9999999};
+	        }
 
 	        int minPrice = 0;
 	        int maxPrice = 0;

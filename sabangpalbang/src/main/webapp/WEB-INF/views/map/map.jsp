@@ -16,10 +16,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery UI CSS -->
     <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
-    <style>
-        .slider-range { margin: 20px 0; }
-        .slider-label { font-weight: bold; }
-    </style>
+
 
 </head>
 <style>
@@ -78,6 +75,10 @@
 		background-color:green;
 	}
 	
+	#property_type_filter{
+		width:50%;
+	}
+	
 	.roominfo {
 		width:220px;
 		margin-top:5px;
@@ -111,9 +112,6 @@
 		background-color:yellow;
 	}
 	
-	.slider-row{
-		width:50%;
-	}
 </style>
 <body>
 <div class="header">
@@ -178,25 +176,25 @@
         </div> -->
         <div id="property_type_filter">
 	        <input type="checkbox" name="deal" value="1" ${mainSearchDto.deal == "1" ? 'checked' : ''}>매매
-	      	<input type="checkbox" name="jeonse" value="2" ${mainSearchDto.jeonse == "2" ? 'checked' : ''}>전세
-	        <input type="checkbox" name="wolse" value="3" ${mainSearchDto.wolse == "3" ? 'checked' : ''}>월세
+	      	<input type="checkbox" name="jeonse" value="1" ${mainSearchDto.jeonse == "1" ? 'checked' : ''}>전세
+	        <input type="checkbox" name="wolse" value="1" ${mainSearchDto.wolse == "1" ? 'checked' : ''}>월세
 	                    
 	    	<div id="dealSlider" class="slider">
-		        <label for="dealAmount">매매 가격 범위:</label>
+		        <label class="slider-label" for="dealAmount">매매 가격 범위:</label>
 		        <input type="text" id="dealAmount" name="dealAmount" readonly class="form-control bg-white">      
-		        <div id="dealRange"></div>
+		        <div class="slider-range" id="dealRange"></div>
 	   		</div>
 	   		
 	    	<div id="jeonseSlider" class="slider">
-		        <label for="jeonseAmount">전세 가격 범위:</label>
+		        <label class="slider-label" for="jeonseAmount">보증금/전세 가격 범위:</label>
 		        <input type="text" id="jeonseAmount" name="jeonseAmount" readonly class="form-control bg-white">
-		        <div id="jeonseRange"></div>
+		        <div class="slider-range" id="jeonseRange"></div>
 	    	</div>
 	    	<!-- style="display: none;" -->
 	    	<div id="wolseSlider" class="slider">
-		        <label for="wolseAmount">월세 가격 범위:</label>
+		        <label class="slider-label" for="wolseAmount">월세 가격 범위:</label>
 		        <input type="text" id="wolseAmount" name="wolseAmount" readonly class="form-control bg-white">
-		        <div id="wolseRange"></div>
+		        <div class="slider-range" id="wolseRange"></div>
 	   		</div>
    		</div>
      </form> 
@@ -281,22 +279,29 @@ var map = new naver.maps.Map(mapDiv);
     <script>
         $(function() {
         	var urlParams = new URLSearchParams(window.location.search);
-            
-            // URL에 'search' 파라미터가 없는 경우에만 체크박스를 체크
-            if (!urlParams.has('search')) {
+
+            // 페이지가 최초로 로드될 때 (검색이 수행되지 않았을 때)
+            if (!urlParams.has('searchType')) {
+                // 모든 체크박스를 체크
                 $('#property_type_filter input[type="checkbox"]').prop('checked', true).change();
             }
 
-        	 $('#property_type_filter input[type="checkbox"]').click(function(event) {
-        	        var checkedBoxes = $('#property_type_filter input[type="checkbox"]:checked');
-        	        
-        	        // 마지막 체크박스의 해제를 방지
-        	       if (checkedBoxes.length === 0) {
-            		$(this).prop('checked', true);
-        			}
-        	    });
+            // 검색 버튼 클릭 이벤트
+            $("#search_submit").click(function(event) {
+             
+                $('#searchForm').submit();
+            });
         	
-        	
+	       	 $('#property_type_filter input[type="checkbox"]').click(function(event) {
+	 	        var checkedBoxes = $('#property_type_filter input[type="checkbox"]:checked');
+	 	        
+	 	        // 마지막 체크박스의 해제를 방지
+	 	       if (checkedBoxes.length === 0) {
+	     		$(this).prop('checked', true);
+	 			}
+	 	    });
+            
+            
         	$('#searchForm input[type="checkbox"]').change(function() {
                 // 매매 체크박스 변경 시
                 if (this.name === 'deal') {
@@ -462,36 +467,10 @@ var map = new naver.maps.Map(mapDiv);
                        return value + '만원';
                    }
                }
-        	    
-               $("#search_submit").click(function(event){
-                   var originalUrl = window.location.href;
-                   var url = new URL(originalUrl);
-                   var searchParams = url.searchParams;
-                   event.preventDefault(); // 폼의 자동 제출 방지
-
-                   console.log("Original URL: " + originalUrl);
-
-
-                   // 기존 'search' 파라미터 제거
-                   searchParams.delete('search');
-
-                   // 새로운 'search' 파라미터 추가
-                   searchParams.set('search', 'true');
-                   url.search = searchParams.toString(); // 변경된 파라미터를 URL 객체에 반영
-
-
-                   // 폼의 action 속성 업데이트
-                   $('#searchForm').attr('action', url.toString());
-
-                   console.log("Updated URL: " + url.toString());
-
-                   // 폼 제출
-                   $('#searchForm').submit();
-               });
+        	 
         	    
         	});
        
-      
      
     </script>
 </body>
