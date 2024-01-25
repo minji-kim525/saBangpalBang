@@ -110,7 +110,6 @@
 		SELECT
 		property_id,
 		p_service_type,
-		user_id,
 		property_type_id,
 		price,
 		feet,
