@@ -1,6 +1,7 @@
 package com.app.property.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,9 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dto.ImagesDTO;
+import com.app.dto.MainSearchDto;
+import com.app.dto.PaginationDto;
+import com.app.dto.PagingResponseDto;
 import com.app.dto.PropertyDTO;
 import com.app.dto.PropertyServiceDTO;
 import com.app.dto.TransactionPriceDTO;
+import com.app.manager.dto.PropertyResponseDto;
 import com.app.property.dao.SearchAllDAO;
 import com.app.property.dto.PropertyDetailDTO;
 import com.app.property.dto.PropertyResultDTO;
@@ -23,20 +28,31 @@ public class SearchAllService {
 	@Autowired
 	private SearchAllDAO alldao;
 
-	// 검색
-	public List<PropertyResultDTO> getAllProperties(String keyword) {
-		List<PropertyResultDTO> result = alldao.getAllProperties(keyword);
+	// 검색 PagingResponseDto<PropertyResponseDto> 
+	public PagingResponseDto<PropertyResultDTO> getAllProperties(MainSearchDto mainSearchDto) {
+		mainSearchDto.parsePriceRanges();
+		System.out.println(mainSearchDto);
+		//조건에 해당하는 데이터가 없는 경우 null
+		int count = alldao.count(mainSearchDto);
+		if(count<1) {
+			return new PagingResponseDto<>(Collections.emptyList(),null);
+		}
+		PaginationDto paginationDto = new PaginationDto(count,mainSearchDto);
+		mainSearchDto.setPaginationDto(paginationDto);
+		List<PropertyResultDTO> result = alldao.getAllProperties(mainSearchDto);
 		for (PropertyResultDTO propertyResultDTO : result) {
 			// 각 매물에 대한 이미지 가져옴
-			ImagesDTO imageDTO = alldao.getImage(propertyResultDTO.getProperty_service_id(),
+			ImagesDTO imageDTO = alldao.getImagePs(propertyResultDTO.getProperty_service_id(),
 					propertyResultDTO.getPs_service_type());
-			ImagesDTO imageDTO2 = alldao.getImage(propertyResultDTO.getProperty_id(),
+			ImagesDTO imageDTO2 = alldao.getImageP(propertyResultDTO.getProperty_id(),
 					propertyResultDTO.getP_service_type());
 			// 이미지를 PropertyResultDTO에 설정
 			propertyResultDTO.addImage(imageDTO);
 			propertyResultDTO.addImage(imageDTO2);
 		}
-		return result;
+		
+		return new PagingResponseDto<>(result, paginationDto);
+	
 	}
 
 	// 서비스 매물 상세정보
@@ -62,7 +78,7 @@ public class SearchAllService {
 		List<PropertyDTO> propertyList = alldao.getProperties();
 		for (PropertyDTO propertyDTO : propertyList) {
 			// 이미지 정보 가져오기
-			ImagesDTO imageDTO = alldao.getImage(propertyDTO.getProperty_id(), propertyDTO.getP_service_type());
+			ImagesDTO imageDTO = alldao.getImageP(propertyDTO.getProperty_id(), propertyDTO.getP_service_type());
 			// 이미지를 매물 서비스에 설정
 			propertyDTO.setImages(imageDTO);
 			result.add(propertyDTO);
@@ -78,7 +94,7 @@ public class SearchAllService {
 		List<PropertyServiceDTO> propertyServiceList = alldao.getServiceProperties();
 		for (PropertyServiceDTO propertyServiceDTO : propertyServiceList) {
 			// 이미지 정보 가져오기
-			ImagesDTO imageDTO = alldao.getImage(propertyServiceDTO.getProperty_service_id(),
+			ImagesDTO imageDTO = alldao.getImagePs(propertyServiceDTO.getProperty_service_id(),
 					propertyServiceDTO.getPs_service_type());
 			// 이미지를 매물 서비스에 설정
 			propertyServiceDTO.setImages(imageDTO);
@@ -95,7 +111,7 @@ public class SearchAllService {
 		List<PropertyServiceDTO> propertyServiceList = alldao.getRanServiceProperties();
 		for (PropertyServiceDTO propertyServiceDTO : propertyServiceList) {
 			// 이미지 정보 가져오기
-			ImagesDTO imageDTO = alldao.getImage(propertyServiceDTO.getProperty_service_id(),
+			ImagesDTO imageDTO = alldao.getImagePs(propertyServiceDTO.getProperty_service_id(),
 					propertyServiceDTO.getPs_service_type());
 			// 이미지를 매물 서비스에 설정
 			propertyServiceDTO.setImages(imageDTO);

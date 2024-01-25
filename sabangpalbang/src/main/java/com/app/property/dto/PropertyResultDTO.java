@@ -24,6 +24,12 @@ public class PropertyResultDTO {
     private String address;
     private int deposit;
     private int month_price;
+    private int count;
+    private int floor;
+    private int feet;
+    private int charge;
+    private String description;
+
     
     ConfirmDTO confirmDTO;
 	private List<ImagesDTO> imagesList;
