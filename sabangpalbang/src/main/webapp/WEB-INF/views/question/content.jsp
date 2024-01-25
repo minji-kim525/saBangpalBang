@@ -95,12 +95,12 @@
 	
 	<c:if test="${content.id == id || role == 'ROLE_ADMIN'}">
 		<form action="delete/${content.question_id}" method="post" >
-			<input type="submit" value="삭제" style="float:right;" 
+			<input type="submit" value="삭제" class="btn btn-outline-danger" style="float:right;" 
 				onclick="if(!confirm('정말로 삭제하시겠습니까?')){return false;}" />
 		</form>
 		<form action="update" method="post">
 			<input type="hidden" value="${content.question_id}"
-				name="question_id"> <input type="submit" value="수정" style="float:right; margin-right:5px;"
+				name="question_id"> <input class="btn btn-outline-primary" type="submit" value="수정" style="float:right; margin-right:5px;"
 				onclick="if(!confirm('수정하시겠습니까?')){return false;}" />
 		</form>
 	</c:if>
@@ -132,12 +132,12 @@
 							name="question_id"> <input type="hidden"
 							value="${alist.answer_id}" name="answer_id"> <input
 							type="hidden" value="${alist.content}" name="content"> <input
-							type="submit" value="답변수정">
+							class="btn btn-outline-primary" type="submit" value="답변수정">
 					</form>
 					<form action="answerdelete" method="post">
 						<input type="hidden" value="${alist.answer_id}" name="answer_id">
 						<input type="hidden" value="${content.question_id}"
-							name="question_id"> <input type="submit" value="삭제"
+							name="question_id"> <input type="submit" class="btn btn-outline-danger" value="삭제"
 							onclick="if(!confirm('정말로 삭제하시겠습니까?')){return false;}">
 					</form>
 				</c:if>

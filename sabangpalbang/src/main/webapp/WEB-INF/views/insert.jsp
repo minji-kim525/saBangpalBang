@@ -43,7 +43,7 @@
 
           <hr class="mb-4">
           <div class="mb-4"></div>
-          <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+          <button class="btn btn-primary btn-lg btn-block" id="formSubmit" type="submit">가입 완료</button>
         </form>
       </div>
 </body>
@@ -52,6 +52,7 @@
 <script>
 
 $(function(){
+	let idChecked = false; 
 
     $("#idCheck").click(function(){
     
@@ -64,6 +65,7 @@ $(function(){
             data: {"id":id}, 
             success: function(data){ 
                 if(data == "N" && id.length > 0){ // 만약 성공할시
+                	idChecked = true;
                     result = "사용 가능한 아이디입니다.";
                     $("#result_checkId").html(result).css("color", "green");
                  
@@ -83,7 +85,17 @@ $(function(){
         
     });
     
+    $("#formSubmit").click(function(e){
+        if (!idChecked) {
+            alert("아이디 중복확인을 해주세요.");
+            e.preventDefault();
+            return false;
+        }
+        else {$("#validation-form").submit();}
+    
+	});
 });
+
 
 </script>
 

@@ -88,7 +88,7 @@
 		<form action="title" method="get" id="searchForm">
 			<div class="container-fluid" style="--bs-gutter-x:0;">
 				<select class="form-select form-select-sm" aria-label=".form-select-sm example" name="searchType" id="mySelect" 
-				style="width:110px; display:inline-block; padding-top:0.375rem; padding-bottom:0.375rem; font-size:1rem;">
+				style="width:110px; display:inline-block; padding-top:0.375rem; padding-bottom:0.375rem; font-size:1rem; margin-left:10px;">
 					<option value="" ${searchDto.searchType == "" ? 'selected' : ''}>전체검색</option>
 				  <option value="writer"
 						${searchDto.searchType == "writer" ? 'selected' : ''}>작성자</option>
