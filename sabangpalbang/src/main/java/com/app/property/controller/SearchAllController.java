@@ -105,6 +105,7 @@ public class SearchAllController {
 	@GetMapping("/map")
 	public String map(@ModelAttribute MainSearchDto mainSearchDto, Model m) {
 		PagingResponseDto<PropertyResultDTO>list = allservice.getAllProperties(mainSearchDto);
+		System.out.println(list);
 		m.addAttribute("list", list.getList());
 		m.addAttribute("pagination",list.getPaginationDto());
  		return "map/map";
