@@ -30,7 +30,7 @@
             class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
             <li><a href="/map" class="nav-link px-2">지도</a></li>
-            <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
+            <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
             <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
@@ -70,7 +70,7 @@
     	  <hr class="hr-solid"/>
 	      <ul id="nav_side2" class="nav nav-pills nav-stacked">
 	        <li><a href="/mypage/likelist">찜목록</a></li>
-	        <li><a href="#">최근 본 내역</a></li>
+	        <li><a href="/history">최근 본 내역</a></li>
 	        <li><a href="/mypage/notify">알림</a></li>
 	        <li><a href="/mypage/myupload">내가 올린 글</a></li>
 	      </ul>

@@ -7,6 +7,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Password Check</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/font.css">
 	<link rel="stylesheet" href="/css/header.css">
@@ -30,7 +31,7 @@
             class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
             <li><a href="/map" class="nav-link px-2">지도</a></li>
-            <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
+            <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
             <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
@@ -70,7 +71,7 @@
     	  <hr class="hr-solid"/>
 	      <ul id="nav_side2" class="nav nav-pills nav-stacked">
 	        <li><a href="/mypage/likelist">찜목록</a></li>
-	        <li><a href="#">최근 본 내역</a></li>
+	        <li><a href="/history">최근 본 내역</a></li>
 	        <li><a href="/mypage/notify">알림</a></li>
 	        <li><a href="/mypage/myupload">내가 올린 글</a></li>
 	      </ul>
@@ -93,10 +94,16 @@
     </div>
 </div>
 
-    <script type="text/javascript">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
+    <script>
 	    var msg = '${msg}';
 	    if(msg === '비밀번호를 다시 확인해 주세요.') {
-	        alert("비밀번호를 다시 확인해 주세요.");
+	    	Swal.fire({
+      	      icon: 'error',
+      	      title: '비밀번호를 다시 확인해주세요',
+      	      text: '비밀번호가 일치하지 않습니다.',
+      	    });
 	    }
 	</script>
     

@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
@@ -28,7 +29,7 @@
             class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
             <li><a href="/map" class="nav-link px-2">지도</a></li>
-            <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
+            <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
             <li><a href="#" class="nav-link px-2">1:1 상담</a></li>
@@ -54,59 +55,105 @@
 </div>
 
 <div class="container-fluid" style="padding-left:0!important;">
-	<div class="col-sm-12 page">
-	<div class="card mb-4">   
-		<div class="card-body">
-			<form action="updatepage" method="post">
-				<div class="mb-3" style="width:10%">
-					<select name="question_type" class="form-select form-select-sm" aria-label=".form-select-sm example" style="margin-top:15vh;">
+	<div class="container">
+		<h3 style="text-align:center; margin-top:30px; margin-bottom:30px;"><strong>문의 수정</strong></h3>
+			<form id="updateform" action="updatepage" method="post">
+				<div class="mb-3">
+					<select name="question_type" class="form-select form-select-sm" aria-label=".form-select-sm example" 
+					style="margin-left:50px; display:inline-block; width:10%; font-size:1rem; padding-top:0.375rem; padding-bottom:0.375rem;">
 						<option value="">문의사항</option>
 						<option value="사기">사기</option>
 						<option value="월세/전세/매매">월세/전세/매매</option>
 						<option value="지역">지역</option>
 						<option value="기타">기타</option>
 					</select>
+				
+				<input type="text" value="${content.title}" name="title" style="display:inline-block; width:85%; margin-left:10px;">
 				</div>
-				<div class="mb-3">
-				<input type="text" value="${content.title}" name="title" style="width:100%;">
-				</div>
-				<div class="mb-3">
-				<textarea name="content" class="form-control" rows="5">${content.content}</textarea>
+				<div class="mb-3" style="width:96.1%; margin-left:50px;">
+				<textarea name="content" class="form-control" rows="10">${content.content}</textarea>
 				</div>
 				
 				<input type="hidden" value="${content.question_id}" name="question_id">
 				
 				
-				<input type="submit" value="수정"
-					onclick="if(!confirm('해당내용으로 수정하시겠습니까?')){return false;}" />
-				<input type="button" value="취소" onclick="cancelUpdate()">
+				<input class="btn btn-outline-primary" type="submit"  value="수정" id="updatebtn" style="margin-left:50px;"/>
+				<input class="btn btn-outline-danger"  type="button" value="취소" id="cancelbtn">
 			</form>
-		</div>
-	
-	
-	</div>
+		
 	</div>
 </div>	
 
-	<script>
-		function cancelUpdate() {
-			if (confirm('취소하시겠습니까?')) {	
-				window.history.back();
-			}
-		}
-	</script>	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 	
 	<script>
-  const selectElement = document.querySelector('select[name="question_type"]');
-  const submitButton = document.querySelector('input[type="submit"]');
-  
-  submitButton.addEventListener('click', function(event) {
-    if (selectElement.value === '') {
-      event.preventDefault(); // 기본 동작인 폼 제출을 막습니다.
-      alert('문의사항을 선택해주세요.');
-    }
-  });
-</script>
+	 
+	 
+	$(document).on('click', '#updatebtn', function(e) {
+		 
+		 e.preventDefault();
+		 
+		 Swal.fire({
+			 
+			   title: '수정 하시겠습니까?',
+			   icon: 'warning',
+			   
+			   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+			   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+			   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+			   confirmButtonText: '수정', // confirm 버튼 텍스트 지정
+			   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+			   	
+
+			}).then(result => {
+			   // 만약 Promise리턴을 받으면,
+			   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+				   $("#updateform").submit();
+			   }
+			   
+			});
+
+		});
+	
+	$('#updateform').submit(function(event) {
+		  if ($('select[name="question_type"]').val() === '') {
+		    event.preventDefault();
+		    Swal.fire({
+		        icon: 'warning',
+		        title: '문의사항을 선택해주세요.',	
+		      });
+		  }
+		});
+	
+	$(document).on('click', '#cancelbtn', function(e) {
+		 
+		 e.preventDefault();
+		 
+		 Swal.fire({
+			 
+			   title: '취소 하시겠습니까?',
+			   icon: 'warning',
+			   
+			   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+			   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+			   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+			   confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+			   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+			   	
+
+			}).then(result => {
+			   // 만약 Promise리턴을 받으면,
+			   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+				   window.history.back();
+			   }
+			   
+			});
+
+		});
+		
+	</script>	
+
 
 
 

@@ -68,7 +68,7 @@ img {
 			<ul id="navbar"
 				class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
 				<li><a href="/map" class="nav-link px-2">지도</a></li>
-				<li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
+				<li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
 				<li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
 				<li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
 				<li><a href="#" class="nav-link px-2">1대1 상담</a></li>

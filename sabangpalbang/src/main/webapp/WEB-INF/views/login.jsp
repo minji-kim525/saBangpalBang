@@ -29,7 +29,7 @@
 		 
 		 <span> 
 		    <c:if test="${error}">
-		        <p id="valid" class="alert alert-danger">${exception}</p>
+		        <p id="valid" class="alert alert-danger" style="font-size:15px;">${exception}</p>
 		    </c:if>
 		</span>
          <button class="w-100 btn btn-lg btn-primary" type="submit" style="margin-bottom:10px;">로그인</button>
