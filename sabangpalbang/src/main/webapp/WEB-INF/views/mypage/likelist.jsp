@@ -96,7 +96,7 @@
 						<div class="property"
 							onclick="{ location.href='/property/pDetail?p_service_type=${like.p_service_type}&propertyId=${like.property_id}&address=${like.address}&pname=${like.pname}'; }"
 							style="cursor: pointer;">
-							<img class="roomimg" src="${like.imageOne.filepath}" alt="" style="width:266px; height:200px;><br>
+							<img class="roomimg" src="${like.imageOne.filepath}" alt="" style="width:266px; height:200px;"><br>
 							<div class="roominfo">
 							<c:choose>
 								<c:when test="${like.property_type_id == 1}">
