@@ -21,6 +21,7 @@ import com.app.mypage.dto.NotifyResponseDto;
 import com.app.mypage.dto.UploadAndQuestionDto;
 import com.app.mypage.dto.UploadRequestDto;
 import com.app.mypage.service.MypageService;
+import com.app.property.dto.PropertyResultDTO;
 import com.app.security.config.SecurityUser;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -94,7 +95,7 @@ public class MypageController {
 	public String getMyLikeList(@AuthenticationPrincipal SecurityUser user,Model model) {
 		model.addAttribute("loginId", user.getUsername());
     	model.addAttribute("loginEmail", user.getUsers().getEmail());
-		List<MyUploadResponseDto> likelist =service.getMyLikeList(user.getUsers().getUser_id());
+		List<PropertyResultDTO> likelist =service.getMyLikeList(user.getUsers().getUser_id());
 		if(!likelist.isEmpty()) {
 			model.addAttribute("likelist",likelist);
 		}else {

@@ -18,6 +18,7 @@ import com.app.mypage.dto.MyUploadResponseDto;
 import com.app.mypage.dto.NotifyResponseDto;
 import com.app.mypage.dto.UploadAndQuestionDto;
 import com.app.mypage.dto.UploadRequestDto;
+import com.app.property.dto.PropertyResultDTO;
 import com.app.question.dto.titleDto;
 
 @Service
@@ -65,7 +66,7 @@ public class MypageService {
 		for (MyUploadResponseDto myUploadResponseDto : list) {
 			int id=myUploadResponseDto.getProperty_service_id();
 			int ps_type=myUploadResponseDto.getPs_service_type();
-			ImagesDTO img=dao.getImage(id,ps_type);
+			ImagesDTO img=dao.getImagePs(id,ps_type);
 			myUploadResponseDto.setImages(img);
 		}
 		List<titleDto>qlist=dao.myQuestionList(user_id);
@@ -81,13 +82,22 @@ public class MypageService {
 
 	
 	//찜목록
-	public List<MyUploadResponseDto> getMyLikeList(int user_id) {
-		List<MyUploadResponseDto> list = dao.getMyLikeList(user_id);
-		for (MyUploadResponseDto myUploadResponseDto : list) {
-			int id=myUploadResponseDto.getProperty_service_id();
-			int ps_type=myUploadResponseDto.getPs_service_type();
-			ImagesDTO img=dao.getImage(id,ps_type);
-			myUploadResponseDto.setImages(img);
+	public List<PropertyResultDTO> getMyLikeList(int user_id) {
+		List<PropertyResultDTO> list = dao.getMyLikeList(user_id);
+		for (PropertyResultDTO propertyResultDTO : list) {
+			// 각 매물에 대한 이미지 가져옴
+			ImagesDTO imageDTO = dao.getImagePs(propertyResultDTO.getProperty_service_id(),
+					propertyResultDTO.getPs_service_type());
+			ImagesDTO imageDTO2 = dao.getImageP(propertyResultDTO.getProperty_id(),
+					propertyResultDTO.getP_service_type());
+			System.out.println(imageDTO2);
+			// 이미지를 PropertyResultDTO에 설정
+			if(imageDTO!=null) {
+				propertyResultDTO.setImageOne(imageDTO);
+			}else
+			{
+				propertyResultDTO.setImageOne(imageDTO2);
+			}
 		}
 		return list;
 	}
