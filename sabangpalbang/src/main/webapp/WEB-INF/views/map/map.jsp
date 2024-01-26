@@ -267,6 +267,22 @@
 				</c:choose>
 				</c:forEach>
 				
+				<jsp:include page="../mapPaging.jsp" flush="true">
+				<jsp:param value="${mainSearchDto.searchType}" name="searchType"/>
+				<jsp:param value="${mainSearchDto.keyword}" name="keyword"/>
+				<jsp:param value="${mainSearchDto.wolse}" name="wolse"/>
+				<jsp:param value="${mainSearchDto.jeonse}" name="jeonse"/>
+				<jsp:param value="${mainSearchDto.deal}" name="deal"/>
+				<jsp:param value="${mainSearchDto.dealAmount}" name="dealAmount"/>
+				<jsp:param value="${mainSearchDto.jeonseAmount}" name="jeonseAmount"/>
+				<jsp:param value="${mainSearchDto.wolseAmount}" name="wolseAmount"/>
+				<jsp:param value="${mainSearchDto.feetAmount}" name="feetAmount"/>
+				<jsp:param value="${mainSearchDto.page}" name="page"/>
+				<jsp:param value="${pagination.startPage}" name="startPage"/>
+				<jsp:param value="${pagination.endPage}" name="endPage"/>
+				<jsp:param value="${pagination.existPrevPage}" name="existPrevPage"/>
+				<jsp:param value="${pagination.existNextPage}" name="existNextPage"/>
+				</jsp:include>
 			</div>
 	</div>
 
