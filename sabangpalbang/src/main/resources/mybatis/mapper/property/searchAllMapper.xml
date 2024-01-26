@@ -4,6 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.property.dao.SearchAllDAO">
 
+
+
+	<select id="count" parameterType="com.app.dto.MainSearchDto" resultType="int">
+	SELECT
+    	(SELECT
+    	 COUNT(*) 
+    	 FROM property p
+    	 <include refid ="searchP"/>
+    	 ) + 
+    	(SELECT
+    	 COUNT(*) 
+    	 FROM 
+    	 property_service ps 
+    	 LEFT JOIN 
+    	 confirm c 
+    	 ON ps.property_service_id = c.property_service_id
+    	 <include refid ="searchPs"/>) 
+    AS total_count;
+	</select>
+
 	<!-- 전체 데이터 keyword 조회 쿼리 -->
 	<select id="getAllProperties"
 		resultType="com.app.property.dto.PropertyResultDTO">
@@ -20,12 +40,16 @@
 		p.month_price,
 		p.deposit,
 		p.telephone,
-		p.address
+		p.address,
+		p.count,
+		p.floor,
+		p.feet,
+		p.charge,
+		p.description
 		FROM
 		property p
-		WHERE
-		p.pname LIKE
-		CONCAT('%', #{keyword},'%')
+		<include refid ="searchP"/>
+
 
 		UNION ALL
 
@@ -43,13 +67,131 @@
 		ps.month_price,
 		ps.deposit,
 		ps.telephone,
-		ps.address
+		ps.address,
+		ps.count,
+		ps.floor,
+		ps.feet,
+		ps.charge,
+		ps.description
+		
 		FROM property_service ps
 		LEFT JOIN confirm c ON
 		ps.property_service_id = c.property_service_id
-		WHERE ps.pname LIKE
-		CONCAT('%', #{keyword}, '%') AND c.confirm_check = 1
+		<include refid ="searchPs"/>
+		
+		LIMIT #{paginationDto.limitStart},#{recordSize} 
 	</select>
+
+	<sql id ="searchPs">
+		<where>
+		c.confirm_check = 2
+		AND (ps.price IS NULL OR ps.price BETWEEN #{dealPriceMin} AND #{dealPriceMax})
+		AND (ps.deposit IS NULL OR ps.deposit BETWEEN #{jeonsePriceMin} AND #{jeonsePriceMax})
+		AND (ps.month_price IS NULL OR ps.month_price BETWEEN #{wolsePriceMin} AND #{wolsePriceMax})
+		AND (ps.feet IS NULL OR ps.feet BETWEEN #{feetMin} AND #{feetMax})
+		
+		 <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <!-- 검색 유형이 있을 때 -->
+	                <when test="searchType != null and searchType != ''">
+	                    <choose>
+	                        <when test="'id'.equals( searchType )">
+	                           AND ps.address LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                        <when test="'email'.equals( searchType )">
+	                           AND ps.pname LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                    </choose>
+	                </when>
+	                
+	                <!-- 전체 검색일 때 -->
+	                <otherwise>
+	                    AND (
+	                         ps.address LIKE CONCAT('%', #{keyword}, '%')
+	                        OR ps.pname LIKE CONCAT('%', #{keyword}, '%')
+	                    )
+	                </otherwise>
+	            </choose>
+	        </if>
+	        <if test="deal!=0 and jeonse!=0 and wolse!=0">
+	        	AND(ps.property_type_id = 1 OR ps.property_type_id=2 OR ps.property_type_id=3)
+	        
+	        </if>
+	        <if test="deal!=0 and jeonse!=0 and wolse==0">
+	        	AND(ps.property_type_id = 1 OR ps.property_type_id=2)
+	        </if>
+	        <if test="deal!=0 and wolse!=0 and jeonse==0">
+	        	AND(ps.property_type_id = 1 OR ps.property_type_id=3)
+	        </if>
+	        <if test="deal==0 and jeonse!=0 and wolse!=0">
+	        	AND(ps.property_type_id=2 OR ps.property_type_id=3)
+	        </if>
+	         <if test="deal!=0 and jeonse==0 and wolse==0">
+	        	AND(ps.property_type_id=1)
+	        </if>
+	         <if test="deal==0 and jeonse!=0 and wolse==0">
+	        	AND(ps.property_type_id=2)
+	        </if>
+	         <if test="deal==0 and jeonse==0 and wolse!=0">
+	        	AND(ps.property_type_id=3)
+	        </if>
+	     </where>
+	</sql>
+	
+	<sql id ="searchP">
+		<where>
+		p.price IS NULL OR p.price BETWEEN #{dealPriceMin} AND #{dealPriceMax}
+		AND (p.deposit IS NULL OR p.deposit BETWEEN #{jeonsePriceMin} AND #{jeonsePriceMax})
+		AND (p.month_price IS NULL OR p.month_price BETWEEN #{wolsePriceMin} AND #{wolsePriceMax})
+		AND (p.feet IS NULL OR p.feet BETWEEN #{feetMin} AND #{feetMax})
+		
+		 <if test="keyword != null and keyword != ''">
+	            <choose>
+	                <!-- 검색 유형이 있을 때 -->
+	                <when test="searchType != null and searchType != ''">
+	                    <choose>
+	                        <when test="'id'.equals( searchType )">
+	                            p.address LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                        <when test="'email'.equals( searchType )">
+	                            p.pname LIKE CONCAT('%', #{keyword}, '%')
+	                        </when>
+	                    </choose>
+	                </when>
+	                
+	                <!-- 전체 검색일 때 -->
+	                <otherwise>
+	                    AND (
+	                         p.address LIKE CONCAT('%', #{keyword}, '%')
+	                        OR p.pname LIKE CONCAT('%', #{keyword}, '%')
+	                    )
+	                </otherwise>
+	            </choose>
+	        </if>
+	         <if test="deal!=0 and jeonse!=0 and wolse!=0">
+	        	AND(p.property_type_id = 1 OR p.property_type_id=2 OR p.property_type_id=3)
+	        
+	        </if>
+	        <if test="deal!=0 and jeonse!=0 and wolse==0">
+	        	AND(p.property_type_id = 1 OR p.property_type_id=2)
+	        </if>
+	        <if test="deal!=0 and wolse!=0 and jeonse==0">
+	        	AND(p.property_type_id = 1 OR p.property_type_id=3)
+	        </if>
+	        <if test="deal==0 and jeonse!=0 and wolse!=0">
+	        	AND(p.property_type_id=2 OR p.property_type_id=3)
+	        </if>
+	         <if test="deal!=0 and jeonse==0 and wolse==0">
+	        	AND(p.property_type_id=1)
+	        </if>
+	         <if test="deal==0 and jeonse!=0 and wolse==0">
+	        	AND(p.property_type_id=2)
+	        </if>
+	         <if test="deal==0 and jeonse==0 and wolse!=0">
+	        	AND(p.property_type_id=3)
+	        </if>
+	        </where>
+	</sql>
 
 	<!-- 서비스 매물 상세 정보 -->
 	<select id="getpsDetail"
@@ -110,7 +252,6 @@
 		SELECT
 		property_id,
 		p_service_type,
-		user_id,
 		property_type_id,
 		price,
 		feet,
@@ -200,7 +341,34 @@
 	</select>
 
 	<!-- 썸네일 -->
-	<select id="getImage" resultType="com.app.dto.ImagesDTO">
+	<select id="getImageP" resultType="com.app.dto.ImagesDTO">
+		SELECT
+		property_id,
+		property_service_id,
+		filename,
+		filepath,
+		p_service_type,
+		ps_service_type
+		FROM (
+		SELECT
+		property_id,
+		property_service_id,
+		filename,
+		filepath,
+		p_service_type,
+		ps_service_type,
+		ROW_NUMBER() OVER(PARTITION BY
+		property_service_id ORDER BY image_id) as
+		img_sequence
+		FROM images
+		) AS
+		img
+		WHERE img.img_sequence = 1 and
+		property_id=#{id1} and
+		p_service_type=#{id2}
+	</select>
+	<!-- 썸네일 -->
+	<select id="getImagePs" resultType="com.app.dto.ImagesDTO">
 		SELECT
 		property_id,
 		property_service_id,
