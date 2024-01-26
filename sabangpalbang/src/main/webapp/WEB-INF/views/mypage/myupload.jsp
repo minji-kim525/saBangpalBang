@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,7 @@
 		top:15px;
 	}
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
@@ -35,7 +37,7 @@
             class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
             <li><a href="/map" class="nav-link px-2">지도</a></li>
-            <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
+            <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
             <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
@@ -75,7 +77,7 @@
     	  <hr class="hr-solid"/>
 	      <ul id="nav_side2" class="nav nav-pills nav-stacked">
 	        <li><a href="/mypage/likelist">찜목록</a></li>
-	        <li><a href="#">최근 본 내역</a></li>
+	        <li><a href="/history">최근 본 내역</a></li>
 	        <li><a href="/mypage/notify">알림</a></li>
 	        <li><a href="/mypage/myupload">내가 올린 글</a></li>
 	      </ul>
@@ -91,16 +93,43 @@
 				<div class="card" style="width: 18rem; margin-right:50px; margin-bottom:50px;">
 				
 					<img src="/roomImg/${property.images.filename}" class="card-img-top" alt="" style="width:266px; height:200px;">
+					<c:set var="billions" value="${((property.price / 100000000) - (property.price % 100000000 / 100000000))}" />
+					<c:set var="millions" value="${((property.price % 100000000) / 10000)}" />
+					<fmt:formatNumber var="billionsFormatted" value="${billions}" pattern="#,##0" />
+					<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+					
+					<c:set var="billions_de" value="${property.deposit / 10000}" />
+					<c:set var="millions_de" value="${property.deposit}" />
+					<fmt:formatNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" />
+					<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
+							
 					<c:choose>
 						<c:when test="${property.property_type_id==1}">
-						<p>매매 </p>
-						<p>${property.price}</p>
-						<p>${property.pname}</p><br>
+						<c:if test="${billions > 0}">
+				    		<p>매매</p>
+				    		<p> ${billionsFormatted}억 ${millionsFormatted}만원</p>
+				    		<p>${property.pname}</p><br>
+						</c:if>
+						<c:if test="${billions == 0 && millions > 0}">
+							<p>매매</p>
+							<p>${millionsFormatted}만원</p>
+							<p>${property.pname}</p><br>
+						</c:if>
+						<c:if test="${billions == 0 && millions == 0}">
+							<p>매매가 : 가격 정보 없음</p>
+						</c:if>
 						</c:when>
 						<c:when test="${property.property_type_id==2}">
-						<p>전세 </p>
-						<p>${property.deposit}</p>
-						<p>${property.pname}</p><br>
+							<c:if test="${billions_de > 1}">
+								<p>전세</p>
+								<p>${billionsFormatted_de}억 ${millionsFormatted_de}만원</p>
+								<p>${property.pname}</p><br>
+							</c:if>
+							<c:if test="${billions_de < 1 && millions_de > 0}">
+								<p>전세</p>
+								<p>${millionsFormatted_de}만원</p>
+								<p>${property.pname}</p><br>
+							</c:if>
 						</c:when>
 						<c:when test="${property.property_type_id==3}">
 						<p>월세 </p>
@@ -159,25 +188,64 @@
 </div>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	
 	<script>
-	$(document).ready(function() {
-		 $(document).on('click', '#changePrivate', function() {
-			if (confirm("해당 게시물을 비공개 하시겠습니까?") == true) { //확인
-				$("#updateform").submit();
-			} else { //취소
-				return false;
-			}
+	
+		 $(document).on('click', '#changePrivate', function(e) {
+			 
+			 e.preventDefault();
+			 
+			 Swal.fire({
+				 
+				   title: '해당 게시물을 비공개 하시겠습니까?',
+				   text: '비공개된 매물은 볼 수 없습니다.',
+				   icon: 'warning',
+				   
+				   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+				   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+				   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+				   confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+				   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+				   	
+
+				}).then(result => {
+				   // 만약 Promise리턴을 받으면,
+				   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+				      $("#updateform").submit();
+				   }
+				   
+				});
 
 			});
-	$(document).on('click', '#notPrivate', function() {
-			if (confirm("해당 게시물을 공개 하시겠습니까?") == true) { //확인
-				$("#updateform").submit();
-			} else { //취소
-				return false;
-			}
+	
+	$(document).on('click', '#notPrivate', function(e) {
+		e.preventDefault();
+		 
+		 Swal.fire({
+			 
+			   title: '해당 게시물을 공개 하시겠습니까?',
+			   text: '틀린정보가 있는지 꼭 확인하세요.',
+			   icon: 'warning',
+			   
+			   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+			   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+			   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+			   confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+			   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+			   	
+
+			}).then(result => {
+			   // 만약 Promise리턴을 받으면,
+			   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+			      $("#updateform").submit();
+			   }
+			   
+			});
+
 
 		});
-	});
+	
 	</script>
 
 </body>
