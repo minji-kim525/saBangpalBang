@@ -73,7 +73,7 @@
 				<td class="col" scope="col">${title.question_id}</td>
 				<td class="col" scope="col">${title.question_type}</td>
 				<td class="col" scope="col">${title.id}</td>
-				<td class="col" scope="col"><a href="${title.question_id}">${title.title}</a></td>
+				<td class="col" scope="col"><a href="../question/${title.question_id}">${title.title}</a></td>
 				<td class="col" scope="col"><fmt:formatDate value="${title.created_at}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				
 				
