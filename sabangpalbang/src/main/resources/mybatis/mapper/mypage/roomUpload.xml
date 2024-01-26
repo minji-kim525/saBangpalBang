@@ -38,28 +38,59 @@
 	</foreach>
 	</insert>
 	
-	<select id="getImage" resultType="com.app.dto.ImagesDTO"> 
+	<select id="getImageP" resultType="com.app.dto.ImagesDTO">
 		SELECT
-	    	property_id,
-	    	property_service_id,
-	    	filename,
-	    	filepath,
-	    	p_service_type,
-	    	ps_service_type
+		property_id,
+		property_service_id,
+		filename,
+		filepath,
+		p_service_type,
+		ps_service_type
 		FROM (
-	    	SELECT
-	       		property_id,
-	        	property_service_id,
-	        	filename,
-	        	filepath,
-	        	p_service_type,
-	        	ps_service_type,
-	        	ROW_NUMBER() OVER(PARTITION BY property_service_id ORDER BY image_id) as img_sequence
-	    	FROM images
-		) AS img
-		WHERE img.img_sequence = 1 and property_service_id=#{id1} and ps_service_type=#{id2}
+		SELECT
+		property_id,
+		property_service_id,
+		filename,
+		filepath,
+		p_service_type,
+		ps_service_type,
+		ROW_NUMBER() OVER(PARTITION BY
+		property_id ORDER BY image_id) as
+		img_sequence
+		FROM images
+		) AS
+		img
+		WHERE img.img_sequence = 1 and
+		property_id=#{id1} and
+		p_service_type=#{id2}
 	</select>
-		
+	<!-- 썸네일 -->
+	<select id="getImagePs" resultType="com.app.dto.ImagesDTO">
+		SELECT
+		property_id,
+		property_service_id,
+		filename,
+		filepath,
+		p_service_type,
+		ps_service_type
+		FROM (
+		SELECT
+		property_id,
+		property_service_id,
+		filename,
+		filepath,
+		p_service_type,
+		ps_service_type,
+		ROW_NUMBER() OVER(PARTITION BY
+		property_service_id ORDER BY image_id) as
+		img_sequence
+		FROM images
+		) AS
+		img
+		WHERE img.img_sequence = 1 and
+		property_service_id=#{id1} and
+		ps_service_type=#{id2}
+	</select>
 	<insert id="insertLikeList" parameterType="com.app.dto.LikeListDTO">
 		insert 
 		into 

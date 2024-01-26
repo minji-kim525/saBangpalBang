@@ -46,9 +46,15 @@ public class SearchAllService {
 					propertyResultDTO.getPs_service_type());
 			ImagesDTO imageDTO2 = alldao.getImageP(propertyResultDTO.getProperty_id(),
 					propertyResultDTO.getP_service_type());
+			System.out.println(imageDTO2);
 			// 이미지를 PropertyResultDTO에 설정
-			propertyResultDTO.addImage(imageDTO);
-			propertyResultDTO.addImage(imageDTO2);
+			if(imageDTO!=null) {
+				propertyResultDTO.setImageOne(imageDTO);
+			}else
+			{
+				propertyResultDTO.setImageOne(imageDTO2);
+			}
+		
 		}
 		
 		return new PagingResponseDto<>(result, paginationDto);

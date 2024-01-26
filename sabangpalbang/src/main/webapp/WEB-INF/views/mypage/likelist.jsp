@@ -91,26 +91,58 @@
 		<c:if test="${listcheck!=0 }">
 			<c:forEach items="${likelist}" var="like">
 				<div class="card" style="width: 18rem; margin-right:50px; margin-bottom:50px;">
-					<img src="/roomImg/${like.images.filename}" alt="" style="width:266px; height:200px;">
-					<c:choose>
-						<c:when test="${like.property_type_id==1}">
-						<p>매매 </p>
-						<p>${like.price}</p>
-						<p>${like.pname}</p><br>
-						</c:when>
-						<c:when test="${like.property_type_id==2}">
-						<p>전세 </p>
-						<p>${like.deposit}</p>
-						<p>${like.pname}</p><br>
-						</c:when>
-						<c:when test="${like.property_type_id==3}">
-						<p>월세 </p>
-						<p>${like.deposit} / ${like.month_price}</p>
-						<p>${like.pname}</p><br>
-						</c:when>
-					</c:choose>
-				
-				</div>
+				<c:choose>
+					<c:when test="${like.p_service_type == 2}">
+						<div class="property"
+							onclick="{ location.href='/property/pDetail?p_service_type=${like.p_service_type}&propertyId=${like.property_id}&address=${like.address}&pname=${like.pname}'; }"
+							style="cursor: pointer;">
+							<img class="roomimg" src="${like.imageOne.filepath}" alt="" style="width:266px; height:200px;><br>
+							<div class="roominfo">
+							<c:choose>
+								<c:when test="${like.property_type_id == 1}">
+									<h3 class="property-type">매매 ${ChargeFunction.formatNumberWithUnit(like.price)}</h3>
+								</c:when>
+								<c:when test="${like.property_type_id == 2}">
+									<h3 class="property-type">전세 ${ChargeFunction.formatNumberWithUnit(like.deposit)}</h3>
+								</c:when>
+								<c:when test="${like.property_type_id == 3}">
+									<h3 class="property-type">월세 ${property.deposit} / ${like.month_price}</h3>
+								</c:when>
+							</c:choose>
+							
+							<p class="pname">${like.pname}</p>	
+							<p class="roombr">방 개수: ${like.count}</p>
+							<p class="roomfloor">${like.floor}층, ${like.feet}평, 관리비 ${like.charge}만</p>
+							</div>
+						</div>
+					</c:when>
+					<c:when
+						test="${like.private_property == false && like.ps_service_type == 1}">
+						<div class="property"
+							onclick="{location.href='/property/psDetail?ps_service_type=${like.ps_service_type}&propertyId=${like.property_service_id}&address=${like.address}&pname=${like.pname}'; }"
+							style="cursor: pointer;">
+							<img src="/roomImg/${like.imageOne.filename}" alt=""><br>
+							<div class="roominfo">
+							<c:choose>
+								<c:when test="${like.property_type_id == 1}">
+									<h3 class="property-type">매매 ${ChargeFunction.formatNumberWithUnit(like.price)}</h3>
+								</c:when>
+								<c:when test="${like.property_type_id == 2}">
+									<h3 class="property-type">전세 ${ChargeFunction.formatNumberWithUnit(like.deposit)}</h3>
+								</c:when>
+								<c:when test="${like.property_type_id == 3}">
+									<h3 class="property-type">월세 ${like.deposit} / ${like.month_price}</h3>
+								</c:when>
+							</c:choose>
+							<p class="pname">${like.pname}</p>	
+							<p class="roombr">방 개수: ${like.count}</p>
+							<p class="roomfloor">${like.floor}층, ${like.feet}평, 관리비 ${like.charge}만</p>
+							</div>
+						</div>
+					</c:when>
+				</c:choose>
+								
+			</div>
 			</c:forEach>
 		</c:if>
 		</div>
