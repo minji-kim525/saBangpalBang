@@ -29,7 +29,7 @@ public class PropertyResultDTO {
     private int feet;
     private int charge;
     private String description;
-
+    private ImagesDTO imageOne;
     
     ConfirmDTO confirmDTO;
 	private List<ImagesDTO> imagesList;

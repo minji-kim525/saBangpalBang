@@ -16,8 +16,6 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery UI CSS -->
     <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
-
-
 </head>
 <style>
 	*{
@@ -222,7 +220,7 @@
 						<div class="property"
 							onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
 							style="cursor: pointer;">
-							<img class="roomimg" src="/roomImg/${property.imagesList[0].filename}" alt=""><br>
+							<img class="roomimg" src="${property.imageOne.filepath}" alt=""><br>
 							<div class="roominfo">
 							<c:choose>
 								<c:when test="${property.property_type_id == 1}">
@@ -247,7 +245,7 @@
 						<div class="property"
 							onclick="{location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}&address=${property.address}&pname=${property.pname}'; }"
 							style="cursor: pointer;">
-							<img src="/roomImg/${property.imagesList[0].filename}" alt=""><br>
+							<img src="/roomImg/${property.imageOne.filename}" alt=""><br>
 							<div class="roominfo">
 							<c:choose>
 								<c:when test="${property.property_type_id == 1}">

@@ -358,7 +358,7 @@
 		p_service_type,
 		ps_service_type,
 		ROW_NUMBER() OVER(PARTITION BY
-		property_service_id ORDER BY image_id) as
+		property_id ORDER BY image_id) as
 		img_sequence
 		FROM images
 		) AS
