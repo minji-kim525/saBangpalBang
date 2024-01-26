@@ -38,7 +38,7 @@ public interface MypageDao {
 
 	int insertLikeList(@Param("likeListDto")LikeListDTO likeListDto);
 	
-	List<PropertyResultDTO> getMyLikeList(@Param("user_id")int user_id);
+	List<PropertyResultDTO>getMyLikeList(@Param("user_id")int user_id);
   
 	@Select("select question_id,title,created_at,id from question natural join users where user_id=#{user_id}")
 	List<titleDto> myQuestionList(@Param("user_id")int user_id);

@@ -102,7 +102,7 @@
 		values("#{user_id},#{p_service_type},#{ps_service_type},#{property_service_id},#{property_id}")
 	</insert>
 	
-	<select id="getMyLikeList"  parameterType="int" resultType="com.app.mypage.dto.MyUploadResponseDto">
+	<select id="getMyLikeList"  parameterType="int" resultType="com.app.property.dto.PropertyResultDTO">
 		SELECT
     		COALESCE(p.pname, ps.pname)pname,
     		l.like_list_id,
