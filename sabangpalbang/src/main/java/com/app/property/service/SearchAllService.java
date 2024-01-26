@@ -91,6 +91,20 @@ public class SearchAllService {
 		}
 		return result;
 	}
+	
+	public List<PropertyDTO> getRanProperties() {
+		List<PropertyDTO> result = new ArrayList<>();
+		// 매물 서비스 정보 가져오기
+		List<PropertyDTO> propertyList = alldao.getRanProperties();
+		for (PropertyDTO propertyDTO : propertyList) {
+			// 이미지 정보 가져오기
+			ImagesDTO imageDTO = alldao.getImageP(propertyDTO.getProperty_id(), propertyDTO.getP_service_type());
+			// 이미지를 매물 서비스에 설정
+			propertyDTO.setImages(imageDTO);
+			result.add(propertyDTO);
+		}
+		return result;
+	}
 
 	// 서비스매물 정보
 	public List<PropertyServiceDTO> getServiceProperties() {
