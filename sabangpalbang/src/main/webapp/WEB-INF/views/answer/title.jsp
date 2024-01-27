@@ -35,6 +35,12 @@
           </ul>
 
           <div class="col-md-3 text-end">
+          	<sec:authorize access="!isAuthenticated()"> 
+	            <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
+	              로그인
+	            </button>	        
+            	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'" style="margin-right:50px;">회원가입</button>
+            </sec:authorize>
             <sec:authorize access="hasAuthority('USER')"> 
 				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
 				<form action="/logout" method="post" style="float:right">
@@ -73,7 +79,7 @@
 				<td class="col" scope="col">${title.question_id}</td>
 				<td class="col" scope="col">${title.question_type}</td>
 				<td class="col" scope="col">${title.id}</td>
-				<td class="col" scope="col"><a href="${title.question_id}">${title.title}</a></td>
+				<td class="col" scope="col"><a href="../question/${title.question_id}">${title.title}</a></td>
 				<td class="col" scope="col"><fmt:formatDate value="${title.created_at}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				
 				

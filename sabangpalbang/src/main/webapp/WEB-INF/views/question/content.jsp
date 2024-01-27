@@ -37,6 +37,12 @@
           </ul>
 
           <div class="col-md-3 text-end">
+          	<sec:authorize access="!isAuthenticated()"> 
+	            <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
+	              로그인
+	            </button>	        
+            	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'" style="margin-right:50px;">회원가입</button>
+            </sec:authorize>
             <sec:authorize access="hasAuthority('USER')"> 
 				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
 				<form action="/logout" method="post" style="float:right">
@@ -135,16 +141,7 @@
 		</div>
 		
 	</div>
-	<c:if test="${role == 'ROLE_ADMIN' and count == 0}">
-		<form action="answer" method="post">
-			<input type="hidden" value="${content.question_id}"
-				name="question_id"> <input type="hidden"
-				value="${content.title}" name="title"> <input type="hidden"
-				value="${content.user_id}" name="user_id"> <input
-				type="submit" value="답변하기" />
-
-		</form>
-	</c:if>
+	
 	<c:if test="${role == 'ROLE_ADMIN'}">
 					<form action="answerdelete" id="deleteasform" method="post">
 						<input type="hidden" value="${alist.answer_id}" name="answer_id">
@@ -162,6 +159,16 @@
 					
 				</c:if>
 	</c:forEach>
+	<c:if test="${role == 'ROLE_ADMIN' and count == 0}">
+		<form action="answer" method="post">
+			<input type="hidden" value="${content.question_id}"
+				name="question_id"> <input type="hidden"
+				value="${content.title}" name="title"> <input type="hidden"
+				value="${content.user_id}" name="user_id"> <input
+				class="btn btn-outline-primary" type="submit" value="답변하기" />
+
+		</form>
+	</c:if>
 	</div>
 </div>
 

@@ -18,11 +18,6 @@
 
 <style>
 
-	.psdetail > p {
-		position:relative;
-		left:60px;
-		
-	}
 	
 	.modal_wrap {
 		display:none;
@@ -67,6 +62,21 @@
 		height:100%;
 		background:url(https://img.icons8.com/metro/26/000000/close-window.png);
 		text-indent:-9999px;
+	}
+	
+	.images {
+		display:flex;
+		width:100%;
+		height:300px;
+	}
+	
+	.images_part {
+		margin-right:10px;
+	}
+	
+	.images_part > img {
+		width:250px;
+		height:250px;
 	}
 </style>
 </head>
@@ -117,11 +127,20 @@
 	<div class="col-sm-12 page">
 		<div class="container" style="margin-top:20px;">
 			<div>
-				<c:forEach items="${psdetail.images}" var="image">
-					<div style="text-align:center; display:inline-block; vertical-align:top;">
-						<img src="/roomImg/${image.filename}" alt="" style="width:400px; height:480px;">
-					</div>
-				</c:forEach>
+				<div class="images">
+					<c:forEach items="${psdetail.images}" var="image">
+						<div class="images_part">
+							<img src="/roomImg/${image.filename}" alt="" >
+						</div>
+						
+					</c:forEach>
+					<c:forEach  var="i" begin="1" step="1" end="${5-fn:length(psdetail.images)}">
+						<div class="images_part">
+							<img src="" onerror="this.onerror=null; this.src='/icon/noimage.jpg';" >
+						</div>
+						
+					</c:forEach>
+				</div>
 				<c:set var="billions" value="${((psdetail.price / 100000000) - (psdetail.price % 100000000 / 100000000))}" />
 				<c:set var="millions" value="${((psdetail.price % 100000000) / 10000)}" />
 				
@@ -159,6 +178,7 @@
 					<p>층수: ${psdetail.floor}</p>
 					<p>관리비: ${psdetail.charge}</p>
 					<p>방 개수: ${psdetail.count}</p>
+					<p>입주 가능일: ${psdetail.move_date}</p>
 					<p>
 						등록 날짜:
 						<fmt:formatDate value="${psdetail.registration_date}"
@@ -166,7 +186,7 @@
 					</p>
 					<p>설명: ${psdetail.description}</p>
 			
-					<button class="btn btn-primary" type="button" id="telephone" style="margin-left:60px; margin-top:80px;">연락처 보기</button>
+					<button class="btn btn-primary" type="button" id="telephone">연락처 보기</button>
 				</div>
 				
 				<div class="black_bg"></div>
