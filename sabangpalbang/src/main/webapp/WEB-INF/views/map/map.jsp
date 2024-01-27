@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>간단한 지도 표시하기</title>
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=yl1aqr3ar8"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=06f4a6f0808017813dd6a404a0927314"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
  	 <!-- 부트스트랩 CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -290,11 +290,112 @@
 </div>
 <div id="footer"></div>
 <script>
-//지도를 삽입할 HTML 요소 또는 HTML 요소의 id를 지정합니다.
-var mapDiv = document.getElementById('map'); // 'map'으로 선언해도 동일
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = { 
+    center: new kakao.maps.LatLng(37.5666103, 126.9783882), // 지도의 중심좌표
+    level: 7 // 지도의 확대 레벨
+};
 
-//옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
-var map = new naver.maps.Map(mapDiv);
+//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+var overlays = [];
+var getRegion_result;
+//지명 커스텀오버레이 생성 함수
+function addCustomOverlay(name,lat,long){
+    // 커스텀 오버레이에 표시할 내용입니다     
+    // HTML 문자열 또는 Dom Element 입니다
+    var content = '<div style="position: absolute; cursor: pointer; white-space: nowrap;">' + 
+                    '<div class="sc-jNMcJZ custom" style="width: 60px; height: 23px; background-image: url(../icon/local.png);">' +
+                       ' <div class="sc-dOSRxR jbhFAf" style="color: rgb(254, 254, 254);">' + name + '</div>' +
+                    '</div>' + 
+                '</div>';
+
+    // 커스텀 오버레이가 표시될 위치입니다 
+    var position = new kakao.maps.LatLng(lat, long);  
+
+     // 커스텀 오버레이를 생성합니다
+    var customOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: content   
+    });       
+    overlays.push(customOverlay);
+    customOverlay.setMap(map);
+}
+
+//오버레이 화면에 표시 or 재거
+function setCustomOverlays(map, overlays) {
+    for (var i = 0; i < overlays.length; i++) {
+        overlays[i].setMap(map);
+    }            
+}
+
+//현재 지도 영역 지명 얻는 함수(커스텀오버레이)
+function getRegionName(){
+    // 지도의 현재 영역을 얻어옵니다 
+    var bounds = map.getBounds();
+    // 영역의 남서쪽 좌표를 얻어옵니다 
+    var swLatLng = bounds.getSouthWest(); 
+    // 영역의 북동쪽 좌표를 얻어옵니다 
+    var neLatLng = bounds.getNorthEast();
+    
+    var swLat = swLatLng.getLat();
+    var swLon = swLatLng.getLng();
+    var neLat = neLatLng.getLat();
+    var neLon = neLatLng.getLng();
+    
+    //ajax로 지도영역 좌표 보내서 영역안의 시군구동 이름,좌표 얻어오기
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("POST","map");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("swLat="+swLat+"&swLon="+swLon+"&neLat="+neLat+"&neLon="+neLon+"&mapLevel="+map.getLevel());
+    xhttp.addEventListener("readystatechange",function(){
+        if(xhttp.readyState==4 && xhttp.status==200){
+            getRegion_result = JSON.parse(xhttp.responseText.trim());
+            console.log(getRegion_Result);
+        }
+    })  	
+}
+
+//------------------------지도 중심좌표 or 확대,축소 이벤트-------------------------------------------
+kakao.maps.event.addListener(map, 'idle', function() {
+
+    setCustomOverlays(null, overlays);
+
+    getRegionName();    //지역명 커스텀 오버레이
+
+    //시,군,동, 지역 이름 커스텀 오버레이 출력
+ 	if(map.getLevel()>=5 && map.getLevel()<7){
+        for(let i in getRegion_result){
+            setTimeout(function(){
+                if(getRegion_result[i].dong!=null&&getRegion_result[i].sigungu!=null){
+                    addCustomOverlay(getRegion_result[i].dong, getRegion_result[i].lat, getRegion_result[i].lon);  
+                }
+            },10);
+        }
+    }else if(map.getLevel()>=7 && map.getLevel()<11){
+        for(let i in getRegion_result){
+            setTimeout(function(){
+                if(getRegion_result[i].dong==null&&getRegion_result[i].sigungu!=null){
+                    addCustomOverlay(getRegion_result[i].sigungu, getRegion_result[i].lat, getRegion_result[i].lon);
+                } 
+            },10);
+        }
+    }else if(map.getLevel()>=11){
+        for(let i in getRegion_result){
+            setTimeout(function(){
+                if(getRegion_result[i].sido!=null&&getRegion_result[i].dong==null&&getRegion_result[i].sigungu==null){
+                    addCustomOverlay(getRegion_result[i].sido, getRegion_result[i].lat, getRegion_result[i].lon);   
+                }
+            },10);
+        }
+    }
+});
+
+
+
+
 </script>
 
  <!-- jQuery 및 jQuery UI -->
