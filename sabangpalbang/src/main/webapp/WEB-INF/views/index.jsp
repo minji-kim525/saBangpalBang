@@ -298,49 +298,63 @@
 		</section>
 		<section class=recommend_property2>
 			<div>
-				<h3>혹시 이런 곳은 어떠신가요?(여긴 크롤링)</h3>
+				<h3>바로 볼 수 있는 매물은 어떠신가요?</h3>
 				<ul class=RoomList>
 					<li>
 						<div>
 							<a>
+							<c:set var="billions" value="${getRanProperties[0].price / 10000}" />
+							<c:set var="millions" value="${(getRanProperties[0].price % 10000)}" />
+							<fmt:formatNumber var="billionsFormatted" value="${billions}" pattern="#,##0" />
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
 							
-							<c:set var="billions3" value="${getRanServiceProperties[3].price / 100000000}" />
-							<c:set var="millions3" value="${(getRanServiceProperties[3].price % 100000000) / 10000}" />
-							<fmt:formatNumber var="billionsFormatted3" value="${billions3}" pattern="#,##0" />
-							<fmt:formatNumber var="millionsFormatted3" value="${millions3}" pattern="#,##0" />
-							
-							<c:set var="billions_de3" value="${getRanServiceProperties[3].deposit / 10000}" />
-							<c:set var="millions_de3" value="${(getRanServiceProperties[3].deposit)}" />
-							<fmt:formatNumber var="billionsFormatted_de3" value="${billions_de3}" pattern="#,##0" />
-							<fmt:formatNumber var="millionsFormatted_de3" value="${millions_de3}" pattern="#,##0" />
+							<c:set var="billions_de" value="${getRanProperties[0].deposit / 10000}" />
+							<c:set var="millions_de" value="${(getRanProperties[0].deposit % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
 							
 							
 								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important; cursor:pointer" 
-								onclick="{ location.href='/property/psDetail?ps_service_type=${getRanServiceProperties[3].ps_service_type}&propertyId=${getRanServiceProperties[3].property_service_id}&address=${getRanServiceProperties[3].address}&pname=${getRanServiceProperties[3].pname}'; }">
+								onclick="{ location.href='/property/pDetail?p_service_type=${getRanProperties[0].p_service_type}&propertyId=${getRanProperties[0].property_id}&address=${getRanProperties[0].address}&pname=${getRanProperties[0].pname}'; }">
 			                        <div class="card h-100">
-			                        <img class="card-img-top" src="/roomImg/${getRanServiceProperties[3].images.filename}" alt="..." style="width:280px; height:186px;"/>
-			                        <div class="card-body p-4" style="padding: 0!important;">
-			                                <div class="text-center">
-			                                    <p class="Roomtype">방 갯수: ${getRanServiceProperties[3].count}</p>
-			                                     <c:choose>
-													<c:when test="${getRanServiceProperties[3].property_type_id == 1}">
-							                        	<c:if test="${billions3 > 0}">
-													    <h5 class="Roomprice">매매가  ${billionsFormatted3}억 ${millionsFormatted3}만원</h5>
+			                        <img class="card-img-top" src="${getRanProperties[0].images.filepath}" alt="..." style="width:280px; height:186px;"/>
+			                        <div class="card-body p-4" style="padding: 0!important;"> 
+			                                <div class="text-center">  
+			                                    <p class="Roomtype">방 개수: ${getRanProperties[0].count}</p>
+			                                    <c:choose>
+													<c:when test="${getRanProperties[0].property_type_id == 1}">
+							                        	<c:if test="${billions > 0 && millions != 0}">
+													    <h5 class="Roomprice">매매가 : ${billionsFormatted}억 ${millionsFormatted}만원</h5>
 														</c:if>
-							                    	</c:when>
-							                    <c:when test="${getRanServiceProperties[3].property_type_id == 2}">
-							                        <c:if test="${billions_de3 > 1}">
-												    <h5 class="Roomprice2">전세  ${billionsFormatted_de3}억 ${millionsFormatted_de3}만원</h5>
+														<c:if test="${billions > 0 && millions == 0}">
+													    <h5 class="Roomprice">매매가 : ${billionsFormatted}억</h5>
+														</c:if>
+														
+							                    </c:when>
+							                    <c:when test="${getRanProperties[0].property_type_id == 2}">
+							                        <c:if test="${billions_de > 0 && millions_de != 0}">
+												    <h5 class="Roomprice2">전세  ${billionsFormatted_de}억 ${millionsFormatted_de}만원</h5>
 													</c:if>
-													<c:if test="${billions_de3 < 1 && millions_de3 > 0}">
-													<h5 class="Roomprice2">전세  ${millionsFormatted_de3}만원</h5>
+													<c:if test="${billions_de > 0 && millions_de == 0}">
+													    <h5 class="Roomprice2">전세  : ${billionsFormatted_de}억</h5>
+														</c:if>
+													<c:if test="${billions_de < 1 && millions_de > 0}">
+													<h5 class="Roomprice2">전세  ${millionsFormatted_de}만원</h5>
 													</c:if>
 								                </c:when>
-							                    <c:when test="${getRanServiceProperties[3].property_type_id == 3}">	
-														<h5 class="Roomprice3">월세  ${getRanServiceProperties[3].deposit} / ${getRanServiceProperties[3].month_price}</h5>
+							                    <c:when test="${getRanProperties[0].property_type_id == 3}">
+							                    	<c:if test="${billions_de >= 1 && millions_de != 0}">
+												    <h5 class="Roomprice3">월세 ${billionsFormatted_de}억 ${millionsFormatted_de}만원 / ${getRanProperties[0].month_price}</h5>
+													</c:if>
+							                    	<c:if test="${billions_de > 0 && millions_de == 0}">
+												    <h5 class="Roomprice3">월세  ${billionsFormatted_de}억 / ${getRanProperties[0].month_price}</h5>
+													</c:if>
+													<c:if test="${billions_de < 1}">
+														<h5 class="Roomprice3">월세  ${getRanProperties[0].deposit} / ${getRanProperties[0].month_price}</h5>
+													</c:if>	
 													</c:when>
 												</c:choose>
-			                                    <p class="Roominfo">${getRanServiceProperties[3].description}</p>
+			                                    <p class="Roominfo">${getRanProperties[0].description}</p>
 			                                </div>
 			                            </div>	
 			                        	
@@ -352,87 +366,123 @@
 					<li>
 						<div>
 							<a>
-								
-								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important;">
+							<c:set var="billions" value="${getRanProperties[1].price / 10000}" />
+							<c:set var="millions" value="${(getRanProperties[1].price % 10000)}" />
+							<fmt:formatNumber var="billionsFormatted" value="${billions}" pattern="#,##0" />
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+							
+							<c:set var="billions_de" value="${getRanProperties[1].deposit / 10000}" />
+							<c:set var="millions_de" value="${(getRanProperties[1].deposit % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
+							
+							
+							
+								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important; cursor:pointer" 
+								onclick="{ location.href='/property/pDetail?p_service_type=${getRanProperties[1].p_service_type}&propertyId=${getRanProperties[1].property_id}&address=${getRanProperties[1].address}&pname=${getRanProperties[1].pname}'; }">
 			                        <div class="card h-100">
-			                        <img class="card-img-top" src="/roomImg/${getServiceProperties[1].images.filename}" alt="..." style="width:280px; height:186px;"/>
-			                        <div class="card-body p-4" style="padding: 0!important;">
-			                                <div class="text-center">
-			                                    <p class="Roomtype">방 갯수: ${getServiceProperties[1].count}</p>
+			                        <img class="card-img-top" src="${getRanProperties[1].images.filepath}" alt="..." style="width:280px; height:186px;"/>
+			                        <div class="card-body p-4" style="padding: 0!important;"> 
+			                                <div class="text-center">  
+			                                    <p class="Roomtype">방 개수: ${getRanProperties[1].count}</p>
 			                                    <c:choose>
-													<c:when test="${getServiceProperties[1].property_type_id == 1}">
-														<h5 class="Roomprice">매매 / ${getServiceProperties[1].price}</h5>
-													</c:when>
-													<c:when test="${getServiceProperties[1].property_type_id == 2}">
-														<h5 class="Roomprice2">전세 / ${getServiceProperties[1].deposit}</h5>
-													</c:when>
-													<c:when test="${getServiceProperties[1].property_type_id == 3}">
-														<h5 class="Roomprice3">월세  ${getServiceProperties[1].deposit} / ${getServiceProperties[1].month_price}</h5>
-													</c:when>
-												</c:choose>
-			                                    <p class="Roominfo">${getServiceProperties[1].description}</p>
-			                                </div>
-			                            </div>	
-			                        	
-			                        </div>
-			                    </div>
-			                    
-							</a>
-						</div>
-					</li>
-					<li>
-						<div>
-							<a>
-								
-								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important;">
-			                        <div class="card h-100">
-			                        <img class="card-img-top" src="/roomImg/${getServiceProperties[2].images.filename}" alt="..." style="width:280px; height:186px;"/>
-			                        <div class="card-body p-4" style="padding: 0!important;">
-			                                <div class="text-center">
-			                                    <p class="Roomtype">방 갯수: ${getServiceProperties[2].count}</p>
-			                                    <c:choose>
-													<c:when test="${getServiceProperties[2].property_type_id == 1}">
-														<h5 class="Roomprice">매매 / ${getServiceProperties[2].price}</h5>
+													<c:when test="${getRanProperties[1].property_type_id == 1}">
+							                        	<c:if test="${billions > 0 && millions != 0}">
+													    <h5 class="Roomprice">매매가 : ${billionsFormatted}억 ${millionsFormatted}만원</h5>
+														</c:if>
+														<c:if test="${billions > 0 && millions == 0}">
+													    <h5 class="Roomprice">매매가 : ${billionsFormatted}억</h5>
+														</c:if>
 														
-													</c:when>
-													<c:when test="${getServiceProperties[2].property_type_id == 2}">
-														<h5 class="Roomprice2">전세 / ${getServiceProperties[2].deposit}</h5>
-													</c:when>
-													<c:when test="${getServiceProperties[2].property_type_id == 3}">
-														<h5 class="Roomprice3">월세  ${getServiceProperties[2].deposit} / ${getServiceProperties[2].month_price	}</h5>
+							                    </c:when>
+							                    <c:when test="${getRanProperties[1].property_type_id == 2}">
+							                        <c:if test="${billions_de > 0 && millions_de != 0}">
+												    <h5 class="Roomprice2">전세  ${billionsFormatted_de}억 ${millionsFormatted_de}만원</h5>
+													</c:if>
+													<c:if test="${billions_de > 0 && millions_de == 0}">
+													    <h5 class="Roomprice2">전세  : ${billionsFormatted_de}억</h5>
+														</c:if>
+													<c:if test="${billions_de < 1 && millions_de > 0}">
+													<h5 class="Roomprice2">전세  ${millionsFormatted_de}만원</h5>
+													</c:if>
+								                </c:when>
+							                    <c:when test="${getRanProperties[1].property_type_id == 3}">
+							                    	<c:if test="${billions_de >= 1 && millions_de != 0}">
+												    <h5 class="Roomprice3">월세 ${billionsFormatted_de}억 ${millionsFormatted_de}만원 / ${getRanProperties[1].month_price}</h5>
+													</c:if>
+							                    	<c:if test="${billions_de > 0 && millions_de == 0}">
+												    <h5 class="Roomprice3">월세  ${billionsFormatted_de}억 / ${getRanProperties[1].month_price}</h5>
+													</c:if>
+													<c:if test="${billions_de < 1}">
+														<h5 class="Roomprice3">월세  ${getRanProperties[1].deposit} / ${getRanProperties[1].month_price}</h5>
+													</c:if>	
 													</c:when>
 												</c:choose>
-			                                    <p class="Roominfo">${getServiceProperties[2].description}</p>
+			                                    <p class="Roominfo">${getRanProperties[1].description}</p>
 			                                </div>
 			                            </div>	
 			                        	
 			                        </div>
 			                    </div>
-			                    
 							</a>
 						</div>
 					</li>
 					<li>
 						<div>
 							<a>
-								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important;">
+							<c:set var="billions" value="${getRanProperties[2].price / 10000}" />
+							<c:set var="millions" value="${(getRanProperties[2].price % 10000)}" />
+							<fmt:formatNumber var="billionsFormatted" value="${billions}" pattern="#,##0" />
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+							
+							<c:set var="billions_de" value="${getRanProperties[2].deposit / 10000}" />
+							<c:set var="millions_de" value="${(getRanProperties[2].deposit % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
+							
+							
+							
+								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important; cursor:pointer" 
+								onclick="{ location.href='/property/pDetail?p_service_type=${getRanProperties[2].p_service_type}&propertyId=${getRanProperties[2].property_id}&address=${getRanProperties[2].address}&pname=${getRanProperties[2].pname}'; }">
 			                        <div class="card h-100">
-			                        <img class="card-img-top" src="/roomImg/${getServiceProperties[3].images.filename}" alt="..." style="width:280px; height:186px;"/>
-			                        <div class="card-body p-4" style="padding: 0!important;">
-			                                <div class="text-center">
-			                                    <p class="Roomtype">방 갯수: ${getServiceProperties[3].count}</p>
+			                        <img class="card-img-top" src="${getRanProperties[2].images.filepath}" alt="..." style="width:280px; height:186px;"/>
+			                        <div class="card-body p-4" style="padding: 0!important;"> 
+			                                <div class="text-center">  
+			                                    <p class="Roomtype">방 개수: ${getRanProperties[2].count}</p>
 			                                    <c:choose>
-													<c:when test="${getServiceProperties[3].property_type_id == 1}">
-														<h5 class="Roomprice">매매 / ${getServiceProperties[3].price}</h5>
-													</c:when>
-													<c:when test="${getServiceProperties[3].property_type_id == 2}">
-														<h5 class="Roomprice2">전세 / ${getServiceProperties[3].deposit}</h5>
-													</c:when>
-													<c:when test="${getServiceProperties[3].property_type_id == 3}">
-														<h5 class="Roomprice3">월세  ${getServiceProperties[3].deposit} / ${getServiceProperties[3].month_price}</h5>
+													<c:when test="${getRanProperties[2].property_type_id == 1}">
+							                        	<c:if test="${billions > 0 && millions != 0}">
+													    <h5 class="Roomprice">매매가 : ${billionsFormatted}억 ${millionsFormatted}만원</h5>
+														</c:if>
+														<c:if test="${billions > 0 && millions == 0}">
+													    <h5 class="Roomprice">매매가 : ${billionsFormatted}억</h5>
+														</c:if>
+														
+							                    </c:when>
+							                    <c:when test="${getRanProperties[2].property_type_id == 2}">
+							                        <c:if test="${billions_de > 0 && millions_de != 0}">
+												    <h5 class="Roomprice2">전세  ${billionsFormatted_de}억 ${millionsFormatted_de}만원</h5>
+													</c:if>
+													<c:if test="${billions_de > 0 && millions_de == 0}">
+													    <h5 class="Roomprice2">전세  : ${billionsFormatted_de}억</h5>
+														</c:if>
+													<c:if test="${billions_de < 1 && millions_de > 0}">
+													<h5 class="Roomprice2">전세  ${millionsFormatted_de}만원</h5>
+													</c:if>
+								                </c:when>
+							                    <c:when test="${getRanProperties[2].property_type_id == 3}">
+							                    	<c:if test="${billions_de >= 1 && millions_de != 0}">
+												    <h5 class="Roomprice3">월세 ${billionsFormatted_de}억 ${millionsFormatted_de}만원 / ${getRanProperties[2].month_price}</h5>
+													</c:if>
+							                    	<c:if test="${billions_de > 0 && millions_de == 0}">
+												    <h5 class="Roomprice3">월세  ${billionsFormatted_de}억 / ${getRanProperties[2].month_price}</h5>
+													</c:if>
+													<c:if test="${billions_de < 1}">
+														<h5 class="Roomprice3">월세  ${getRanProperties[2].deposit} / ${getRanProperties[2].month_price}</h5>
+													</c:if>	
 													</c:when>
 												</c:choose>
-			                                    <p class="Roominfo">${getServiceProperties[3].description}</p>
+			                                    <p class="Roominfo">${getRanProperties[2].description}</p>
 			                                </div>
 			                            </div>	
 			                        	
@@ -442,7 +492,68 @@
 						</div>
 					</li>
 					<li>
-						
+						<div>
+							<a>
+							<c:set var="billions" value="${getRanProperties[3].price / 10000}" />
+							<c:set var="millions" value="${(getRanProperties[3].price % 10000)}" />
+							<fmt:formatNumber var="billionsFormatted" value="${billions}" pattern="#,##0" />
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+							
+							<c:set var="billions_de" value="${getRanProperties[3].deposit / 10000}" />
+							<c:set var="millions_de" value="${(getRanProperties[3].deposit % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
+							
+							
+							
+								<div class="col mb-5" style="width:280px; height:308px; margin-bottom:0!important; cursor:pointer" 
+								onclick="{ location.href='/property/pDetail?p_service_type=${getRanProperties[3].p_service_type}&propertyId=${getRanProperties[3].property_id}&address=${getRanProperties[3].address}&pname=${getRanProperties[3].pname}'; }">
+			                        <div class="card h-100">
+			                        <img class="card-img-top" src="${getRanProperties[3].images.filepath}" alt="..." style="width:280px; height:186px;"/>
+			                        <div class="card-body p-4" style="padding: 0!important;"> 
+			                                <div class="text-center">  
+			                                    <p class="Roomtype">방 개수: ${getRanProperties[3].count}</p>
+			                                    <c:choose>
+													<c:when test="${getRanProperties[3].property_type_id == 1}">
+							                        	<c:if test="${billions > 0 && millions != 0}">
+													    <h5 class="Roomprice">매매가 : ${billionsFormatted}억 ${millionsFormatted}만원</h5>
+														</c:if>
+														<c:if test="${billions > 0 && millions == 0}">
+													    <h5 class="Roomprice">매매가 : ${billionsFormatted}억</h5>
+														</c:if>
+														
+							                    </c:when>
+							                    <c:when test="${getRanProperties[3].property_type_id == 2}">
+							                        <c:if test="${billions_de > 0 && millions_de != 0}">
+												    <h5 class="Roomprice2">전세  ${billionsFormatted_de}억 ${millionsFormatted_de}만원</h5>
+													</c:if>
+													<c:if test="${billions_de > 0 && millions_de == 0}">
+													    <h5 class="Roomprice2">전세  : ${billionsFormatted_de}억</h5>
+														</c:if>
+													<c:if test="${billions_de < 1 && millions_de > 0}">
+													<h5 class="Roomprice2">전세  ${millionsFormatted_de}만원</h5>
+													</c:if>
+								                </c:when>
+							                    <c:when test="${getRanProperties[3].property_type_id == 3}">
+							                    	<c:if test="${billions_de >= 1 && millions_de != 0}">
+												    <h5 class="Roomprice3">월세 ${billionsFormatted_de}억 ${millionsFormatted_de}만원 / ${getRanProperties[3].month_price}</h5>
+													</c:if>
+							                    	<c:if test="${billions_de > 0 && millions_de == 0}">
+												    <h5 class="Roomprice3">월세  ${billionsFormatted_de}억 / ${getRanProperties[3].month_price}</h5>
+													</c:if>
+													<c:if test="${billions_de < 1}">
+														<h5 class="Roomprice3">월세  ${getRanProperties[3].deposit} / ${getRanProperties[3].month_price}</h5>
+													</c:if>	
+													</c:when>
+												</c:choose>
+			                                    <p class="Roominfo">${getRanProperties[3].description}</p>
+			                                </div>
+			                            </div>	
+			                        	
+			                        </div>
+			                    </div>
+							</a>
+						</div>
 					</li>
 				</ul>
 			</div>

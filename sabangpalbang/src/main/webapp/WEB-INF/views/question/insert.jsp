@@ -121,7 +121,7 @@
 		});
 	
 	$('#insertform').submit(function(event) {
-		  if ($('select[name="question_type"]').val() === '') {
+		  if ($('select[name="question"]').val() === '') {
 		    event.preventDefault();
 		    Swal.fire({
 		        icon: 'warning',

@@ -36,6 +36,8 @@ public interface SearchAllDAO {
 	//크롤링매물 정보
 	List<PropertyDTO> getProperties();
 	
+	List<PropertyDTO> getRanProperties();
+	
 	//서비스매물 정보
 	List<PropertyServiceDTO> getServiceProperties();
 	

@@ -19,6 +19,7 @@ public class PropertyDetailDTO {
 	private int floor; 
 	private int count;
 	private Date registration_date;
+	private Date move_date;
 	private String description;
 	private int property_type_id;
 	private int charge;
