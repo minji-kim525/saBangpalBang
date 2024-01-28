@@ -153,20 +153,50 @@
 							style="cursor: pointer;">
 							<img src="/roomImg/${like.imageOne.filename}" alt=""><br>
 							<div class="roominfo">
+							<c:set var="billions" value="${like.price / 10000}" />
+							<c:set var="millions" value="${(like.price % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+							
+							<c:set var="billions_de" value="${like.deposit / 10000}" />
+							<c:set var="millions_de" value="${(like.deposit %  10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
+							<div class="roominfo">
 							<c:choose>
-								<c:when test="${like.property_type_id == 1}">
-									<h3 class="property-type">매매 ${ChargeFunction.formatNumberWithUnit(like.price)}</h3>
+								<c:when test="${like.property_type_id==1}">
+								<c:if test="${billions > 0 && millions > 0}">
+						    		<p>매매</p>
+						    		<p> ${billionsFormatted}억 ${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions > 0 && millions == 0}">
+						    		<p>매매</p>
+						    		<p> ${billionsFormatted}억</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions > 0}">
+									<p>매매</p>
+									<p>${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions == 0}">
+									<p>매매가 : 가격 정보 없음</p>
+								</c:if>
 								</c:when>
-								<c:when test="${like.property_type_id == 2}">
-									<h3 class="property-type">전세 ${ChargeFunction.formatNumberWithUnit(like.deposit)}</h3>
+								<c:when test="${like.property_type_id==2}">
+									<c:if test="${billions_de > 1}">
+										<p>전세</p>
+										<p>${billionsFormatted_de}억 ${millionsFormatted_de}만원</p>
+									</c:if>
+									<c:if test="${billions_de < 1 && millions_de > 0}">
+										<p>전세</p>
+										<p>${millionsFormatted_de}만원</p>
+									</c:if>
 								</c:when>
-								<c:when test="${like.property_type_id == 3}">
-									<h3 class="property-type">월세 ${like.deposit} / ${like.month_price}</h3>
+								<c:when test="${like.property_type_id==3}">
+								<p>월세 </p>
+								<p>${like.deposit} / ${like.month_price} </p>
 								</c:when>
 							</c:choose>
 							<p class="pname">${like.pname}</p>	
-							<p class="roombr">방 개수: ${like.count}</p>
-							<p class="roomfloor">${like.floor}층, ${like.feet}평, 관리비 ${like.charge}만</p>
 							</div>
 						</div>
 					</c:when>
