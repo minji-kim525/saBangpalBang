@@ -5,12 +5,47 @@
 <mapper namespace="com.app.map.dao.MapDao">
 	
 	<select id="getRegions" resultType="com.app.map.dto.Region">
-	SELECT seoul_id,lat,lon,dong,sigungu,sido
-	
+	SELECT seoul_id,lat,lon
+	<choose>
+	<when test="mapLevel >=5 and mapLevel &lt; 7">
+		,dong
+	 </when>
+	 <when test="mapLevel >= 7 and mapLevel &lt; 11">
+		,sigungu
+	 </when>
+	 <when test="mapLevel>=11">
+		,sido
+	 </when>
+	 </choose>
 		FROM 
 		seoul_area
 		WHERE lat BETWEEN #{swLat} AND #{neLat} AND lon BETWEEN #{swLon} AND #{neLon}
+		<choose>
+		<when test="mapLevel >=5 and mapLevel &lt; 7">
+		 AND dong IS NOT NULL 
+   		 AND sigungu IS NOT NULL 
+   		 AND sido IS NOT NULL
+	 	</when>
+	 	<when test="mapLevel >= 7 and mapLevel &lt; 11">
+		AND dong IS NULL 
+   		 AND sigungu IS NOT NULL 
+   		 AND sido IS NOT NULL
+	 	</when>
+	 	<when test="mapLevel>=11">
+		AND dong IS NULL 
+   		 AND sigungu IS NULL 
+   		 AND sido IS NOT NULL
+	 	</when>
+	 	</choose>
 	</select>
+	
+	<select id="getAddress" resultType="com.app.map.dto.AddressDto">
+	SELECT property_id,pname,address,p_service_type,property_type_id
+		FROM 
+		property
+		WHERE address LIKE CONCAT('%', #{sigungu}, '%')
+	</select>
+	
 	</mapper>
 	
 	<!-- <choose>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.app.map.dto.AddressDto;
 import com.app.map.dto.Region;
 
 @Mapper
@@ -17,4 +18,5 @@ public interface  MapDao {
 			@Param("neLon") double neLon,
 			@Param("mapLevel")int mapLevel);
 
+	List<AddressDto> getAddress(@Param("sigungu")String sigungu);
 }
