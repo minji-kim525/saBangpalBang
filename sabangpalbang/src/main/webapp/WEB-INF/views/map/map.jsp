@@ -4,6 +4,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ page import="com.property.ChargeFunction"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -26,270 +27,356 @@
 <!-- 	<link rel="stylesheet" href="/css/font.css">
  -->
 <link rel="stylesheet" href="/css/buttons.css">
+<link rel="stylesheet" href="/css/header.css">
 </head>
 <style>
-* {
-	padding: 0;
-	margin: 0;
-}
-
-p {
-	margin-bottom: 0 !important;
-}
-
-.header {
-	width: 100vw;
-}
-
-#search {
-	width: 400px;
-	height: 90vh;
-	background-color: red;
-	float: left;
-	overflow: scroll;
-}
-
-#container {
-	display: flex;
-	width: 100%;
-}
-
-.property-container {
-	width: 400px;
-	height: 90vh;;
-}
-
-.property {
-	display: flex;
-	margin-top: 20px;
-	margin-left: 20px;
-	margin-bottom: 10px;
-	width: 400px;
-	height: 175px;;
-}
-
-img {
-	float: left;
-	width: 140px;
-	height: 140px;
-}
-
-#search_filter {
-	float: left;
-	width: 100%;
-	/* 		height:64px; */
-	height: auto;
-	background-color: green;
-}
-
-#property_type_filter {
-	width: 50%;
-}
-
-#feet_filter {
-	width: 50%;
-}
-
-.roominfo {
-	width: 220px;
-	margin-top: 5px;
-	margin-left: 10px;
-}
-
-.roominfo>h3 {
-	margin-bottom: 15px;
-}
-
-.description {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-#map {
-	float: left;
-	width: 76.5vw;
-	height: 90vh;
-}
-
-#footer {
-	float: left;
-	width: 100vw;
-	height: 10vh;
-	background-color: yellow;
-}
+*{
+		padding: 0;
+		margin: 0;
+	}
+	
+	p {
+		margin-bottom:0!important;
+	}
+	
+	.header {
+		width:100vw;
+	}
+	
+	#search {
+		width:400px; 
+		height:90vh; 
+		float:left;
+		overflow:scroll;
+		overflow-x:hidden;
+	}
+	
+	.slider {
+		text-align:center;
+	}
+	
+	#container {
+		display:flex;
+		width:100%;
+		border-top:1px solid;
+	}
+	
+	#type {
+		font-weight:bold;
+		font-size:22px;
+		padding-bottom:12px;
+	}
+	 
+	#price {
+		padding-bottom:12px;
+	}
+	
+	.pname {
+		padding-bottom:12px;
+	}
+	.property-container {
+		width:400px;
+		height:90vh;;	
+		
+	}
+	
+	.property {
+		display:flex;
+		margin-top:20px;
+		margin-left:20px;
+		margin-bottom:10px;
+		width:400px;
+		height:175px;;	
+		
+	}
+	
+	img {
+		float:left;
+		width:140px;
+		height:140px;
+	}
+	#search_filter {
+		float:left;
+		width:100%; 
+		height: auto;
+	}
+	
+	#property_type_filter{
+		width:50%;
+	}
+	
+	#feet_filter{
+		width:50%;
+	}
+	
+	.roominfo {
+		width:220px;
+		margin-top:5px;
+		margin-left:10px;
+	}
+	
+	.roominfo > h3 {
+		margin-bottom:15px;
+	}
+	
+	.description {
+		white-space : nowrap;
+		overflow : hidden;
+		text-overflow: ellipsis;
+	}
+	
+	
+	
+	#map {
+		float:left;
+		width:76.5vw;
+		height:90vh;
+	}
+	
+	#Roominfo {
+		font-size: 14px;
+		line-height: 24px;
+		font-weight: 400;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+	
+	
 </style>
 <body>
-	<div class="header">
-		<header
-			class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
-			style="margin-bottom: 0 !important; padding-bottom: 0 !important;">
-			<div class="col-md-3 mb-2 mb-md-0">
-				<a href="/"> <img src="/icon/logo.png"
-					style="width: 100px; height: 60px">
-				</a>
-			</div>
+<div class="header">
+  <header
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" 
+    style="margin-bottom:0!important;"
+  >
+    <div class="col-md-3 mb-2 mb-md-0">
+        <a
+            href="/"
+          >
+        <img src="/icon/logo.png" style="width:100px; height:60px; margin-left:50px;">
+		  </a>
+    </div>
 
-			<ul
-				class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-				<li><a href="#" class="nav-link px-2">지도</a></li>
-				<li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
-				<li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
-				<li><a href="#" class="nav-link px-2">문의게시판</a></li>
-			</ul>
+    <ul id="navbar"
+      class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
+    >
+      <li><a href="/map" class="nav-link px-2">지도</a></li>
+      <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
+      <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
+      <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
+    </ul>
 
-			<div class="col-md-3 text-end">
-				<sec:authorize access="!isAuthenticated()">
-					<button type="button" class="btn btn-outline-primary me-2"
-						onclick="location.href = '/login'">로그인</button>
-					<button type="button" class="btn btn-primary"
-						onclick="location.href = '/insert'">회원가입</button>
-				</sec:authorize>
-				<sec:authorize access="isAuthenticated()">
-					<button type="button" class="btn btn-outline-primary me-2"
-						onclick="location.href='user'">회원정보</button>
+    <div class="col-md-3 text-end">
+    	<sec:authorize access="!isAuthenticated()"> 
+          <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
+            로그인
+          </button>	        
+      	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'" style="margin-right:50px;">회원가입</button>
+      </sec:authorize>
+      <sec:authorize access="hasAuthority('USER')"> 
+			<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
+			<form action="/logout" method="post" style="float:right">
+			<button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
+		        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  		</form>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ADMIN')">
+		  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
+		  <form action="/logout" method="post" style="float:right">
+		  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
+		  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  	  </form>
+		</sec:authorize>
+    </div>
+  </header>
+</div>
 
-					<form action="/logout" method="post" style="float: right">
-						<button type="submit" class="btn btn-primary">로그아웃</button>
-						<input type="hidden" name="${_csrf.parameterName}"
-							value="${_csrf.token}" />
-					</form>
+<div id="search_filter">
 
-				</sec:authorize>
-			</div>
-		</header>
+<form action="map" method="get" id="searchForm" style="margin-top:10px;">
+
+    <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="searchType"
+    style="width:110px; display:inline-block; padding-top:0.375rem; padding-bottom:0.375rem; font-size:1rem; margin-left:10px;">
+    	<option value="" ${searchDto.searchType == "" ? 'selected' : ''}>전체 검색</option>
+        <option value="name" ${searchDto.searchType == "name" ? 'selected' : ''}>건물명</option>
+        <option value="address" ${searchDto.searchType == "address" ? 'selected' : ''}>주소</option>
+    </select>
+    <input class="form-control me-2" type="text" id="keywordForm" name="keyword" 
+    placeholder="키워드를 입력해 주세요." title="키워드 입력"  value="${searchDto.keyword}" style="display:inline; width:300px;"/>
+    <button class="btn btn-outline-success" type="button" id="search_submit" style="vertical-align:baseline;"><span class="skip_info">검색</span></button>
+    <div id="dealSlider" class="slider" style="display:inline-block; margin-left:30px;">
+	        <label class="slider-label" for="dealAmount">매매 가격 범위</label>
+	        <input type="text" id="dealAmount" name="dealAmount" readonly class="form-control bg-white">      
+	        <div class="slider-range" id="dealRange"></div>
+   		</div>
+   		
+    	<div id="jeonseSlider" class="slider" style="display:inline-block; margin-left:30px;">
+	        <label class="slider-label" for="jeonseAmount">보증금/전세 가격 범위</label>
+	        <input type="text" id="jeonseAmount" name="jeonseAmount" readonly class="form-control bg-white">
+	        <div class="slider-range" id="jeonseRange"></div>
+    	</div>
+    	<!-- style="display: none;" -->
+    	<div id="wolseSlider" class="slider" style="display:inline-block; margin-left:30px;">
+	        <label class="slider-label" for="wolseAmount">월세 가격 범위</label>
+	        <input type="text" id="wolseAmount" name="wolseAmount" readonly class="form-control bg-white">
+	        <div class="slider-range" id="wolseRange"></div>
+   		</div>
+	
+                    
+    	<div id="feetSlider" class="slider" style="display:inline-block; margin-left:30px;">
+	        <label class="slider-label" for="feetAmount">전용평수</label>
+	        <input type="text" id="feetAmount" name="feetAmount" readonly class="form-control bg-white">
+	        <div class="slider-range" id="feetRange"></div>
+   		</div>
+	
+    <!-- <div class="slider-row">
+        <div class="col">
+            <label for="amount">가격 범위:</label>
+            <input type="text" id="amount" readonly class="form-control bg-white">
+            <div id="slider-range"></div>
+        </div>
+    </div> -->
+    <div id="property_type_filter" style="margin-left:10px; margin-bottom:20px;">
+        <input type="checkbox" name="deal" value="1" ${mainSearchDto.deal == "1" ? 'checked' : ''}>매매
+      	<input type="checkbox" name="jeonse" value="1" ${mainSearchDto.jeonse == "1" ? 'checked' : ''}>전세
+        <input type="checkbox" name="wolse" value="1" ${mainSearchDto.wolse == "1" ? 'checked' : ''}>월세
+                    
+    	
 	</div>
-	<div id="search_filter">
-
-		<form action="map" method="get" id="searchForm">
-
-			<select name="searchType">
-				<option value="" ${searchDto.searchType == "" ? 'selected' : ''}>전체
-					검색</option>
-				<option value="name"
-					${searchDto.searchType == "name" ? 'selected' : ''}>건물명</option>
-				<option value="address"
-					${searchDto.searchType == "address" ? 'selected' : ''}>주소</option>
-			</select> <input type="text" id="keywordForm" name="keyword"
-				placeholder="키워드를 입력해 주세요." title="키워드 입력"
-				value="${searchDto.keyword}" />
-			<button type="button" id="search_submit">
-				<span class="skip_info">검색</span>
-			</button>
-
-			<!-- <div class="slider-row">
-            <div class="col">
-                <label for="amount">가격 범위:</label>
-                <input type="text" id="amount" readonly class="form-control bg-white">
-                <div id="slider-range"></div>
-            </div>
-        </div> -->
-			<div id="property_type_filter">
-				<input type="checkbox" name="deal" value="1"
-					${mainSearchDto.deal == "1" ? 'checked' : ''}>매매 <input
-					type="checkbox" name="jeonse" value="1"
-					${mainSearchDto.jeonse == "1" ? 'checked' : ''}>전세 <input
-					type="checkbox" name="wolse" value="1"
-					${mainSearchDto.wolse == "1" ? 'checked' : ''}>월세
-
-				<div id="dealSlider" class="slider">
-					<label class="slider-label" for="dealAmount">매매 가격 범위:</label> <input
-						type="text" id="dealAmount" name="dealAmount" readonly
-						class="form-control bg-white">
-					<div class="slider-range" id="dealRange"></div>
-				</div>
-
-				<div id="jeonseSlider" class="slider">
-					<label class="slider-label" for="jeonseAmount">보증금/전세 가격
-						범위:</label> <input type="text" id="jeonseAmount" name="jeonseAmount"
-						readonly class="form-control bg-white">
-					<div class="slider-range" id="jeonseRange"></div>
-				</div>
-				<!-- style="display: none;" -->
-				<div id="wolseSlider" class="slider">
-					<label class="slider-label" for="wolseAmount">월세 가격 범위:</label> <input
-						type="text" id="wolseAmount" name="wolseAmount" readonly
-						class="form-control bg-white">
-					<div class="slider-range" id="wolseRange"></div>
-				</div>
-			</div>
-			<div id="feet_filter">
-
-				<div id="feetSlider" class="slider">
-					<label class="slider-label" for="feetAmount">전용평수:</label> <input
-						type="text" id="feetAmount" name="feetAmount" readonly
-						class="form-control bg-white">
-					<div class="slider-range" id="feetRange"></div>
-				</div>
-			</div>
-		</form>
-	</div>
+   		
+    </form> 
+</div>
 
 	<div id=container>
 
-		<div id="search">
+	<div id="search">
 			<div class="property-container">
 				<c:forEach var="property" items="${list}">
-					<c:choose>
-						<c:when test="${property.p_service_type == 2}">
-							<div class="property"
-								onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
-								style="cursor: pointer;">
-								<img class="roomimg" src="${property.imageOne.filepath}" alt=""><br>
-								<div class="roominfo">
-									<c:choose>
-										<c:when test="${property.property_type_id == 1}">
-											<h3 class="property-type">매매
-												${ChargeFunction.formatNumberWithUnit(property.price)}</h3>
-										</c:when>
-										<c:when test="${property.property_type_id == 2}">
-											<h3 class="property-type">전세
-												${ChargeFunction.formatNumberWithUnit(property.deposit)}</h3>
-										</c:when>
-										<c:when test="${property.property_type_id == 3}">
-											<h3 class="property-type">월세 ${property.deposit} /
-												${property.month_price}</h3>
-										</c:when>
-									</c:choose>
-
-									<p class="pname">${property.pname}</p>
-									<p class="roombr">방 개수: ${property.count}</p>
-									<p class="roomfloor">${property.floor}층,${property.feet}평,
-										관리비 ${property.charge}만</p>
-								</div>
+				<c:choose>
+					<c:when test="${property.p_service_type == 2}">
+						<div class="property"
+							onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
+							style="cursor: pointer;">
+							<img class="roomimg" src="${property.imageOne.filepath}" alt=""><br>
+							<c:set var="billions" value="${property.price / 10000}" />
+							<c:set var="millions" value="${(property.price % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+							
+							<c:set var="billions_de" value="${property.deposit / 10000}" />
+							<c:set var="millions_de" value="${(property.deposit %  10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
+							<div class="roominfo">
+							<c:choose>
+								<c:when test="${property.property_type_id==1}">
+								<c:if test="${billions > 0 && millions != 0}">
+						    		<p id="type">매매</p>
+						    		<p id="price"> ${billionsFormatted}억 ${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions > 0 && millions == 0}">
+						    		<p id="type">매매</p>
+						    		<p id="price"> ${billionsFormatted}억</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions != 0}">
+									<p id="type">매매</p>
+									<p id="price">${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions == 0}">
+									<p id="type">매매가 : 가격 정보 없음</p>
+								</c:if>
+								</c:when>
+								<c:when test="${property.property_type_id==2}">
+									<c:if test="${billions_de >= 1 && millions_de != 0}">
+										<p id="type">전세</p>
+										<p id="price">${billionsFormatted_de}억 ${millionsFormatted_de}만원</p>
+									</c:if>
+									<c:if test="${billions_de > 0 && millions_de == 0}">
+							    		<p id="type">전세</p>
+							    		<p id="price">${billionsFormatted_de}억</p>
+									</c:if>
+									<c:if test="${billions_de < 1 && millions_de != 0}">
+										<p id="type">전세</p>
+										<p id="price">${millionsFormatted_de}만원</p>
+									</c:if>
+								</c:when>
+								<c:when test="${property.property_type_id==3}">
+									<c:if test="${billions_de >= 1 && millions_de != 0}">
+										<p id="type">월세</p>
+										<p id="price">${billionsFormatted_de}억 ${millionsFormatted_de}만 / ${property.month_price}</p>
+									</c:if>
+									<c:if test="${billions_de > 0 && millions_de == 0}">
+							    		<p id="type">월세</p>
+							    		<p id="price">${billionsFormatted_de}억 / ${property.month_price}</p>
+									</c:if>
+									<c:if test="${billions_de < 1 && millions_de != 0}">
+										<p id="type">월세</p>
+										<p id="price">${millionsFormatted_de}만 / ${property.month_price}</p>
+									</c:if>
+								</c:when>
+							</c:choose>
+							<p class="pname">${property.pname}</p>	
+							<p id="Roominfo">${property.description}</p>
 							</div>
-						</c:when>
-						<c:when
-							test="${property.private_property == false && property.ps_service_type == 1}">
-							<div class="property"
-								onclick="{location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}&address=${property.address}&pname=${property.pname}'; }"
-								style="cursor: pointer;">
-								<img src="/roomImg/${property.imageOne.filename}" alt=""><br>
-								<div class="roominfo">
-									<c:choose>
-										<c:when test="${property.property_type_id == 1}">
-											<h3 class="property-type">매매
-												${ChargeFunction.formatNumberWithUnit(property.price)}</h3>
-										</c:when>
-										<c:when test="${property.property_type_id == 2}">
-											<h3 class="property-type">전세
-												${ChargeFunction.formatNumberWithUnit(property.deposit)}</h3>
-										</c:when>
-										<c:when test="${property.property_type_id == 3}">
-											<h3 class="property-type">월세 ${property.deposit} /
-												${property.month_price}</h3>
-										</c:when>
-									</c:choose>
-									<p class="pname">${property.pname}</p>
-									<p class="roombr">방 개수: ${property.count}</p>
-									<p class="roomfloor">${property.floor}층,${property.feet}평,
-										관리비 ${property.charge}만</p>
-								</div>
+						</div>
+					</c:when>
+					<c:when
+						test="${property.private_property == false && property.ps_service_type == 1}">
+						<div class="property"
+							onclick="{location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}&address=${property.address}&pname=${property.pname}'; }"
+							style="cursor: pointer;">
+							<img src="/roomImg/${property.imageOne.filename}" alt=""><br>
+							<div class="roominfo">
+							<c:set var="billions" value="${property.price / 10000}" />
+							<c:set var="millions" value="${(property.price % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+							
+							<c:set var="billions_de" value="${property.deposit / 10000}" />
+							<c:set var="millions_de" value="${(property.deposit %  10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
+							<div class="roominfo">
+							<c:choose>
+								<c:when test="${property.property_type_id==1}">
+								<c:if test="${billions > 0 && millions > 0}">
+						    		<p>매매</p>
+						    		<p> ${billionsFormatted}억 ${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions > 0 && millions == 0}">
+						    		<p>매매</p>
+						    		<p> ${billionsFormatted}억</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions > 0}">
+									<p>매매</p>
+									<p>${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions == 0}">
+									<p>매매가 : 가격 정보 없음</p>
+								</c:if>
+								</c:when>
+								<c:when test="${property.property_type_id==2}">
+									<c:if test="${billions_de > 1}">
+										<p>전세</p>
+										<p>${billionsFormatted_de}억 ${millionsFormatted_de}만원</p>
+									</c:if>
+									<c:if test="${billions_de < 1 && millions_de > 0}">
+										<p>전세</p>
+										<p>${millionsFormatted_de}만원</p>
+									</c:if>
+								</c:when>
+								<c:when test="${property.property_type_id==3}">
+								<p>월세 </p>
+								<p>${property.deposit} / ${property.month_price} </p>
+								</c:when>
+							</c:choose>
+							<p class="pname">${property.pname}</p>	
 							</div>
-						</c:when>
-					</c:choose>
+						</div>
+					</c:when>
+				</c:choose>
 				</c:forEach>
-
 				<jsp:include page="../mapPaging.jsp" flush="true">
 					<jsp:param value="${mainSearchDto.searchType}" name="searchType" />
 					<jsp:param value="${mainSearchDto.keyword}" name="keyword" />
@@ -308,11 +395,12 @@ img {
 					<jsp:param value="${pagination.existNextPage}" name="existNextPage" />
 				</jsp:include>
 			</div>
-		</div>
-
-		<div id="map"></div>
 	</div>
-	<div id="footer"></div>
+
+	<div id="map"></div>
+</div>
+
+
  <!-- jQuery 및 jQuery UI -->
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

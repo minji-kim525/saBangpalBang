@@ -6,6 +6,7 @@
 <html>
 <head>
 <title>사용자 관리</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
@@ -32,7 +33,6 @@
             <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
@@ -63,7 +63,6 @@
 	        <li><a href="/manager/confirm/search">승인 요청</a></li>
 	        <li><a href="/manager/users/search">사용자 관리</a></li>
 	        <li><a href="/answer/title">문의</a></li>
-	        <li><a href="#">1대1 상담</a></li>
 	      </ul>
     </nav>
     
@@ -141,6 +140,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script>
 
 
@@ -149,14 +149,32 @@
 	  	  $("#searchForm").submit();
 	});
       
-      $("#deleteform").click(function(){
-    	  if (confirm("정말 삭제하시겠습니까?") == true){    //확인
-        	  $("#deleteform").submit();
-    		 }else{   //취소
-    		     return false;
-    		 }
-    	  
-      });
+	$(document).on('click', '#deleteId', function(e) {
+		 
+		 e.preventDefault();
+		 
+		 Swal.fire({
+			 
+			   title: '해당 사용자를 삭제 하시겠습니까?',
+			   text: '삭제된 유저는 되돌릴 수 없습니다.',
+			   icon: 'warning',
+			   
+			   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+			   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+			   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+			   confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+			   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+			   	
+
+			}).then(result => {
+			   // 만약 Promise리턴을 받으면,
+			   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+			      $("#deleteform").submit();
+			   }
+			   
+			});
+
+		});
   
 
 

@@ -40,7 +40,6 @@
             <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
@@ -92,23 +91,29 @@
 			
 				<div class="card" style="width: 18rem; margin-right:50px; margin-bottom:50px;">
 				
-					<img src="/roomImg/${property.images.filename}" class="card-img-top" alt="" style="width:266px; height:200px;">
-					<c:set var="billions" value="${((property.price / 100000000) - (property.price % 100000000 / 100000000))}" />
-					<c:set var="millions" value="${((property.price % 100000000) / 10000)}" />
-					<fmt:formatNumber var="billionsFormatted" value="${billions}" pattern="#,##0" />
+					<img src="/roomImg/${property.images.filename}" class="card-img-top" alt="" style="width:266px; height:200px;">	
+					
+					<c:set var="billions" value="${property.price / 10000}" />
+					<c:set var="millions" value="${(property.price % 10000)}" />
+					<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
 					<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
 					
 					<c:set var="billions_de" value="${property.deposit / 10000}" />
-					<c:set var="millions_de" value="${property.deposit}" />
-					<fmt:formatNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" />
+					<c:set var="millions_de" value="${(property.deposit %  10000)}" />
+					<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
 					<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
-							
+				
 					<c:choose>
 						<c:when test="${property.property_type_id==1}">
 						<c:if test="${billions > 0}">
 				    		<p>매매</p>
 				    		<p> ${billionsFormatted}억 ${millionsFormatted}만원</p>
 				    		<p>${property.pname}</p><br>
+						</c:if>
+						<c:if test="${billions == 0 && millions == 0}">
+							<p>매매</p>
+							<p>${billionsFormatted}억</p>
+							<p>${property.pname}</p><br>
 						</c:if>
 						<c:if test="${billions == 0 && millions > 0}">
 							<p>매매</p>

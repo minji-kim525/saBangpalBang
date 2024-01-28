@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +39,6 @@
             <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
@@ -92,27 +92,56 @@
 			<c:forEach items="${likelist}" var="like">
 				<div class="card" style="width: 18rem; margin-right:50px; margin-bottom:50px;">
 				<c:choose>
+					
 					<c:when test="${like.p_service_type == 2}">
 						<div class="property"
 							onclick="{ location.href='/property/pDetail?p_service_type=${like.p_service_type}&propertyId=${like.property_id}&address=${like.address}&pname=${like.pname}'; }"
 							style="cursor: pointer;">
 							<img class="roomimg" src="${like.imageOne.filepath}" alt="" style="width:266px; height:200px;"><br>
+							<c:set var="billions" value="${like.price / 10000}" />
+							<c:set var="millions" value="${(like.price % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+							
+							<c:set var="billions_de" value="${like.deposit / 10000}" />
+							<c:set var="millions_de" value="${(like.deposit %  10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
 							<div class="roominfo">
 							<c:choose>
-								<c:when test="${like.property_type_id == 1}">
-									<h3 class="property-type">매매 ${ChargeFunction.formatNumberWithUnit(like.price)}</h3>
+								<c:when test="${like.property_type_id==1}">
+								<c:if test="${billions > 0 && millions > 0}">
+						    		<p>매매</p>
+						    		<p> ${billionsFormatted}억 ${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions > 0 && millions == 0}">
+						    		<p>매매</p>
+						    		<p> ${billionsFormatted}억</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions > 0}">
+									<p>매매</p>
+									<p>${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions == 0}">
+									<p>매매가 : 가격 정보 없음</p>
+								</c:if>
 								</c:when>
-								<c:when test="${like.property_type_id == 2}">
-									<h3 class="property-type">전세 ${ChargeFunction.formatNumberWithUnit(like.deposit)}</h3>
+								<c:when test="${like.property_type_id==2}">
+									<c:if test="${billions_de > 1}">
+										<p>전세</p>
+										<p>${billionsFormatted_de}억 ${millionsFormatted_de}만원</p>
+									</c:if>
+									<c:if test="${billions_de < 1 && millions_de > 0}">
+										<p>전세</p>
+										<p>${millionsFormatted_de}만원</p>
+									</c:if>
 								</c:when>
-								<c:when test="${like.property_type_id == 3}">
-									<h3 class="property-type">월세 ${property.deposit} / ${like.month_price}</h3>
+								<c:when test="${like.property_type_id==3}">
+								<p>월세 </p>
+								<p>${like.deposit} / ${like.month_price} </p>
 								</c:when>
 							</c:choose>
-							
 							<p class="pname">${like.pname}</p>	
-							<p class="roombr">방 개수: ${like.count}</p>
-							<p class="roomfloor">${like.floor}층, ${like.feet}평, 관리비 ${like.charge}만</p>
 							</div>
 						</div>
 					</c:when>
@@ -123,20 +152,50 @@
 							style="cursor: pointer;">
 							<img src="/roomImg/${like.imageOne.filename}" alt=""><br>
 							<div class="roominfo">
+							<c:set var="billions" value="${like.price / 10000}" />
+							<c:set var="millions" value="${(like.price % 10000)}" />
+							<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+							
+							<c:set var="billions_de" value="${like.deposit / 10000}" />
+							<c:set var="millions_de" value="${(like.deposit %  10000)}" />
+							<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+							<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
+							<div class="roominfo">
 							<c:choose>
-								<c:when test="${like.property_type_id == 1}">
-									<h3 class="property-type">매매 ${ChargeFunction.formatNumberWithUnit(like.price)}</h3>
+								<c:when test="${like.property_type_id==1}">
+								<c:if test="${billions > 0 && millions > 0}">
+						    		<p>매매</p>
+						    		<p> ${billionsFormatted}억 ${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions > 0 && millions == 0}">
+						    		<p>매매</p>
+						    		<p> ${billionsFormatted}억</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions > 0}">
+									<p>매매</p>
+									<p>${millionsFormatted}만원</p>
+								</c:if>
+								<c:if test="${billions == 0 && millions == 0}">
+									<p>매매가 : 가격 정보 없음</p>
+								</c:if>
 								</c:when>
-								<c:when test="${like.property_type_id == 2}">
-									<h3 class="property-type">전세 ${ChargeFunction.formatNumberWithUnit(like.deposit)}</h3>
+								<c:when test="${like.property_type_id==2}">
+									<c:if test="${billions_de > 1}">
+										<p>전세</p>
+										<p>${billionsFormatted_de}억 ${millionsFormatted_de}만원</p>
+									</c:if>
+									<c:if test="${billions_de < 1 && millions_de > 0}">
+										<p>전세</p>
+										<p>${millionsFormatted_de}만원</p>
+									</c:if>
 								</c:when>
-								<c:when test="${like.property_type_id == 3}">
-									<h3 class="property-type">월세 ${like.deposit} / ${like.month_price}</h3>
+								<c:when test="${like.property_type_id==3}">
+								<p>월세 </p>
+								<p>${like.deposit} / ${like.month_price} </p>
 								</c:when>
 							</c:choose>
 							<p class="pname">${like.pname}</p>	
-							<p class="roombr">방 개수: ${like.count}</p>
-							<p class="roomfloor">${like.floor}층, ${like.feet}평, 관리비 ${like.charge}만</p>
 							</div>
 						</div>
 					</c:when>

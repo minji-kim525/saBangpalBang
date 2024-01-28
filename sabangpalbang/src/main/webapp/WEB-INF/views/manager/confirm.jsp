@@ -7,6 +7,7 @@
 <html>
 <head>
 <title>승인 요청</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
@@ -33,7 +34,6 @@
             <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
@@ -64,7 +64,6 @@
 	        <li><a href="/manager/confirm/search">승인 요청</a></li>
 	        <li><a href="/manager/users/search">사용자 관리</a></li>
 	        <li><a href="/answer/title">문의</a></li>
-	        <li><a href="#">1대1 상담</a></li>
 	      </ul>
     </nav>
 
@@ -179,6 +178,7 @@
                
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script>
 
 $(document).ready(function() {
@@ -222,7 +222,6 @@ $(document).ready(function() {
       });
       
 });
-
   </script>
 
 </body>
