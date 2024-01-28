@@ -1,58 +1,116 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>아파트 실거래가 비교</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/header.css">
 </head>
+<style>
+	.form-select {
+		display:inline-block;
+		width:15%;
+	}
+</style>
 <body onload="Graph()">
+<div class="header">
+  <header
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" 
+    style="margin-bottom:0!important;"
+  >
+    <div class="col-md-3 mb-2 mb-md-0">
+        <a
+            href="/"
+          >
+        <img src="/icon/logo.png" style="width:100px; height:60px; margin-left:50px;">
+		  </a>
+    </div>
 
+    <ul id="navbar"
+      class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
+    >
+      <li><a href="/map" class="nav-link px-2">지도</a></li>
+      <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
+      <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
+      <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
+    </ul>
+
+    <div class="col-md-3 text-end">
+    	<sec:authorize access="!isAuthenticated()"> 
+          <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
+            로그인
+          </button>	        
+      	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'" style="margin-right:50px;">회원가입</button>
+      </sec:authorize>
+      <sec:authorize access="hasAuthority('USER')"> 
+			<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
+			<form action="/logout" method="post" style="float:right">
+			<button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
+		        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  		</form>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ADMIN')">
+		  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
+		  <form action="/logout" method="post" style="float:right">
+		  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
+		  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  	  </form>
+		</sec:authorize>
+    </div>
+  </header>
+</div>
+<div class="container-fluid" style="padding-left:0!important;">
+	<div class="col-sm-12 page">
+		<div class="container" style="margin-top:20px;">
+		<div style="text-align:center; margin-top:10px; margin-bottom:20px;">
 	<!--  아파트 1 -->
-	<select id="city">
-		<option selected disabled>서울특별시</option>
-	</select>
-	<select id="gu" name="gu" onchange="updateDongList()">
-		<option selected>구</option>
-		<option value="11110">종로구</option>
-		<option value="11140">중구</option>
-		<option value="11170">용산구</option>
-		<option value="11200">성동구</option>
-		<option value="11215">광진구</option>
-		<option value="11230">동대문구</option>
-		<option value="11260">중랑구</option>
-		<option value="11290">성북구</option>
-		<option value="11305">강북구</option>
-		<option value="11320">도봉구</option>
-		<option value="11350">노원구</option>
-		<option value="11380">은평구</option>
-		<option value="11410">서대문구</option>
-		<option value="11440">마포구</option>
-		<option value="11470">양천구</option>
-		<option value="11500">강서구</option>
-		<option value="11530">구로구</option>
-		<option value="11545">금천구</option>
-		<option value="11560">영등포구</option>
-		<option value="11590">동작구</option>
-		<option value="11620">관악구</option>
-		<option value="11650">서초구</option>
-		<option value="11680">강남구</option>
-		<option value="11710">송파구</option>
-		<option value="11740">강동구</option>
-	</select>
-	<select id="dong" name="dong" onchange="updateApartmentList()">
-		<option selected>동</option>
-	</select>
-	<select id="apartment_name" name="apartment_name">
-		<option selected disabled>아파트</option>
-	</select>
-
+			<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="city">
+				<option selected disabled>서울특별시</option>
+			</select>
+			<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="gu" name="gu" onchange="updateDongList()">
+				<option selected>구</option>
+				<option value="11110">종로구</option>
+				<option value="11140">중구</option>
+				<option value="11170">용산구</option>
+				<option value="11200">성동구</option>
+				<option value="11215">광진구</option>
+				<option value="11230">동대문구</option>
+				<option value="11260">중랑구</option>
+				<option value="11290">성북구</option>
+				<option value="11305">강북구</option>
+				<option value="11320">도봉구</option>
+				<option value="11350">노원구</option>
+				<option value="11380">은평구</option>
+				<option value="11410">서대문구</option>
+				<option value="11440">마포구</option>
+				<option value="11470">양천구</option>
+				<option value="11500">강서구</option>
+				<option value="11530">구로구</option>
+				<option value="11545">금천구</option>
+				<option value="11560">영등포구</option>
+				<option value="11590">동작구</option>
+				<option value="11620">관악구</option>
+				<option value="11650">서초구</option>
+				<option value="11680">강남구</option>
+				<option value="11710">송파구</option>
+				<option value="11740">강동구</option>
+			</select>
+			<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="dong" name="dong" onchange="updateApartmentList()">
+				<option selected>동</option>
+			</select>
+			<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="apartment_name" name="apartment_name">
+				<option selected disabled>아파트</option>
+			</select>
+		</div>
 	<!--  아파트 2-->
-	<div>
-		<select id="city2">
+		<div style="text-align:center; margin-top:10px;">
+		<select class="form-select form-select-sm" aria-label=".form-select-sm example" id="city2">
 			<option selected disabled>서울특별시</option>
-		</select> <select id="gu2" name="gu2" onchange="updateDongList2()">
+		</select> <select class="form-select form-select-sm" id="gu2" name="gu2" onchange="updateDongList2()">
 			<option selected>구</option>
 			<option value="11110">종로구</option>
 			<option value="11140">중구</option>
@@ -79,12 +137,18 @@
 			<option value="11680">강남구</option>
 			<option value="11710">송파구</option>
 			<option value="11740">강동구</option>
-		</select> <select id="dong2" name="dong2" onchange="updateApartmentList2()">
+		</select> <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="dong2" name="dong2" onchange="updateApartmentList2()">
 			<option selected>동</option>
-		</select> <select id="apartment_name2" name="apartment_name2">
+		</select> <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="apartment_name2" name="apartment_name2">
 			<option selected disabled>아파트</option>
 		</select>
+		</div>
+		<div style="text-align:center;">
+		<canvas id="realEstateChart" style="height: 50vh; width: 50vw; display:inline; margin-top:100px;"></canvas>
+		</div>
+		</div>
 	</div>
+</div>	
 
 	<!--  구에 따라 동이 바뀌는 스크립트 -->
 	<script>
@@ -137,7 +201,7 @@
 		}
 	</script>
 
-	<canvas id="realEstateChart" style="height: 40vh; width: 30vw"></canvas>
+	
 
 	<!-- 동에 따라 아파트 이름이 바뀌는 스크립트 -->
 	<script>

@@ -68,7 +68,6 @@
             <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>	
           </ul>
 
           <div class="col-md-3 text-end">
@@ -116,7 +115,8 @@
 		</div>
 		<section class=recommend_property>
 			<div>
-				<h3>혹시 이런 곳은 어떠신가요?</h3>
+				<h2>혹시 이런 곳은 어떠신가요?</h2>
+				<p style="padding-top:40px;">여기 매물들은 <strong>로그인</strong>을 해야 상세정보를 확인할 수 있습니다.</p>
 				<ul class=RoomList>
 					<li>
 						<div>
@@ -388,7 +388,8 @@
 		</section>
 		<section class=recommend_property2>
 			<div>
-				<h3>바로 볼 수 있는 매물은 어떠신가요?</h3>
+				<h2>바로 볼 수 있는 매물은 어떠신가요?</h2>
+				<p style="padding-top:40px;">여기 매물들은 <strong>로그인</strong> 없이 상세정보를 확인할 수 있습니다.</p>
 				<ul class=RoomList>
 					<li>
 						<div>

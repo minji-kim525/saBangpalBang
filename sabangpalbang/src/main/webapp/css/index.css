@@ -62,20 +62,20 @@
 	
 	
 	
-	.recommend_property > div > h3 {
+	.recommend_property > div > h2 {
 		position: relative;
-		top: 20px;
+		top: 30px;
 	}
 	
-	.recommend_property2 > div > h3 {
+	.recommend_property2 > div > h2 {
 		position: relative;
-		top: 20px;
+		top: 30px;
 	}
 	
 	
 	.RoomList {
 		position: relative;
-		top: 70px;
+		top: 40px;
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0px,1fr));
 		

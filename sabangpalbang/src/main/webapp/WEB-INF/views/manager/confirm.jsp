@@ -34,7 +34,6 @@
             <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
@@ -65,7 +64,6 @@
 	        <li><a href="/manager/confirm/search">승인 요청</a></li>
 	        <li><a href="/manager/users/search">사용자 관리</a></li>
 	        <li><a href="/answer/title">문의</a></li>
-	        <li><a href="#">1대1 상담</a></li>
 	      </ul>
     </nav>
 

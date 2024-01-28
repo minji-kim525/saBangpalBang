@@ -3,39 +3,59 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.map.dao.MapDao">
-
-	<!-- 전체 데이터 keyword 조회 쿼리 -->
-	<select id="getAllProperties"
-		resultType="com.app.property.dto.PropertyResultDTO">
-		SELECT
-		p.pname,
-		p.property_id,
-		NULL AS property_service_id,
-		p.p_service_type,
-		NULL AS ps_service_type,
-		p.price,
-		p.property_type_id,
-		NULL AS private_property,
-		NULL AS confirm_check
-		FROM
-		property p
-		WHERE p.pname LIKE
-		CONCAT('%', #{keyword},'%')
-
-		UNION ALL
-
-		SELECT
-		ps.pname,
-		NULL AS property_id,
-		ps.property_service_id,
-		NULL AS p_service_type,
-		ps.ps_service_type,
-		ps.price,
-		ps.property_type_id,
-		ps.private_property,
-		c.confirm_check
-		FROM property_service ps
-		LEFT JOIN confirm c ON ps.property_service_id = c.property_service_id
-		WHERE ps.pname LIKE CONCAT('%', #{keyword}, '%') AND c.confirm_check = 1
+	
+	<select id="getRegions" resultType="com.app.map.dto.Region">
+	SELECT seoul_id,lat,lon
+	<choose>
+	<when test="mapLevel >=5 and mapLevel &lt; 7">
+		,dong
+	 </when>
+	 <when test="mapLevel >= 7 and mapLevel &lt; 11">
+		,sigungu
+	 </when>
+	 <when test="mapLevel>=11">
+		,sido
+	 </when>
+	 </choose>
+		FROM 
+		seoul_area
+		WHERE lat BETWEEN #{swLat} AND #{neLat} AND lon BETWEEN #{swLon} AND #{neLon}
+		<choose>
+		<when test="mapLevel >=5 and mapLevel &lt; 7">
+		 AND dong IS NOT NULL 
+   		 AND sigungu IS NOT NULL 
+   		 AND sido IS NOT NULL
+	 	</when>
+	 	<when test="mapLevel >= 7 and mapLevel &lt; 11">
+		AND dong IS NULL 
+   		 AND sigungu IS NOT NULL 
+   		 AND sido IS NOT NULL
+	 	</when>
+	 	<when test="mapLevel>=11">
+		AND dong IS NULL 
+   		 AND sigungu IS NULL 
+   		 AND sido IS NOT NULL
+	 	</when>
+	 	</choose>
 	</select>
+	
+	<select id="getAddress" resultType="com.app.map.dto.AddressDto">
+	SELECT property_id,pname,address,p_service_type,property_type_id
+		FROM 
+		property
+		WHERE address LIKE CONCAT('%', #{sigungu}, '%')
+	</select>
+	
 	</mapper>
+	
+	<!-- <choose>
+	<when test="mapLevel >=5 and mapLevel &lt; 7">
+		,dong
+	 </when>
+	 <when test="mapLevel >= 7 and mapLevel &lt; 11">
+		,sigungu
+	 </when>
+	 <when test="mapLevel>=11">
+		,sido
+	 </when>
+	 </choose> -->
