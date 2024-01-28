@@ -95,10 +95,10 @@
 	                <!-- 검색 유형이 있을 때 -->
 	                <when test="searchType != null and searchType != ''">
 	                    <choose>
-	                        <when test="'id'.equals( searchType )">
+	                        <when test="'address'.equals( searchType )">
 	                           AND ps.address LIKE CONCAT('%', #{keyword}, '%')
 	                        </when>
-	                        <when test="'email'.equals( searchType )">
+	                        <when test="'name'.equals( searchType )">
 	                           AND ps.pname LIKE CONCAT('%', #{keyword}, '%')
 	                        </when>
 	                    </choose>
@@ -150,11 +150,11 @@
 	                <!-- 검색 유형이 있을 때 -->
 	                <when test="searchType != null and searchType != ''">
 	                    <choose>
-	                        <when test="'id'.equals( searchType )">
-	                            p.address LIKE CONCAT('%', #{keyword}, '%')
+	                        <when test="'address'.equals( searchType )">
+	                           AND p.address LIKE CONCAT('%', #{keyword}, '%')
 	                        </when>
-	                        <when test="'email'.equals( searchType )">
-	                            p.pname LIKE CONCAT('%', #{keyword}, '%')
+	                        <when test="'name'.equals( searchType )">
+	                           AND p.pname LIKE CONCAT('%', #{keyword}, '%')
 	                        </when>
 	                    </choose>
 	                </when>

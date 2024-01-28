@@ -1,292 +1,325 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ page import="com.property.ChargeFunction"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <title>간단한 지도 표시하기</title>
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=yl1aqr3ar8"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
- 	 <!-- 부트스트랩 CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery UI CSS -->
-    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>간단한 지도 표시하기</title>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+<!-- 부트스트랩 CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- jQuery UI CSS -->
+<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+	rel="stylesheet">
+<!-- 	<link rel="stylesheet" href="/css/font.css">
+ -->
+<link rel="stylesheet" href="/css/buttons.css">
 </head>
 <style>
-	*{
-		padding: 0;
-		margin: 0;
-	}
-	
-	p {
-		margin-bottom:0!important;
-	}
-	
-	.header {
-		width:100vw;
-	}
-	
-	#search {
-		width:400px; 
-		height:90vh; 
-		background-color:red;
-		float:left;
-		overflow:scroll;
-	}
-	
-	#container {
-		display:flex;
-		width:100%;
-	}
-	
-	.property-container {
-		width:400px;
-		height:90vh;;	
-		
-	}
-	
-	.property {
-		display:flex;
-		margin-top:20px;
-		margin-left:20px;
-		margin-bottom:10px;
-		width:400px;
-		height:175px;;	
-		
-	}
-	
-	img {
-		float:left;
-		width:140px;
-		height:140px;
-	}
-	#search_filter {
-		float:left;
-		width:100%; 
-/* 		height:64px; */	
-		height: auto;
-		background-color:green;
-	}
-	
-	#property_type_filter{
-		width:50%;
-	}
-	
-	#feet_filter{
-		width:50%;
-	}
-	
-	.roominfo {
-		width:220px;
-		margin-top:5px;
-		margin-left:10px;
-	}
-	
-	.roominfo > h3 {
-		margin-bottom:15px;
-	}
-	
-	.description {
-		white-space : nowrap;
-		overflow : hidden;
-		text-overflow: ellipsis;
-	}
-	
-	
-	
-	#map {
-		float:left;
-		width:76.5vw;
-		height:90vh;
-	}
-	
-	
-	
-	#footer {
-		float:left;
-		width:100vw;
-		height:10vh;
-		background-color:yellow;
-	}
-	
+* {
+	padding: 0;
+	margin: 0;
+}
+
+p {
+	margin-bottom: 0 !important;
+}
+
+.header {
+	width: 100vw;
+}
+
+#search {
+	width: 400px;
+	height: 90vh;
+	background-color: red;
+	float: left;
+	overflow: scroll;
+}
+
+#container {
+	display: flex;
+	width: 100%;
+}
+
+.property-container {
+	width: 400px;
+	height: 90vh;;
+}
+
+.property {
+	display: flex;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	width: 400px;
+	height: 175px;;
+}
+
+img {
+	float: left;
+	width: 140px;
+	height: 140px;
+}
+
+#search_filter {
+	float: left;
+	width: 100%;
+	/* 		height:64px; */
+	height: auto;
+	background-color: green;
+}
+
+#property_type_filter {
+	width: 50%;
+}
+
+#feet_filter {
+	width: 50%;
+}
+
+.roominfo {
+	width: 220px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+
+.roominfo>h3 {
+	margin-bottom: 15px;
+}
+
+.description {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#map {
+	float: left;
+	width: 76.5vw;
+	height: 90vh;
+}
+
+#footer {
+	float: left;
+	width: 100vw;
+	height: 10vh;
+	background-color: yellow;
+}
 </style>
 <body>
-<div class="header">
-        <header
-          class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" 
-          style="margin-bottom:0!important; padding-bottom:0!important;"
-        >
-          <div class="col-md-3 mb-2 mb-md-0">
-	          <a
-	              href="/"
-	            >
-	          <img src="/icon/logo.png" style="width:100px; height:60px">
-			  </a>
-          </div>
+	<div class="header">
+		<header
+			class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
+			style="margin-bottom: 0 !important; padding-bottom: 0 !important;">
+			<div class="col-md-3 mb-2 mb-md-0">
+				<a href="/"> <img src="/icon/logo.png"
+					style="width: 100px; height: 60px">
+				</a>
+			</div>
 
-          <ul
-            class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
-          >
-            <li><a href="#" class="nav-link px-2">지도</a></li>
-            <li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
-            <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
-            <li><a href="#" class="nav-link px-2">문의게시판</a></li>
-          </ul>
+			<ul
+				class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+				<li><a href="#" class="nav-link px-2">지도</a></li>
+				<li><a href="#" class="nav-link px-2">실거래가 비교</a></li>
+				<li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
+				<li><a href="#" class="nav-link px-2">문의게시판</a></li>
+			</ul>
 
-          <div class="col-md-3 text-end">
-          	<sec:authorize access="!isAuthenticated()"> 
-	            <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
-	              로그인
-	            </button>	        
-            	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'">회원가입</button>
-            </sec:authorize>
-            <sec:authorize access="isAuthenticated()"> 
-				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='user'">회원정보</button>
-				
-				<form action="/logout" method="post" style="float:right">
-				<button type="submit" class="btn btn-primary">로그아웃</button>
-			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	    		</form>
-	    		
-			</sec:authorize>
-          </div>
-        </header>
-</div>
-<div id="search_filter">
+			<div class="col-md-3 text-end">
+				<sec:authorize access="!isAuthenticated()">
+					<button type="button" class="btn btn-outline-primary me-2"
+						onclick="location.href = '/login'">로그인</button>
+					<button type="button" class="btn btn-primary"
+						onclick="location.href = '/insert'">회원가입</button>
+				</sec:authorize>
+				<sec:authorize access="isAuthenticated()">
+					<button type="button" class="btn btn-outline-primary me-2"
+						onclick="location.href='user'">회원정보</button>
 
-	<form action="map" method="get" id="searchForm">
+					<form action="/logout" method="post" style="float: right">
+						<button type="submit" class="btn btn-primary">로그아웃</button>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+					</form>
 
-        <select name="searchType">
-        	<option value="" ${searchDto.searchType == "" ? 'selected' : ''}>전체 검색</option>
-            <option value="name" ${searchDto.searchType == "name" ? 'selected' : ''}>건물명</option>
-            <option value="address" ${searchDto.searchType == "address" ? 'selected' : ''}>주소</option>
-        </select>
-        <input type="text" id="keywordForm" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력"  value="${searchDto.keyword}"/>
-        <button type="button" id="search_submit"><span class="skip_info">검색</span></button>
-         
-        <!-- <div class="slider-row">
+				</sec:authorize>
+			</div>
+		</header>
+	</div>
+	<div id="search_filter">
+
+		<form action="map" method="get" id="searchForm">
+
+			<select name="searchType">
+				<option value="" ${searchDto.searchType == "" ? 'selected' : ''}>전체
+					검색</option>
+				<option value="name"
+					${searchDto.searchType == "name" ? 'selected' : ''}>건물명</option>
+				<option value="address"
+					${searchDto.searchType == "address" ? 'selected' : ''}>주소</option>
+			</select> <input type="text" id="keywordForm" name="keyword"
+				placeholder="키워드를 입력해 주세요." title="키워드 입력"
+				value="${searchDto.keyword}" />
+			<button type="button" id="search_submit">
+				<span class="skip_info">검색</span>
+			</button>
+
+			<!-- <div class="slider-row">
             <div class="col">
                 <label for="amount">가격 범위:</label>
                 <input type="text" id="amount" readonly class="form-control bg-white">
                 <div id="slider-range"></div>
             </div>
         </div> -->
-        <div id="property_type_filter">
-	        <input type="checkbox" name="deal" value="1" ${mainSearchDto.deal == "1" ? 'checked' : ''}>매매
-	      	<input type="checkbox" name="jeonse" value="1" ${mainSearchDto.jeonse == "1" ? 'checked' : ''}>전세
-	        <input type="checkbox" name="wolse" value="1" ${mainSearchDto.wolse == "1" ? 'checked' : ''}>월세
-	                    
-	    	<div id="dealSlider" class="slider">
-		        <label class="slider-label" for="dealAmount">매매 가격 범위:</label>
-		        <input type="text" id="dealAmount" name="dealAmount" readonly class="form-control bg-white">      
-		        <div class="slider-range" id="dealRange"></div>
-	   		</div>
-	   		
-	    	<div id="jeonseSlider" class="slider">
-		        <label class="slider-label" for="jeonseAmount">보증금/전세 가격 범위:</label>
-		        <input type="text" id="jeonseAmount" name="jeonseAmount" readonly class="form-control bg-white">
-		        <div class="slider-range" id="jeonseRange"></div>
-	    	</div>
-	    	<!-- style="display: none;" -->
-	    	<div id="wolseSlider" class="slider">
-		        <label class="slider-label" for="wolseAmount">월세 가격 범위:</label>
-		        <input type="text" id="wolseAmount" name="wolseAmount" readonly class="form-control bg-white">
-		        <div class="slider-range" id="wolseRange"></div>
-	   		</div>
-   		</div>
-   		<div id="feet_filter">
-	                    
-	    	<div id="feetSlider" class="slider">
-		        <label class="slider-label" for="feetAmount">전용평수:</label>
-		        <input type="text" id="feetAmount" name="feetAmount" readonly class="form-control bg-white">
-		        <div class="slider-range" id="feetRange"></div>
-	   		</div>
-   		</div>
-     </form> 
-</div>
-      
-<div id=container>
+			<div id="property_type_filter">
+				<input type="checkbox" name="deal" value="1"
+					${mainSearchDto.deal == "1" ? 'checked' : ''}>매매 <input
+					type="checkbox" name="jeonse" value="1"
+					${mainSearchDto.jeonse == "1" ? 'checked' : ''}>전세 <input
+					type="checkbox" name="wolse" value="1"
+					${mainSearchDto.wolse == "1" ? 'checked' : ''}>월세
 
-	<div id="search">
-			<div class="property-container">
-				<c:forEach var="property" items="${list}">
-				<c:choose>
-					<c:when test="${property.p_service_type == 2}">
-						<div class="property"
-							onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
-							style="cursor: pointer;">
-							<img class="roomimg" src="${property.imageOne.filepath}" alt=""><br>
-							<div class="roominfo">
-							<c:choose>
-								<c:when test="${property.property_type_id == 1}">
-									<h3 class="property-type">매매 ${ChargeFunction.formatNumberWithUnit(property.price)}</h3>
-								</c:when>
-								<c:when test="${property.property_type_id == 2}">
-									<h3 class="property-type">전세 ${ChargeFunction.formatNumberWithUnit(property.deposit)}</h3>
-								</c:when>
-								<c:when test="${property.property_type_id == 3}">
-									<h3 class="property-type">월세 ${property.deposit} / ${property.month_price}</h3>
-								</c:when>
-							</c:choose>
-							
-							<p class="pname">${property.pname}</p>	
-							<p class="roombr">방 개수: ${property.count}</p>
-							<p class="roomfloor">${property.floor}층, ${property.feet}평, 관리비 ${property.charge}만</p>
-							</div>
-						</div>
-					</c:when>
-					<c:when
-						test="${property.private_property == false && property.ps_service_type == 1}">
-						<div class="property"
-							onclick="{location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}&address=${property.address}&pname=${property.pname}'; }"
-							style="cursor: pointer;">
-							<img src="/roomImg/${property.imageOne.filename}" alt=""><br>
-							<div class="roominfo">
-							<c:choose>
-								<c:when test="${property.property_type_id == 1}">
-									<h3 class="property-type">매매 ${ChargeFunction.formatNumberWithUnit(property.price)}</h3>
-								</c:when>
-								<c:when test="${property.property_type_id == 2}">
-									<h3 class="property-type">전세 ${ChargeFunction.formatNumberWithUnit(property.deposit)}</h3>
-								</c:when>
-								<c:when test="${property.property_type_id == 3}">
-									<h3 class="property-type">월세 ${property.deposit} / ${property.month_price}</h3>
-								</c:when>
-							</c:choose>
-							<p class="pname">${property.pname}</p>	
-							<p class="roombr">방 개수: ${property.count}</p>
-							<p class="roomfloor">${property.floor}층, ${property.feet}평, 관리비 ${property.charge}만</p>
-							</div>
-						</div>
-					</c:when>
-				</c:choose>
-				</c:forEach>
-				
+				<div id="dealSlider" class="slider">
+					<label class="slider-label" for="dealAmount">매매 가격 범위:</label> <input
+						type="text" id="dealAmount" name="dealAmount" readonly
+						class="form-control bg-white">
+					<div class="slider-range" id="dealRange"></div>
+				</div>
+
+				<div id="jeonseSlider" class="slider">
+					<label class="slider-label" for="jeonseAmount">보증금/전세 가격
+						범위:</label> <input type="text" id="jeonseAmount" name="jeonseAmount"
+						readonly class="form-control bg-white">
+					<div class="slider-range" id="jeonseRange"></div>
+				</div>
+				<!-- style="display: none;" -->
+				<div id="wolseSlider" class="slider">
+					<label class="slider-label" for="wolseAmount">월세 가격 범위:</label> <input
+						type="text" id="wolseAmount" name="wolseAmount" readonly
+						class="form-control bg-white">
+					<div class="slider-range" id="wolseRange"></div>
+				</div>
 			</div>
+			<div id="feet_filter">
+
+				<div id="feetSlider" class="slider">
+					<label class="slider-label" for="feetAmount">전용평수:</label> <input
+						type="text" id="feetAmount" name="feetAmount" readonly
+						class="form-control bg-white">
+					<div class="slider-range" id="feetRange"></div>
+				</div>
+			</div>
+		</form>
 	</div>
 
-	<div id="map"></div>
-</div>
-<div id="footer"></div>
-<script>
-//지도를 삽입할 HTML 요소 또는 HTML 요소의 id를 지정합니다.
-var mapDiv = document.getElementById('map'); // 'map'으로 선언해도 동일
+	<div id=container>
 
-//옵션 없이 지도 객체를 생성하면 서울 시청을 중심으로 하는 16 레벨의 지도가 생성됩니다.
-var map = new naver.maps.Map(mapDiv);
-</script>
+		<div id="search">
+			<div class="property-container">
+				<c:forEach var="property" items="${list}">
+					<c:choose>
+						<c:when test="${property.p_service_type == 2}">
+							<div class="property"
+								onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
+								style="cursor: pointer;">
+								<img class="roomimg" src="${property.imageOne.filepath}" alt=""><br>
+								<div class="roominfo">
+									<c:choose>
+										<c:when test="${property.property_type_id == 1}">
+											<h3 class="property-type">매매
+												${ChargeFunction.formatNumberWithUnit(property.price)}</h3>
+										</c:when>
+										<c:when test="${property.property_type_id == 2}">
+											<h3 class="property-type">전세
+												${ChargeFunction.formatNumberWithUnit(property.deposit)}</h3>
+										</c:when>
+										<c:when test="${property.property_type_id == 3}">
+											<h3 class="property-type">월세 ${property.deposit} /
+												${property.month_price}</h3>
+										</c:when>
+									</c:choose>
 
+									<p class="pname">${property.pname}</p>
+									<p class="roombr">방 개수: ${property.count}</p>
+									<p class="roomfloor">${property.floor}층,${property.feet}평,
+										관리비 ${property.charge}만</p>
+								</div>
+							</div>
+						</c:when>
+						<c:when
+							test="${property.private_property == false && property.ps_service_type == 1}">
+							<div class="property"
+								onclick="{location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}&address=${property.address}&pname=${property.pname}'; }"
+								style="cursor: pointer;">
+								<img src="/roomImg/${property.imageOne.filename}" alt=""><br>
+								<div class="roominfo">
+									<c:choose>
+										<c:when test="${property.property_type_id == 1}">
+											<h3 class="property-type">매매
+												${ChargeFunction.formatNumberWithUnit(property.price)}</h3>
+										</c:when>
+										<c:when test="${property.property_type_id == 2}">
+											<h3 class="property-type">전세
+												${ChargeFunction.formatNumberWithUnit(property.deposit)}</h3>
+										</c:when>
+										<c:when test="${property.property_type_id == 3}">
+											<h3 class="property-type">월세 ${property.deposit} /
+												${property.month_price}</h3>
+										</c:when>
+									</c:choose>
+									<p class="pname">${property.pname}</p>
+									<p class="roombr">방 개수: ${property.count}</p>
+									<p class="roomfloor">${property.floor}층,${property.feet}평,
+										관리비 ${property.charge}만</p>
+								</div>
+							</div>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+
+				<jsp:include page="../mapPaging.jsp" flush="true">
+					<jsp:param value="${mainSearchDto.searchType}" name="searchType" />
+					<jsp:param value="${mainSearchDto.keyword}" name="keyword" />
+					<jsp:param value="${mainSearchDto.wolse}" name="wolse" />
+					<jsp:param value="${mainSearchDto.jeonse}" name="jeonse" />
+					<jsp:param value="${mainSearchDto.deal}" name="deal" />
+					<jsp:param value="${mainSearchDto.dealAmount}" name="dealAmount" />
+					<jsp:param value="${mainSearchDto.jeonseAmount}"
+						name="jeonseAmount" />
+					<jsp:param value="${mainSearchDto.wolseAmount}" name="wolseAmount" />
+					<jsp:param value="${mainSearchDto.feetAmount}" name="feetAmount" />
+					<jsp:param value="${mainSearchDto.page}" name="page" />
+					<jsp:param value="${pagination.startPage}" name="startPage" />
+					<jsp:param value="${pagination.endPage}" name="endPage" />
+					<jsp:param value="${pagination.existPrevPage}" name="existPrevPage" />
+					<jsp:param value="${pagination.existNextPage}" name="existNextPage" />
+				</jsp:include>
+			</div>
+		</div>
+
+		<div id="map"></div>
+	</div>
+	<div id="footer"></div>
  <!-- jQuery 및 jQuery UI -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!-- 부트스트랩 JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!-- 부트스트랩 JS -->
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
+	<script>
         $(function() {
         	var urlParams = new URLSearchParams(window.location.search);
 
@@ -509,6 +542,228 @@ var map = new naver.maps.Map(mapDiv);
         	});
        
      
-    </script>
+    </script>    
+  <script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=06f4a6f0808017813dd6a404a0927314&libraries=services"></script>
+ <script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = { 
+    center: new kakao.maps.LatLng(37.5666103, 126.9783882), // 지도의 중심좌표
+    level: 7 // 지도의 확대 레벨
+};
+
+//지도를 표시할 div와  지도 옵션으로  지도를 생성
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+var overlays = [];
+var marker_overlays=[];
+var getRegion_result;
+var geocoder = new kakao.maps.services.Geocoder();
+
+//지명 커스텀오버레이 생성 함수
+function addCustomOverlay(name,lat,long){
+    // 커스텀 오버레이에 표시할 내용
+    // HTML 문자열 또는 Dom Element 입니다
+    
+    var content =
+                    '<div class="button btnBorder btnBlueGreen" style="font-size: 70%">' +
+                        name + 
+                    '</div>';
+
+    // 커스텀 오버레이가 표시될 위치
+    var position = new kakao.maps.LatLng(lat, long);  
+
+     // 커스텀 오버레이를 생성
+    var customOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: content   
+    });       
+    overlays.push(customOverlay);
+    customOverlay.setMap(map);
+}
+
+
+
+//현재 지도 영역 지명 얻는 함수(커스텀오버레이)
+function getRegionName(){
+    // 지도의 현재 영역
+    var bounds = map.getBounds();
+    // 영역의 남서쪽 좌표
+    var swLatLng = bounds.getSouthWest(); 
+    // 영역의 북동쪽 좌표
+    var neLatLng = bounds.getNorthEast();
+    
+    var swLat = swLatLng.getLat();
+    var swLon = swLatLng.getLng();
+    var neLat = neLatLng.getLat();
+    var neLon = neLatLng.getLng();
+    
+    //ajax로 지도영역 좌표 보내서 영역안의 시군구동 이름,좌표 얻어오기
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("POST","map");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("swLat="+swLat+"&swLon="+swLon+"&neLat="+neLat+"&neLon="+neLon+"&mapLevel="+map.getLevel());
+    xhttp.addEventListener("readystatechange",function(){
+        if(xhttp.readyState==4 && xhttp.status==200){
+            getRegion_result = JSON.parse(xhttp.responseText.trim());
+        }
+    })  	
+}
+
+function HAddrFromCoords(coords, callback) {
+    // 좌표로 행정동 주소 정보를 요청
+    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);      
+}
+
+
+/* function BAddrFromCoords(coords, callback) {
+    // 좌표로 행정동 주소 정보를 요청
+    geocoder.coord1RegionCode(coords.getLng(), coords.getLat(), callback);      
+} */
+
+// 마커에 건물명, 시세 정보 가져오기
+function getBuildingInfo(result, status){
+    let buildingInfoResult;
+    if (status === kakao.maps.services.Status.OK) {
+        for (var i = 0; i < result.length; i++) {
+            let xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/getAddress");
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=euc-kr");
+            xhttp.send("sigungu=" + result[i].address_name);
+
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    let buildingInfoResult = JSON.parse(this.responseText.trim());
+                    addMarker(buildingInfoResult);
+                }
+            };
+        }
+    }
+}
+//오버레이 화면에 표시 or 재거
+function setCustomOverlays(map, overlays) {
+    for (var i = 0; i < overlays.length; i++) {
+        overlays[i].setMap(map);
+    }            
+}
+//오버레이 화면에 표시 or 재거
+function setCustomMarker_overlays(map, overlays) {
+    for (var i = 0; i < marker_overlays.length; i++) {
+    	marker_overlays[i].setMap(map);
+    }            
+}
+
+//매물 마커 생성 함수
+function addMarker(address_result){
+    for(let i=0; i<address_result.length; i++){
+        setTimeout(function(){
+        	 var content ='<div style="position: absolute; cursor: pointer; white-space: nowrap;">' + 
+             '<div class="button2 btnFade btnM" style="font-size: 60%; font-weight: 300%;word-break:break-all;">' +
+               address_result[i].pname +
+          '</div>' +
+          '<input type="hidden" class="property-id-hidden" value="' + address_result[i].property_id + '">' +
+      '</div>';
+                
+            
+          
+            // 주소로 좌표를 검색
+            geocoder.addressSearch(address_result[i].address, function(result, status) {
+                // 정상적으로 검색이 완료됐으면 
+                if (status === kakao.maps.services.Status.OK) {
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    // 아파트명 커스텀 오버레이를 생성
+                    var customOverlay = new kakao.maps.CustomOverlay({
+                        //map: map,
+                        position: coords,
+                        content: content,
+                        clickable: true,
+                        yAnchor: 1
+                    });
+                    marker_overlays.push(customOverlay);
+                    customOverlay.setMap(map);
+                    addEventHandle(content,'click')
+               } 
+            });     
+        }, 20);   
+    }
+}
+//------------------------지도 중심좌표 or 확대,축소 이벤트-------------------------------------------
+kakao.maps.event.addListener(map, 'idle', function() {
+
+    setCustomMarker_overlays(null, marker_overlays); 
+  	 setCustomOverlays(null, overlays);
+
+
+    getRegionName();    //지역명 커스텀 오버레이
+
+    if(map.getLevel()<5){
+
+        var swCoords = new kakao.maps.LatLng(map.getBounds().qa, map.getBounds().ha);
+        var neCoords = new kakao.maps.LatLng(map.getBounds().pa, map.getBounds().oa);
+        var nwCoords = new kakao.maps.LatLng(map.getBounds().pa, map.getBounds().ha);
+        var seCoords = new kakao.maps.LatLng(map.getBounds().qa, map.getBounds().oa);
+        HAddrFromCoords(map.getCenter(), getBuildingInfo);
+        HAddrFromCoords(swCoords, getBuildingInfo);
+        HAddrFromCoords(neCoords, getBuildingInfo);
+        HAddrFromCoords(nwCoords, getBuildingInfo);
+        HAddrFromCoords(seCoords, getBuildingInfo);
+        setCustomMarker_overlays(map, marker_overlays); 
+      	 setCustomOverlays(null, overlays);
+
+    }
+  
+    //시,군,동, 지역 이름 커스텀 오버레이 출력
+    if(map.getLevel()>=5 && map.getLevel()<7){
+    	 for(let i in getRegion_result){
+    	        (function(index) {
+    	            setTimeout(function(){
+    	                if(getRegion_result[index] && 'dong' in getRegion_result[index] && getRegion_result[index].dong != null && getRegion_result[index].sido == null && getRegion_result[index].sigungu == null) {
+    	                    addCustomOverlay(getRegion_result[index].dong, getRegion_result[index].lat, getRegion_result[index].lon); 
+    	                } else if (!getRegion_result[index] || (getRegion_result[index].sido == null && getRegion_result[index].sigungu == null && getRegion_result[index].dong == null)) {
+    	                    // 세 값이 모두 null인 경우의 처리
+    	                }
+    	            }, 10);
+    	        })(i);
+    	    }
+      setCustomMarker_overlays(null, marker_overlays); 
+
+
+    }else if(map.getLevel()>=7 && map.getLevel()<11){
+      	 for(let i in getRegion_result){
+ 	        (function(index) {
+ 	            setTimeout(function(){
+ 	                if(getRegion_result[index] && 'sigungu' in getRegion_result[index] && getRegion_result[index].dong == null&& getRegion_result[index].sigungu != null) {
+ 	                    addCustomOverlay(getRegion_result[index].sigungu, getRegion_result[index].lat, getRegion_result[index].lon); 
+ 	                } else if (!getRegion_result[index] || (getRegion_result[index].sido == null && getRegion_result[index].sigungu == null && getRegion_result[index].dong == null)) {
+ 	                    // 세 값이 모두 null인 경우의 처리
+ 	                }
+ 	            },10);
+ 	        })(i);
+ 	    }
+      setCustomMarker_overlays(null, marker_overlays); 
+
+
+    }else if(map.getLevel()>=11){
+    	for(let i in getRegion_result){
+ 	        (function(index) {
+ 	            setTimeout(function(){
+ 	                if(getRegion_result[index] && 'sido' in getRegion_result[index] && getRegion_result[index].dong == null && getRegion_result[index].sido != null && getRegion_result[index].sigungu == null) {
+ 	                    addCustomOverlay(getRegion_result[index].sido, getRegion_result[index].lat, getRegion_result[index].lon); 
+ 	                } else if (!getRegion_result[index] || (getRegion_result[index].sido == null && getRegion_result[index].sigungu == null && getRegion_result[index].dong == null)) {
+ 	                    // 세 값이 모두 null인 경우의 처리
+ 	                }
+ 	            }, 10);
+ 	        })(i);
+    	}
+     setCustomMarker_overlays(null, marker_overlays); 
+
+
+    }
+ 
+});
+
+
+</script>
 </body>
 </html>
