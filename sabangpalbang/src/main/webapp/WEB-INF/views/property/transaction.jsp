@@ -8,6 +8,7 @@
 <title>아파트 실거래가 비교</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
 </head>
 <style>

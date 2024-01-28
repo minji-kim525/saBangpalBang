@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
-<link rel="stylesheet" href="/css/index.css">
+<link rel="stylesheet" href="/css/index.css">	
 	<title>시큐리티 테스트</title>
 	<style>
 		.bi {
@@ -99,9 +99,10 @@
 		<div class=container>
 			<h2>어떤 방을 찾으세요?</h2>
 			<form action="map" method="get" id="searchForm" style="top:60px; position:relative;">
-			    <div class="mx-auto mt-5 search-bar input-group mb-3">	
+			    <div class="mx-auto mt-5 search-bar input-group mb-3" style="width:97%; margin-left:0!important;">	
 			      <input type="hidden" name="searchType" value="">
-			      <input name="keyword" id="keyword" onkeypress="navigateOnEnter(event)" type="search" class="form-control rounded-pill" placeholder="찾아보고 싶은 지역이나 단지명을 입력하세요."> 
+			      <input name="keyword" id="keyword" onkeypress="navigateOnEnter(event)" type="search" class="form-control rounded-pill" 
+			      placeholder="찾아보고 싶은 지역이나 단지명을 입력하세요."  style="height:45px; width:100%; position:relative; text-indent:60px; z-index:1"> 
 			      <button id="searchb" style="border: none; background: none; color:inherit;">
 				      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi-search" viewBox="0 0 16 16" style="z-index:2;">
 					  	<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -391,7 +392,7 @@
 		<section class=recommend_property2>
 			<div>
 				<h2>바로 볼 수 있는 매물은 어떠신가요?</h2>
-				<p style="padding-top:40px;">여기 매물들은 <strong>로그인</strong> 없이 상세정보를 확인할 수 있습니다.</p>
+				<p style="padding-top:40px;">여기 매물들은 <strong>로그인</strong> 없이도 상세정보를 확인할 수 있습니다.</p>
 				<ul class=RoomList>
 					<li>
 						<div>

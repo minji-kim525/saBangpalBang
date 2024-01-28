@@ -24,23 +24,18 @@
 <!-- jQuery UI CSS -->
 <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
 	rel="stylesheet">
-<!-- 	<link rel="stylesheet" href="/css/font.css">
- -->
+ <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/buttons.css">
 <link rel="stylesheet" href="/css/header.css">
 </head>
 <style>
-*{
+	*{
 		padding: 0;
 		margin: 0;
 	}
 	
 	p {
 		margin-bottom:0!important;
-	}
-	
-	.header {
-		width:100vw;
 	}
 	
 	#search {
@@ -90,7 +85,7 @@
 		
 	}
 	
-	img {
+	#roomimg {
 		float:left;
 		width:140px;
 		height:140px;
@@ -146,51 +141,51 @@
 </style>
 <body>
 <div class="header">
-  <header
-    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" 
-    style="margin-bottom:0!important;"
-  >
-    <div class="col-md-3 mb-2 mb-md-0">
-        <a
-            href="/"
+        <header
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom" 
+          style="margin-bottom:0!important;"
+        >
+          <div class="col-md-3 mb-2 mb-md-0" style="padding-left:0; padding-right:0;">
+	          <a
+	              href="/"
+	            >
+	          <img src="/icon/logo.png" style="width:100px; height:60px; margin-left:50px;">
+			  </a>
+          </div>
+
+          <ul id="navbar"
+            class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
-        <img src="/icon/logo.png" style="width:100px; height:60px; margin-left:50px;">
-		  </a>
-    </div>
+            <li><a href="/map?searchType=&keyword=&deal=1&jeonse=1&wolse=1" class="nav-link px-2">지도</a></li>
+            <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
+            <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
+            <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
+          </ul>
 
-    <ul id="navbar"
-      class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
-    >
-      <li><a href="/map" class="nav-link px-2">지도</a></li>
-      <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
-      <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
-      <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-    </ul>
-
-    <div class="col-md-3 text-end">
-    	<sec:authorize access="!isAuthenticated()"> 
-          <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
-            로그인
-          </button>	        
-      	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'" style="margin-right:50px;">회원가입</button>
-      </sec:authorize>
-      <sec:authorize access="hasAuthority('USER')"> 
-			<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
-			<form action="/logout" method="post" style="float:right">
-			<button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
-		        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-  		</form>
-		</sec:authorize>
-		<sec:authorize access="hasRole('ADMIN')">
-		  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
-		  <form action="/logout" method="post" style="float:right">
-		  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
-		  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-  	  </form>
-		</sec:authorize>
-    </div>
-  </header>
-</div>
+          <div class="col-md-3 text-end">
+          	<sec:authorize access="!isAuthenticated()"> 
+	            <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
+	              로그인
+	            </button>	        
+            	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'" style="margin-right:50px;">회원가입</button>
+            </sec:authorize>
+            <sec:authorize access="hasAuthority('USER')"> 
+				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
+				<form action="/logout" method="post" style="float:right">
+				<button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
+			        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	    		</form>
+			</sec:authorize>
+			<sec:authorize access="hasRole('ADMIN')">
+			  <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/manager/property/search'">관리자 페이지</button>
+			  <form action="/logout" method="post" style="float:right">
+			  <button type="submit" class="btn btn-primary" style="margin-right:50px;">로그아웃</button>
+			  	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	    	  </form>
+			</sec:authorize>
+          </div>
+        </header>
+      </div>
 
 <div id="search_filter">
 
@@ -258,7 +253,7 @@
 						<div class="property"
 							onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
 							style="cursor: pointer;">
-							<img class="roomimg" src="${property.imageOne.filepath}" alt=""><br>
+							<img class="roomimg" src="${property.imageOne.filepath}" alt="" id="roomimg"><br>
 							<c:set var="billions" value="${property.price / 10000}" />
 							<c:set var="millions" value="${(property.price % 10000)}" />
 							<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
@@ -326,7 +321,7 @@
 						<div class="property"
 							onclick="{location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}&address=${property.address}&pname=${property.pname}'; }"
 							style="cursor: pointer;">
-							<img src="/roomImg/${property.imageOne.filename}" alt=""><br>
+							<img src="/roomImg/${property.imageOne.filename}" alt="" id="roomimg"><br>
 							<div class="roominfo">
 							<c:set var="billions" value="${property.price / 10000}" />
 							<c:set var="millions" value="${(property.price % 10000)}" />
