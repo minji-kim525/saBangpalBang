@@ -7,6 +7,7 @@
 <html>
 <head>
 <title>승인 요청</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
@@ -179,6 +180,7 @@
                
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <script>
 
 $(document).ready(function() {
@@ -222,7 +224,6 @@ $(document).ready(function() {
       });
       
 });
-
   </script>
 
 </body>

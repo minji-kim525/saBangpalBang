@@ -35,6 +35,12 @@
           </ul>
 
           <div class="col-md-3 text-end">
+          <sec:authorize access="!isAuthenticated()"> 
+	            <button type="button" class="btn btn-outline-primary me-2" onclick = "location.href = '/login'" >
+	              로그인
+	            </button>	        
+            	<button type="button" class="btn btn-primary" onclick = "location.href = '/insert'" style="margin-right:50px;">회원가입</button>
+            </sec:authorize>
             <sec:authorize access="hasAuthority('USER')"> 
 				<button type="button" class="btn btn-outline-primary me-2" onclick="location.href='/mypage/likelist'">마이페이지</button>
 				<form action="/logout" method="post" style="float:right">

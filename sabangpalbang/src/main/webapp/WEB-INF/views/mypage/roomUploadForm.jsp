@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
@@ -184,18 +185,38 @@
 </div>
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+	<script>
 	 $(document).ready(function() {
 	        // 초기 상태 설정을 위해 show_form 함수 호출
 	        show_form("1");
 
-	        $("#submit_form").click(function() {
-	            if (confirm("해당 게시물을 등록 하시겠습니까?") == true) {
-	                $("#allsubmit").submit();
-	            } else {
-	                return false;
-	            }
-	        });
+	        $(document).on('click', '#submit_form', function(e) {
+	       	 
+	       	 e.preventDefault();
+	       	 
+	       	 Swal.fire({
+	       		 
+	       		   title: '해당 매물을 등록 하시겠습니까?',
+	       		   icon: 'warning',
+	       		   
+	       		   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+	       		   confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+	       		   cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+	       		   confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+	       		   cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+	       		   	
+
+	       		}).then(result => {
+	       		   // 만약 Promise리턴을 받으면,
+	       		   if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+	       		      $("#allsubmit").submit();
+	       		   }
+	       		   
+	       		});
+
+	       	});
+	       	
 	    });
 	
 		function show_form(select_btn){

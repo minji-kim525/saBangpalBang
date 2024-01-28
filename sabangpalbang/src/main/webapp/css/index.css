@@ -124,7 +124,8 @@
 		overflow: hidden;
 	}
 	.footer {
-		background-color: #aaa;
+		border-top: 1px solid;
+		background-color: rgba(171,171,171,0.5);
 		width:100vw;
 		height:20vh;
 	}

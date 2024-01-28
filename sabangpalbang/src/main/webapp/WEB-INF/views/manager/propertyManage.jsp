@@ -165,6 +165,7 @@
 	</div>	
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
 
 
@@ -173,15 +174,16 @@
 	  	  $("#searchForm").submit();
 	});
       
-      $("#deleteform").click(function(){
-    	  if (confirm("정말 삭제하시겠습니까?") == true){    //확인
-        	  $("#deleteform").submit();
-    		 }else{   //취소
-    		     return false;
-    		 }
-    	  
-      });
-  
+      
+      
+	$(document).on('click', '#deleteform', function(e) {
+  	  if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+      	  $("#deleteform").submit();
+  		 }else{   //취소
+  		     return false;
+  		 }
+  	  
+    });
 
 
 

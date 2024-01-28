@@ -10,7 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>서비스 매물 상세정보</title>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8e08b8b197fa1546d4d48218f8d18451&libraries=services"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
@@ -23,7 +23,7 @@
 		display:none;
 		width:500px;
 		height:500px;
-		position:absolute;
+		position:fixed;
 		top:50%;
 		left:50%;
 		margin:-250px 0 0 -250px;
@@ -41,8 +41,8 @@
 		content:"";
 		width:100%;
 		height:100%;
-		position:absolute;
-		top:0;
+		position:fixed;
+		top:92.67px;
 		left:0;
 		background-color:rgba(0,0,0,0.5);
 		z-index:1;
@@ -78,6 +78,13 @@
 		width:250px;
 		height:250px;
 	}
+	
+	#map {
+      width: 100%;
+      height: 500px;
+      z-index:0;
+    }
+    
 </style>
 </head>
 <body>
@@ -141,37 +148,58 @@
 						
 					</c:forEach>
 				</div>
-				<c:set var="billions" value="${((psdetail.price / 100000000) - (psdetail.price % 100000000 / 100000000))}" />
-				<c:set var="millions" value="${((psdetail.price % 100000000) / 10000)}" />
 				
-				<fmt:formatNumber var="billionsFormatted" value="${billions}" pattern="#,##0" />
+				<canvas id="myChart" style="height: 50vh; width: 30vw; display:inline-block"></canvas>
+				
+				
+				<c:set var="billions" value="${psdetail.price / 10000}" />
+				<c:set var="millions" value="${(psdetail.price % 10000)}" />
+				<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
 				<fmt:formatNumber var="millionsFormatted" value="${millions}" pattern="#,##0" />
+				
+				<c:set var="billions_de" value="${psdetail.deposit / 10000}" />
+				<c:set var="millions_de" value="${(psdetail.deposit %  10000)}" />
+				<fmt:parseNumber var="billionsFormatted_de" value="${billions_de}" pattern="#,##0" integerOnly="true"/>
+				<fmt:formatNumber var="millionsFormatted_de" value="${millions_de}" pattern="#,##0" />
 				
 				
 				
 
 				
-				<div class="psdetail" style="display:inline-block;">
+				<div class="psdetail" style="display:inline-block; margin-left:50px; width:40vw;">
 					<p>주소: ${psdetail.address}</p>
 					<p>건물명: ${psdetail.pname}</p>
 					<c:choose>
 						<c:when test="${psdetail.property_type_id == 1}">
-							<c:if test="${billions > 0}">
-				    <p>매매가 : ${billionsFormatted}억 ${millionsFormatted}만원</p>
+							<c:if test="${billions > 0 && millions != 0}">
+							    <p>매매가 : ${billionsFormatted}억 ${millionsFormatted}만원</p>
 							</c:if>
-							<c:if test="${billions == 0 && millions > 0}">
-							    <p>매매가 : ${millionsFormatted}만원</p>
-							</c:if>
-							<c:if test="${billions == 0 && millions == 0}">
-							    <p>매매가 : 가격 정보 없음</p>
+							<c:if test="${billions > 0 && millions == 0}">
+							    <p>매매가 : ${billionsFormatted}억</p>
 							</c:if>
 								
 						</c:when>
 						<c:when test="${psdetail.property_type_id == 2}">
-							<p>보증금: ${psdetail.deposit}</p>
-						</c:when>
+							<c:if test="${billions_de > 0 && millions_de != 0}">
+						    	<p>전세 : ${billionsFormatted_de}억 ${millionsFormatted_de}만원</p>
+							</c:if>
+							<c:if test="${billions_de > 0 && millions_de == 0}">
+							    <p>전세  : ${billionsFormatted_de}억</p>
+							</c:if>
+							<c:if test="${billions_de < 1 && millions_de > 0}">
+								<p>전세  : ${millionsFormatted_de}만원</p>
+							</c:if>
+						    </c:when>
 						<c:when test="${psdetail.property_type_id == 3}">
-							<p>보증금 : ${psdetail.deposit} / 월세 : ${psdetail.month_price}</p>
+							<c:if test="${billions_de >= 1 && millions_de != 0}">
+						    	<p>월세 : ${billionsFormatted_de}억 ${millionsFormatted_de}만원 / ${psdetail.month_price}</p>
+							</c:if>
+							<c:if test="${billions_de > 0 && millions_de == 0}">
+								<p>월세 : ${billionsFormatted_de}억 / ${psdetail.month_price}</p>
+							</c:if>
+							<c:if test="${billions_de < 1}">
+								<p>월세 : ${psdetail.deposit} / ${psdetail.month_price}</p>
+							</c:if>	
 						</c:when>
 					</c:choose>
 					<p>평수: ${psdetail.feet}</p>
@@ -213,12 +241,12 @@
 					<p style="color:blue; margin-top:10px!important;">개인과의 직거래 시 언제나 안전에 유의하세요</p>
 					</div>
 				</div>
+				<h5 style="margin-top:50px;">주변 지도</h5>
+				<div id="map"></div>
 			</div>
 			
 			<!-- 서비스매물 실거래가 그래프 -->
-			<div class="container">
-				<canvas id="myChart" style="height: 40vh; width: 30vw; margin-top:50px;"></canvas>
-			</div>
+			
 		</div>
 		
 	</div>
@@ -345,5 +373,44 @@
 		document.querySelector('.modal_close').addEventListener('click', offClick); 
 	};    
 </script>
+
+<script>
+var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+var options = { //지도를 생성할 때 필요한 기본 옵션
+	center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+	level: 3 //지도의 레벨(확대, 축소 정도)
+};
+
+var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+//주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('${psdetail.address}', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">${psdetail.pname}</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+});    
+    
+  </script>
 
 </html>
