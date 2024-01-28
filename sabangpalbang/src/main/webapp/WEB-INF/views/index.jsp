@@ -40,7 +40,7 @@
           <ul id="navbar"
             class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"
           >
-            <li><a href="/map" class="nav-link px-2">지도</a></li>
+            <li><a href="/map?searchType=&keyword=&deal=1&jeonse=1&wolse=1" class="nav-link px-2">지도</a></li>
             <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
@@ -75,20 +75,25 @@
 	<div class=main>
 		<div class=container>
 			<h2>어떤 방을 찾으세요?</h2>
-			<form action="/property/searchAllResult" method="GET" style="top:60px; position:relative;">
+			<form action="map" method="get" id="searchForm" style="top:60px; position:relative;">
+
 			    <div class="mx-auto mt-5 search-bar input-group mb-3">	
-			      <input name="keyword" id="keyword" type="search" class="form-control rounded-pill" placeholder="찾아보고 싶은 지역이나 단지명을 입력하세요." 
+			      <input type="hidden" name="searchType" value="">
+			      <input name="keyword" id="keyword" onkeypress="navigateOnEnter(event)" type="search" class="form-control rounded-pill" placeholder="찾아보고 싶은 지역이나 단지명을 입력하세요." 
 			      aria-label="Recipient's username" aria-describedby="button-addon2" 
 			      style="height:45px; width:100%; position:relative; text-indent:60px; z-index:1">
-			      <a href="/" style="color:inherit;" >
+			      <button id="searchb" style="border: none; background: none; color:inherit;">
 				      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi-search" viewBox="0 0 16 16" style="z-index:2;">
 					  	<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 					  </svg>
-				  </a>
+				  </button>
+				  <input type="hidden" name="deal" value="1">
+				  <input type="hidden" name="jeonse" value="1">
+				  <input type="hidden" name="wolse" value="1">
 			      <div class="input-group-append">
 			      </div>
 			    </div>
-		  </form>
+			</form>
 		</div>
 		<section class=recommend_property>
 			<div>
@@ -572,7 +577,20 @@
     	</div>
 	</div>
 	
-	
+	 <script>
+/* 	 document.getElementById("priceRange").value = "0만원"+"-"+"무제한"; 
+ */        function navigateOnEnter(event) {
+        	
+            if (event.key === 'Enter') {
+            	
+            	$("#keyword").submit();
+                
+            }
+        }
+ 
+	 document.getElementById('searchb').addEventListener('click', function() {
+		    $("#searchForm").submit();	});
+    </script>
 	
 	
 	
