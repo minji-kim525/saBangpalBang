@@ -217,12 +217,10 @@ img {
 				viewContainer.appendChild(item);
 
 				function convertUnit(value) {
-					if (value >= 100000000) { // 1억 이상일 경우
-						return (value / 100000000) + "억";
-					} else if (value >= 10000) { // 1만원 이상일 경우
-						return (value / 10000) + "만원";
+					if (value >= 10000) { // 1억 이상일 경우
+						return (value / 10000) + "억";
 					} else {
-						return value;
+						return value + "만원";
 					}
 				}
 			}
