@@ -35,7 +35,6 @@
             <li><a href="/transaction" class="nav-link px-2">실거래가 비교</a></li>
             <li><a href="/mypage/upload" class="nav-link px-2">방 내놓기</a></li>
             <li><a href="/question/title" class="nav-link px-2">문의게시판</a></li>
-            <li><a href="#" class="nav-link px-2">1대1 상담</a></li>
           </ul>
 
           <div class="col-md-3 text-end">
@@ -66,7 +65,6 @@
 	        <li><a href="/manager/confirm/search">승인 요청</a></li>
 	        <li><a href="/manager/users/search">사용자 관리</a></li>
 	        <li><a href="/answer/title">문의</a></li>
-	        <li><a href="#">1대1 상담</a></li>
 	      </ul>
     </nav>
 
@@ -165,6 +163,7 @@
 	</div>	
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
 
 
@@ -173,15 +172,16 @@
 	  	  $("#searchForm").submit();
 	});
       
-      $("#deleteform").click(function(){
-    	  if (confirm("정말 삭제하시겠습니까?") == true){    //확인
-        	  $("#deleteform").submit();
-    		 }else{   //취소
-    		     return false;
-    		 }
-    	  
-      });
-  
+      
+      
+	$(document).on('click', '#deleteform', function(e) {
+  	  if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+      	  $("#deleteform").submit();
+  		 }else{   //취소
+  		     return false;
+  		 }
+  	  
+    });
 
 
 
