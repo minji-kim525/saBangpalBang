@@ -179,7 +179,7 @@ img {
 
 				// 이미지 표시를 위한 <img> 태그 추가
 				var imageLink = document.createElement("a");
-				imageLink.href = "http://localhost:8081/property/psDetail?ps_service_type=1"
+				imageLink.href = "/property/psDetail?ps_service_type=1"
 						+ "&propertyId="
 						+ data.propertyId
 						+ "&address="
@@ -194,7 +194,7 @@ img {
 
 				// 매물 이름에 링크 추가
 				var nameLink = document.createElement("a");
-				nameLink.href = "http://localhost:8081/property/psDetail?ps_service_type=1"
+				nameLink.href = "/property/psDetail?ps_service_type=1"
 						+ "&propertyId="
 						+ data.propertyId
 						+ "&address="
