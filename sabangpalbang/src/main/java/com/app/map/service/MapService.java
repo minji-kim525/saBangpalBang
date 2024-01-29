@@ -27,8 +27,7 @@ public class MapService {
 	            // '서울특별시' 이후의 문자열을 추출합니다.
 	            String result = sigungu.substring(index + keyword.length()).trim();
 	            List<AddressDto>list= mapDao.getAddress( result);
-	            // 결과 출력
-	            System.out.println(result);
+	            
 	            return list;
 	        } else {
 	         List<AddressDto>list=mapDao.getAddress("서울");

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/login.css">
 
-<title>시큐리티 테스트</title>
+<title>로그인</title>
 </head>
 
 <body class="text-center">

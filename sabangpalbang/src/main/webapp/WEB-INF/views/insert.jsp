@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="/css/insert.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Sign Up</title>
+    <title>회원가입</title>
 </head>
 <body>
     <div class="container">

@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
 <link rel="stylesheet" href="/css/index.css">	
-	<title>시큐리티 테스트</title>
+	<title>사방팔방</title>
 	<style>
 		.bi {
         vertical-align: -0.125em;
