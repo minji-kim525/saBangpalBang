@@ -247,12 +247,19 @@
 
 	<div id="search">
 			<div class="property-container">
-				<c:forEach var="property" items="${list}">
+				<c:forEach var="property" items="${list}" varStatus="status">
+				<c:if test="${status.index == 0}">
+        					<input type="hidden" id="firstItem" data-first-value="${property.address}"/>
+    					</c:if>
 				<c:choose>
+				<%-- 첫 번째 요소만 처리 --%>
+    					
 					<c:when test="${property.p_service_type == 2}">
+			
 						<div class="property"
 							onclick="{ location.href='/property/pDetail?p_service_type=${property.p_service_type}&propertyId=${property.property_id}&address=${property.address}&pname=${property.pname}'; }"
 							style="cursor: pointer;">
+							
 							<img class="roomimg" src="${property.imageOne.filepath}" alt="" id="roomimg"><br>
 							<c:set var="billions" value="${property.price / 10000}" />
 							<c:set var="millions" value="${(property.price % 10000)}" />
@@ -392,6 +399,7 @@
 	</div>
 
 	<div id="map"></div>
+	<div>${property.address}</div>
 </div>
 
 
@@ -628,7 +636,39 @@
   <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=06f4a6f0808017813dd6a404a0927314&libraries=services"></script>
  <script>
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
+/* var firstItemCheck=document.getElementById('firstItem');
+console.log(firstItemCheck); */
+
+/* if(firstItemCheck!=null){
+var firstItemValue = document.getElementById('firstItem').getAttribute('data-first-value');
+console.log(firstItemCheck);
+} */
+window.onload = function() {
+    var firstItemCheck = document.getElementById('firstItem');
+    console.log(firstItemCheck);
+
+    if (firstItemCheck != null) {
+        var firstItemValue = firstItemCheck.getAttribute('data-first-value');
+        console.log(firstItemValue);
+        if(firstItemValue!=null){
+        	geocoder.addressSearch(firstItemValue, function(result, status) {
+
+        	    // 정상적으로 검색이 완료됐으면 
+        	        if (status === kakao.maps.services.Status.OK) {
+        	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        	        // 지도 객체 참조 (예: map이 지도 객체 변수)
+        	        // 지도의 중심을 결과 좌표로 이동
+        	        map.setCenter(coords);
+        	        map.setLevel(3);
+
+        	        }
+        	    });
+        	}
+    }
+};
+
 mapOption = { 
     center: new kakao.maps.LatLng(37.5666103, 126.9783882), // 지도의 중심좌표
     level: 7 // 지도의 확대 레벨
