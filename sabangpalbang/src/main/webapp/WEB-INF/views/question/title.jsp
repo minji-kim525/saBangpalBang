@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/header.css">
-<title>Insert title here</title>
+<title>문의게시판</title>
 </head>
 <body>
 <div class="header">
@@ -105,7 +105,7 @@
 					value="${searchDto.keyword}" style="display:inline; width:300px;"/>
 				<button class="btn btn-outline-success" type="button" id="search_submit" style="vertical-align:baseline;"><span class="skip_info">검색</span></button>
 				</form>
-				<button type="button" class="btn btn-outline-secondary" style="color:blue; vertical-align:baseline; float:right" onClick="location.href='http://localhost:8081/question/insert'">글쓰기</button>
+				<button type="button" class="btn btn-outline-secondary" style="color:blue; vertical-align:baseline; float:right" onClick="location.href='/question/insert'">글쓰기</button>
 			</div>
 	</div>
 	</div>

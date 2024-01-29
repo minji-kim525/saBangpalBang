@@ -7,8 +7,9 @@
 	<insert id="answerInsert"
 		parameterType="com.app.question.dto.AnswerDto">
 		insert into
-		answer(answer_id,question_id,user_id,title,content)
-		values(0,#{question_id},#{user_id},#{title},#{content})
+		answer(answer_id,question_id,user_id,title,content,created_at)
+		values(0,#{question_id},#{user_id},#{title},#{content},NOW() +
+		INTERVAL 9 HOUR);
 	</insert>
 	
 	<insert id="insertNotifyAnswer">

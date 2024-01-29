@@ -293,7 +293,7 @@
 	</script>
 
 	<script>
-	  // content.question_id와 content.title을 로컬 스토리지에 저장
+	  // 로컬 스토리지에 저장
 	  var dataToSave = {
 	    propertyId: ${propertyId},
 	    price: ${psdetail.price},
