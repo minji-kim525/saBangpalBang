@@ -13,7 +13,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-<title>간단한 지도 표시하기</title>
+<title>지도	</title>
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
@@ -322,7 +322,6 @@
 							onclick="{location.href='/property/psDetail?ps_service_type=${property.ps_service_type}&propertyId=${property.property_service_id}&address=${property.address}&pname=${property.pname}'; }"
 							style="cursor: pointer;">
 							<img src="/roomImg/${property.imageOne.filename}" alt="" id="roomimg"><br>
-							<div class="roominfo">
 							<c:set var="billions" value="${property.price / 10000}" />
 							<c:set var="millions" value="${(property.price % 10000)}" />
 							<fmt:parseNumber var="billionsFormatted" value="${billions}" pattern="#,##0" integerOnly="true"/>
