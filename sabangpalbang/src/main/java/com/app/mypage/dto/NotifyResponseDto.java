@@ -14,4 +14,5 @@ public class NotifyResponseDto {
     private int ps_service_type;
     private String title;
     private String pname;
+    private String address;
 }

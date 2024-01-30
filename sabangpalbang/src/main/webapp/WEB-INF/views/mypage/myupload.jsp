@@ -178,7 +178,7 @@
 				<c:forEach items="${qlist}" var="question">
 				글번호:${question.question_id}
 				작성자:${question.id}
-				제목:<a href="../quesition/${question.question_id}">${question.title}</a> 
+				제목:<a href="../question/${question.question_id}">${question.title}</a> 
 				등록날짜:${question.created_at}<br>
 		
 				</c:forEach>

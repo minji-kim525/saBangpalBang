@@ -130,12 +130,16 @@
 		   	n.question_id,
 		    c.confirm_check,
 		    c.property_service_id,
-		    c.ps_service_type
+		    c.ps_service_type,
+		    ps.pname,
+		    ps.address
 		FROM 
 		    notify n   
 		INNER JOIN 
 		    confirm c ON n.confirm_id = c.confirm_id
-		WHERE user_id=#{user_id}
+		JOIN 
+    	property_service ps ON c.property_service_id = ps.property_service_id AND c.ps_service_type = ps.ps_service_type
+		WHERE n.user_id=#{user_id}
 		ORDER BY n.notify_id
 			
 	</select>

@@ -5,7 +5,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-없는 게시글입니다
+
+<form  action="consulting/${id}"  method="get">
+<input type="submit" value="상담원호출">
+</form>
+
 
 </body>
 </html>

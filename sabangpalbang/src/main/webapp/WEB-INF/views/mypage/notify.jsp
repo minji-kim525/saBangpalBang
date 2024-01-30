@@ -80,7 +80,7 @@
 		<h3 style="padding-top:30px; margin-bottom:20px;">알림</h3>
 		 <c:if test="${listcheck!=0 }">
 			<c:forEach items="${list}" var="notify">
-			<div class="card" style ="margin-bottom:20px;" onclick="markAsRead(this, '${notify.notify_id}', '${notify.notify_check}'); if (${notify.question_id != null}) { location.href='/question/${notify.question_id}'; } else { location.href='/property/psDetail?ps_service_type=${notify.ps_service_type}&propertyId=${notify.property_service_id}'; }">
+			<div class="card" style ="margin-bottom:20px;" onclick="markAsRead(this, '${notify.notify_id}', '${notify.notify_check}'); if (${notify.question_id != null}) { location.href='/question/${notify.question_id}'; } else { location.href='/property/psDetail?ps_service_type=${notify.ps_service_type}&propertyId=${notify.property_service_id}&address=${notify.address}&pname=${notify.pname}'; }">
 			<input type="hidden" name="notify_id" value="${notify.notify_id}">
 			<c:choose>
 		 				<c:when test="${notify.question_id!=null}">
