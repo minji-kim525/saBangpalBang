@@ -24,10 +24,6 @@
 	margin-right: 20px;
 }
 
-a {
-	text-decoration: none;
-	color: black;
-}
 
 p {
 	text-align: center;

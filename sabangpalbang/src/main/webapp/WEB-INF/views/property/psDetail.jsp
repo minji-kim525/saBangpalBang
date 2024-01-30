@@ -281,14 +281,15 @@
 	 }
  
  // 이미지 파일 경로 생성 함수
-	 function getImageFilePaths() {
-	   var imageFilePaths = [];
-	   <c:forEach items="${psdetail.images}" var="image">
-	     var imagePath = "/roomImg/" + "${image.filename}";
-	     imageFilePaths.push(imagePath);
-	   </c:forEach>
-	   return imageFilePaths;
-	 }
+	function getImageFilePaths() {
+  var imageFilePaths = [];
+  <c:forEach items="${psdetail.images}" var="image" varStatus="loop">
+    var imagePath = "/roomImg/" + "${image.filename}";
+    imageFilePaths.push(imagePath);
+  </c:forEach>
+  var firstImage = imageFilePaths[0]; // 첫 번째 이미지만 가져오기
+  return [firstImage]; // 첫 번째 이미지를 단일 요소 배열로 반환
+}
 	
 	</script>
 
